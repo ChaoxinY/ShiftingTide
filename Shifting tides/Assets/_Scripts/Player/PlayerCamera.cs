@@ -12,9 +12,11 @@ public class PlayerCamera : MonoBehaviour
     private const float MIN_Y = -60.0f;
     private const float cameraMouseMIN_Y = -20.0f;
     private float targetDistance;
-    private GameObject nearestTarget;
+    private Transform nearestTarget;
+    private Vector3 smoothPivotOffset, smoothCamOffset, targetPivotOffset, targetCamOffset, relCameraPos;
     private RaycastHit hits;
-    private float angleV;
+    private float angleV,relCameraPosMag;
+    private bool lockedOn;
 
     [HideInInspector]
     public Camera cameraMain;
@@ -26,12 +28,8 @@ public class PlayerCamera : MonoBehaviour
     public Vector3 targetOffeset, pivotOffset, camOffset;
 
     [HideInInspector]
-    public float mouseX, mouseY, cameraMouseY, angleH, targetFOV;
-    public bool lockedOn;  
+    public float mouseX, mouseY, cameraMouseY, angleH, targetFOV; 
     public float smoothSpeed, mouseSensitivity;
-    
-    private Vector3 smoothPivotOffset, smoothCamOffset,targetPivotOffset,targetCamOffset,relCameraPos; 
-    private float relCameraPosMag;
 
     private void Start()
     {
@@ -56,27 +54,6 @@ public class PlayerCamera : MonoBehaviour
         angleV += Mathf.Clamp(Input.GetAxis("Mouse Y"), -1, 1) * mouseSensitivity;
         angleV = Mathf.Clamp(angleV, MIN_Y, MAX_Y);
 
-        //Quaternion aimRotation = Quaternion.Euler(-angleV, angleH, 0);
-        //Quaternion camYRotation = Quaternion.Euler(0, angleH, 0);
-        //transform.rotation = aimRotation;
-
-        //Vector3 baseTempPosition = player.position + camYRotation * targetPivotOffset;
-        //Vector3 noCollisionOffset = targetCamOffset;
-       
-        //for (float zOffset = targetCamOffset.z; zOffset <= 0; zOffset += 0.4f)
-        //{
-        //    noCollisionOffset.z = zOffset;
-        //    if (DoubleViewingPosCheck(baseTempPosition + aimRotation * noCollisionOffset, Mathf.Abs(zOffset)) || zOffset == 0)
-        //    {             
-        //        break;
-        //    }
-        //}
-        //smoothPivotOffset = Vector3.Lerp(smoothPivotOffset, targetPivotOffset, smoothSpeed * Time.deltaTime);
-        //smoothCamOffset = Vector3.Lerp(smoothCamOffset, noCollisionOffset, smoothSpeed * Time.deltaTime);
-        //transform.position = player.position + camYRotation * smoothPivotOffset + aimRotation * smoothCamOffset;
-        //transform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetComponent<Camera>().fieldOfView, determineCurrentFOV(), Time.deltaTime*1.2f);
-
-
         if (Input.GetMouseButtonDown(2))
         {
             if (lockedOn)
@@ -87,17 +64,53 @@ public class PlayerCamera : MonoBehaviour
             }
             else
             {
-                lockOnTarget();
+              
+                LockOnTarget();
             }
 
         }
 
+        //if (lockedOn)
+        //{
+        //    Invoke("CheckIfTargetIsInVision", 1);
+        //}
+    }
+    void LateUpdate()
+    {
+        basicMovement.bow.transform.LookAt(shootTarget.transform);
         if (lockedOn)
         {
-            Invoke("CheckIfTargetIsInVision", 1);
+            shootTarget.transform.position = nearestTarget.position;
         }
+        else
+        {
+            shootTarget.transform.position = cameraMain.transform.position + cameraMain.transform.forward * 30f + cameraMain.transform.right * targetOffeset.x
+            + cameraMain.transform.up * targetOffeset.y;
+        }
+
+        cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
+        Quaternion aimRotation = Quaternion.Euler(-angleV, angleH, 0);
+        Quaternion camYRotation = Quaternion.Euler(0, angleH, 0);
+        transform.rotation = aimRotation;
+
+        Vector3 baseTempPosition = player.position + camYRotation * targetPivotOffset;
+        Vector3 noCollisionOffset = targetCamOffset;
+
+        for (float zOffset = targetCamOffset.z; zOffset <= 0; zOffset += 0.4f)
+        {
+            noCollisionOffset.z = zOffset;
+            if (DoubleViewingPosCheck(baseTempPosition + aimRotation * noCollisionOffset, Mathf.Abs(zOffset)) || zOffset == 0)
+            {
+                break;
+            }
+        }
+        smoothPivotOffset = Vector3.Lerp(smoothPivotOffset, targetPivotOffset, smoothSpeed * Time.deltaTime);
+        smoothCamOffset = Vector3.Lerp(smoothCamOffset, noCollisionOffset, smoothSpeed * Time.deltaTime);
+        transform.position = player.position + camYRotation * smoothPivotOffset + aimRotation * smoothCamOffset;
+        transform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetComponent<Camera>().fieldOfView, DetermineCurrentFOV(), Time.deltaTime * 1.2f);
+
     }
-    public float determineCurrentFOV() {
+    public float DetermineCurrentFOV() {
         float targetFOV = 60f;
         if (!basicMovement.isAiming) {
             if (basicMovement.maxInput >= 0f && basicMovement.maxInput <= 0.4f)
@@ -171,7 +184,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void CheckIfTargetIsInVision()
     {
-        GameObject lastTarget = nearestTarget;
+        Transform lastTarget = nearestTarget;
         RaycastHit[] hits;
         hits = lookForTarget();
         bool TargetInSight = false;
@@ -186,12 +199,13 @@ public class PlayerCamera : MonoBehaviour
 
         if (!TargetInSight)
         {
+            Debug.Log("Target OutofSight");
             lockedOn = false;
             cursor.GetComponent<Image>().sprite = lockOffCursor;
         }
     }
 
-    private void lockOnTarget()
+    private void LockOnTarget()
     {
         RaycastHit[] hits;
         hits = lookForTarget();
@@ -200,23 +214,26 @@ public class PlayerCamera : MonoBehaviour
         {
             cursor.GetComponent<Image>().sprite = lockOffCursor;
             lockedOn = false;
+            Debug.Log(hits.Length.ToString());
             return;
         }
-
+       
         foreach (RaycastHit rh in hits)
         {
-            Rigidbody ridg = rh.collider.gameObject.GetComponent<Rigidbody>();
-            if (ridg != null)
+            Debug.Log(rh.collider.gameObject);
+            Transform transform = rh.collider.gameObject.GetComponent<Transform>();
+            if (transform != null)
             {
                 Vector3 directionToTarget = rh.collider.gameObject.transform.position - gameObject.transform.position;
                 float dSqrToTarget = directionToTarget.sqrMagnitude;
+               
 
                 if (dSqrToTarget < closestDistanceSqr)
                 {
 
-                    closestDistanceSqr = dSqrToTarget;
-                    nearestTarget = rh.collider.gameObject;
-
+                    closestDistanceSqr = dSqrToTarget;                  
+                    nearestTarget = rh.collider.gameObject.transform;
+                   
                 }
             }
         }
@@ -225,39 +242,5 @@ public class PlayerCamera : MonoBehaviour
         cursor.GetComponent<Image>().sprite = lockOnCursor;
     }
 
-    void LateUpdate()
-    {
-       basicMovement.bow.transform.LookAt(shootTarget.transform);     
-        if (lockedOn)
-        {
-            shootTarget.transform.position = nearestTarget.transform.position;
-        }
-        else
-        {
-            shootTarget.transform.position = cameraMain.transform.position + cameraMain.transform.forward * 30f + cameraMain.transform.right * targetOffeset.x
-            + cameraMain.transform.up * targetOffeset.y;
-        }
 
-        cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
-        Quaternion aimRotation = Quaternion.Euler(-angleV, angleH, 0);
-        Quaternion camYRotation = Quaternion.Euler(0, angleH, 0);
-        transform.rotation = aimRotation;
-
-        Vector3 baseTempPosition = player.position + camYRotation * targetPivotOffset;
-        Vector3 noCollisionOffset = targetCamOffset;
-
-        for (float zOffset = targetCamOffset.z; zOffset <= 0; zOffset += 0.4f)
-        {
-            noCollisionOffset.z = zOffset;
-            if (DoubleViewingPosCheck(baseTempPosition + aimRotation * noCollisionOffset, Mathf.Abs(zOffset)) || zOffset == 0)
-            {
-                break;
-            }
-        }
-        smoothPivotOffset = Vector3.Lerp(smoothPivotOffset, targetPivotOffset, smoothSpeed * Time.deltaTime);
-        smoothCamOffset = Vector3.Lerp(smoothCamOffset, noCollisionOffset, smoothSpeed * Time.deltaTime);
-        transform.position = player.position + camYRotation * smoothPivotOffset + aimRotation * smoothCamOffset;
-        transform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetComponent<Camera>().fieldOfView, determineCurrentFOV(), Time.deltaTime * 1.2f);
-
-    }
 }
