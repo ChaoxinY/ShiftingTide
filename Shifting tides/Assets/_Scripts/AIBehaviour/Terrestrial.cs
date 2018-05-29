@@ -73,7 +73,7 @@ public class Terrestrial : Agent
         patrolRoute.Enqueue(lastPatrolPointVisted);
         nearestWaypoint = lastPatrolPointVisted;
         yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 1f));
-        yield return StartCoroutine(FinishStandandrMovementBehaviour());
+        yield return StartCoroutine(FinishStandandrMovementBehaviour(15,25));
     }
 
     private IEnumerator Roaming()
@@ -82,7 +82,7 @@ public class Terrestrial : Agent
         nearestWaypoint = currentTarget;
         MoveTowardsTarget(currentTarget);
         yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 1f));
-        yield return StartCoroutine(FinishStandandrMovementBehaviour());
+        yield return StartCoroutine(FinishStandandrMovementBehaviour(15,25));
     }
     private IEnumerator Circling()
     {
@@ -116,13 +116,13 @@ public class Terrestrial : Agent
         agent.SetDestination(destination);
     }
 
-    protected IEnumerator FinishStandandrMovementBehaviour() {
-        isResting = true;
-        yield return new WaitForSeconds(Random.Range(15,25 * (1 + desire[2])));
-        isResting = false;
-        StandardBehaviourFinished = true;
-        yield break;
-    }
+    //protected IEnumerator FinishStandandrMovementBehaviour() {
+    //    isResting = true;
+    //    yield return new WaitForSeconds(Random.Range(15,25 * (1 + desire[2])));
+    //    isResting = false;
+    //    StandardBehaviourFinished = true;
+    //    yield break;
+    //}
 
     protected void RestrictVelocity()
     {

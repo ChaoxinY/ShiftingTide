@@ -146,6 +146,15 @@ public class Agent : StandardInteractiveGameObject
         yield break;
     }
 
+    protected IEnumerator FinishStandandrMovementBehaviour(float baseRestTime,float maxRestTime)
+    {
+        isResting = true;
+        yield return new WaitForSeconds(Random.Range(15, 25 * (1 + desire[2])));
+        isResting = false;
+        StandardBehaviourFinished = true;
+        yield break;
+    }
+
     protected void EnterSpontaneousState()
     {           
         standardBehaviour = spontaneousBehaviours[Random.Range(0, spontaneousBehaviours.Count)];

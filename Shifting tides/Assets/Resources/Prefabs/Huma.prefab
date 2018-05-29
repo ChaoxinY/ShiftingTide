@@ -22,13 +22,13 @@ GameObject:
   - component: {fileID: 33622485287963816}
   - component: {fileID: 65358958331757260}
   - component: {fileID: 23632750674727896}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1429410258441288
 GameObject:
   m_ObjectHideFlags: 0
@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1996277776825928
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,9 +58,12 @@ GameObject:
   - component: {fileID: 54459561347080926}
   - component: {fileID: 195156384525511394}
   - component: {fileID: 114505927831087184}
-  m_Layer: 0
+  - component: {fileID: 23361591803749960}
+  - component: {fileID: 33767589813527756}
+  - component: {fileID: 65392691509713416}
+  m_Layer: 13
   m_Name: Huma
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,7 +89,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1996277776825928}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.5, y: 0.75, z: -1165.51}
+  m_LocalPosition: {x: -8, y: -0.33, z: -1196.01}
   m_LocalScale: {x: 1.1, y: 1.7, z: 0.52}
   m_Children:
   - {fileID: 4150878493838522}
@@ -106,6 +109,41 @@ Transform:
   m_Father: {fileID: 4150878493838522}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23361591803749960
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996277776825928}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: fd302da43f5a2d5429ff97138c40424e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!23 &23394356654223602
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -183,6 +221,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1405666626847584}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &33767589813527756
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996277776825928}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &33885513759234234
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -217,6 +262,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65392691509713416
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996277776825928}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.67, z: 1}
+  m_Center: {x: 0, y: 0.07, z: 0}
 --- !u!65 &65872174736908136
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -244,9 +301,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   currentHealth: 10
   maxHealth: 10
   desire:
@@ -260,10 +314,10 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  predictable: 0
-  energetic: 0
+  predictable: 1
+  energetic: 1
   perferRandomBehaviours: 0
-  perferPatternedBehaviours: 0
+  perferPatternedBehaviours: 1
   customized: 0
   patrolPoints:
   - {fileID: 0}
@@ -297,6 +351,6 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.0000001
-  m_BaseOffset: 0.50000006
+  m_BaseOffset: 0.35
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
