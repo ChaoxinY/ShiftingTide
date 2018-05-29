@@ -70,10 +70,10 @@ public class PlayerCamera : MonoBehaviour
 
         }
 
-        //if (lockedOn)
-        //{
-        //    Invoke("CheckIfTargetIsInVision", 1);
-        //}
+        if (lockedOn)
+        {
+            CheckIfTargetIsInVision();
+        }
     }
     void LateUpdate()
     {
@@ -177,20 +177,21 @@ public class PlayerCamera : MonoBehaviour
     {
         int layerMask = 1 << 13;
         RaycastHit[] hits;
-        Vector3 fwd = transform.TransformDirection(Vector3.forward);
-        hits = Physics.BoxCastAll(gameObject.transform.position, new Vector3(6, 5, 1), fwd, Quaternion.Euler(cameraMouseY, mouseX, 0.0f), 30f, layerMask);
+        //Vector3 fwd = transform.TransformDirection(Vector3.forward);
+        hits = Physics.BoxCastAll(player.transform.position, new Vector3(10,5,1f), transform.forward, Quaternion.LookRotation(transform.forward), 20f, layerMask);
         return hits;
     }
 
     private void CheckIfTargetIsInVision()
     {
         Transform lastTarget = nearestTarget;
+
         RaycastHit[] hits;
         hits = lookForTarget();
         bool TargetInSight = false;
         foreach (RaycastHit rh in hits)
         {
-            if (rh.collider.gameObject == lastTarget)
+            if (rh.collider.gameObject.transform == lastTarget)
             {
                 TargetInSight = true;
                 return;

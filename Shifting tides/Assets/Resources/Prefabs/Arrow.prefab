@@ -255,5 +255,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb2e197ca0002047961ffd152f384e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFloating: 0
   penetrationStrength: 0.001
