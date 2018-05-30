@@ -39,7 +39,6 @@ public class Spawner : TriggerBoundMechanism
                 gameObject.SetActive(false);
             }
         }
-        ShiftLocalUpdateState();
     }
 
     public override void TriggerFunction()

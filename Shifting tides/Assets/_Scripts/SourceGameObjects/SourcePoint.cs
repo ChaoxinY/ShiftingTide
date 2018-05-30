@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SourcePoint : StandardInteractiveGameObject
 {
-
-   
     private Vector3 rotationValue;
     /// <summary>
     /// addResource 0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes

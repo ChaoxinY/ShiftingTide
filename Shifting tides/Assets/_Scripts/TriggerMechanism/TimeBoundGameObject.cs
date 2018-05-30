@@ -37,7 +37,7 @@ public abstract class TimeBoundGameObject : MonoBehaviour
 
     protected virtual IEnumerator LocalUpdate()
     {
-        StartCoroutine(PauseOnTimeStop());
+        yield return StartCoroutine(PauseOnTimeStop());
         yield break;
     }
 

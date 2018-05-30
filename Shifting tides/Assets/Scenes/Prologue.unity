@@ -2055,8 +2055,9 @@ GameObject:
   - component: {fileID: 1535458363}
   - component: {fileID: 1535458362}
   - component: {fileID: 1535458361}
+  - component: {fileID: 1535458365}
   m_Layer: 0
-  m_Name: Cube (7)
+  m_Name: Ain's War pet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2089,7 +2090,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bfd597acdbdac054b9046853f3b7a8fe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2123,12 +2124,43 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1535458360}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.47, y: 7.91, z: -1165.38}
+  m_LocalPosition: {x: -5.47, y: 12, z: -1174.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1535458365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1535458360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cbc9f4cbd406e4c97c6cb53955c2de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wayPoints: []
+  currentHealth: 0
+  maxHealth: 0
+  desire:
+  - 0
+  - 0
+  - 0
+  factorInfluencePoint:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  predictable: 0
+  energetic: 0
+  perferRandomBehaviours: 0
+  perferPatternedBehaviours: 0
+  customized: 0
+  activityBounds: []
 --- !u!1 &1543318898
 GameObject:
   m_ObjectHideFlags: 0
@@ -2860,6 +2892,10 @@ Prefab:
     - target: {fileID: 1996277776825928, guid: c59ffe105aa385d4ba21c6d908b8ce2a, type: 2}
       propertyPath: m_Name
       value: Huma
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996277776825928, guid: c59ffe105aa385d4ba21c6d908b8ce2a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c59ffe105aa385d4ba21c6d908b8ce2a, type: 2}

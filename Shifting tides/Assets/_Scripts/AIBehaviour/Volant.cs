@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Volant : Agent
 {
+    private Vector3 path, targetRot;
+    
     public Transform[] activityBounds;
 
     protected override void InitializeLists()
@@ -15,28 +17,23 @@ public class Volant : Agent
         restingBehaviours.Add("AirRest");
         restingBehaviours.Add("GroundRest");
     }
-
+    
+    // do this in local update 
     private void Update()
     {
-        
+        transform.rotation = Quaternion.LookRotation(targetRot);
+        transform.position = Vector3.MoveTowards(transform.position, path, Time.deltaTime * 7f);
     }
 
 
     protected IEnumerator AirCircling() {
 
         int CirclesToSpin = Random.Range(0, 5);
-        while(CirclesToSpin < 5) {
-           
-            Vector3 path = transform.position + Vector3.forward * 5f;
-            Vector3 targetRot = Vector3.RotateTowards(transform.position,path,Time.deltaTime*3f,0.0f);
-            while (Arrived(gameObject.transform.position, path, 0.5f) == false )
-            {
-                Debug.Log("Running");
-                transform.rotation = Quaternion.LookRotation(targetRot);
-                transform.position = Vector3.MoveTowards(transform.position, path, Time.deltaTime * 2f);
-            }
-            CirclesToSpin++;
-            
+        while(CirclesToSpin < 5) {            
+            path = transform.position + Vector3.forward * 5f;
+            targetRot = Vector3.RotateTowards(transform.position,path,Time.deltaTime*3f,0.0f);
+            yield return new WaitUntil(()=> Arrived(gameObject.transform.position, path, 0.5f));
+            CirclesToSpin++;           
         }
         StartCoroutine(FinishStandandrMovementBehaviour(0,1));
         yield break;
