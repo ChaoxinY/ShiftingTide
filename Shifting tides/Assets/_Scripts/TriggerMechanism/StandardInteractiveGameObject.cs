@@ -10,6 +10,7 @@ public class StandardInteractiveGameObject : TimeBoundGameObject {
         {
             yield return new WaitUntil(() => !gameMng.isTimeStoped);
         }
+        yield break;
     }
 
 }

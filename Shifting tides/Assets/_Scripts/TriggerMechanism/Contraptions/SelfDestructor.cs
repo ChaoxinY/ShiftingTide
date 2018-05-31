@@ -7,19 +7,24 @@ public class SelfDestructor : TriggerBoundMechanism {
     public float destructionDelay;
     public bool selfDestructAfterSpawn;
 
-    protected override IEnumerator LocalUpdate()
-    {
-        yield return base.LocalUpdate();
-        if (selfDestructAfterSpawn) {
-            Invoke("TriggerFunction", destructionDelay);
-        }
-
-        ShiftLocalUpdateState();
-    }
+    //protected override IEnumerator LocalUpdate()
+    //{
+    //    yield return base.LocalUpdate();
+    //    if (selfDestructAfterSpawn)
+    //    {
+    //        Invoke("TriggerFunction", destructionDelay);
+    //    }
+    //}
 
     public override void TriggerFunction()
     {
-        Destroy(gameObject);
+           StartCoroutine(SelfDestruct());
+    }
+
+    protected IEnumerator SelfDestruct() {     
+        yield return StartCoroutine(PauseOnTimeStop());
+        Destroy(gameObject, destructionDelay);
+        yield break;
     }
 
     private void OnCollisionEnter(Collision collision)

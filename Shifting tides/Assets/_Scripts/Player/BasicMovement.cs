@@ -47,6 +47,11 @@ public class BasicMovement : MonoBehaviour
             gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 0f;
             gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 0f;
         }
+        else if (onGround && !IsMoving()) {
+            gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 3.34f;
+            gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 3.6f;
+
+        }
         else if (onGround)
         {
 
