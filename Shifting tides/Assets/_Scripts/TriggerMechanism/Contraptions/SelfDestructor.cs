@@ -7,15 +7,6 @@ public class SelfDestructor : TriggerBoundMechanism {
     public float destructionDelay;
     public bool selfDestructAfterSpawn;
 
-    //protected override IEnumerator LocalUpdate()
-    //{
-    //    yield return base.LocalUpdate();
-    //    if (selfDestructAfterSpawn)
-    //    {
-    //        Invoke("TriggerFunction", destructionDelay);
-    //    }
-    //}
-
     public override void TriggerFunction()
     {
            StartCoroutine(SelfDestruct());

@@ -119,14 +119,14 @@ public class PlayerCamera : MonoBehaviour
             }
             else if (basicMovement.maxInput > 0.4f && basicMovement.maxInput <= 0.7f)
             {
-                return targetFOV = 80f;
+                return targetFOV = 70f;
             }
             else if (basicMovement.maxInput > 0.7f) {
                 return targetFOV = 100f;
             }
         }
         else{
-            targetFOV = 40;
+            targetFOV = 55;
         }
         return targetFOV;
     }

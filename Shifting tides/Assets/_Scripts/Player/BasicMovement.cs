@@ -36,6 +36,7 @@ public class BasicMovement : MonoBehaviour
 
     void Update()
     {
+      
         currentMotion = Input.GetAxisRaw("Vertical") * moveForce * gameManagerObject.transform.forward + Input.GetAxisRaw("Horizontal") * moveForce * gameManagerObject.transform.right;
         h = Input.GetAxis("Horizontal");
         v = Input.GetAxis("Vertical");

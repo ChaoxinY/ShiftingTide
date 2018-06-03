@@ -149,7 +149,7 @@ public class Agent : StandardInteractiveGameObject
     protected IEnumerator FinishStandandrMovementBehaviour(float baseRestTime,float maxRestTime)
     {
         isResting = true;
-        yield return new WaitForSeconds(Random.Range(15, 25 * (1 + desire[2])));
+        yield return new WaitForSeconds(Random.Range(baseRestTime, maxRestTime * (1 + desire[2])));
         isResting = false;
         StandardBehaviourFinished = true;
         yield break;
