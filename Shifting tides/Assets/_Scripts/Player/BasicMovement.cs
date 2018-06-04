@@ -74,7 +74,7 @@ public class BasicMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        gravity = rbPlayer.velocity.y >= -1 ? 0 : gravity -= 1.2f;
+        gravity = rbPlayer.velocity.y >= -1 ? 0 : gravity -= 0.7f;
         rbPlayer.AddForce(currentMotion + Vector3.up * (gravity + slopeAngle), ForceMode.Acceleration);
         Vector2 horizontalVelocity = new Vector2(rbPlayer.velocity.x, rbPlayer.velocity.z);
         horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, speedLimit);

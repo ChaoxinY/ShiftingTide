@@ -116,14 +116,6 @@ public class Terrestrial : Agent
         agent.SetDestination(destination);
     }
 
-    //protected IEnumerator FinishStandandrMovementBehaviour() {
-    //    isResting = true;
-    //    yield return new WaitForSeconds(Random.Range(15,25 * (1 + desire[2])));
-    //    isResting = false;
-    //    StandardBehaviourFinished = true;
-    //    yield break;
-    //}
-
     protected void RestrictVelocity()
     {
         currentSpeed = agent.speed;
