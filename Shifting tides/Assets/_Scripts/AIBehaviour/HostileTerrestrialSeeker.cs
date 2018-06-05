@@ -10,11 +10,6 @@ public class HostileTerrestrialSeeker : Terrestrial
 
     protected  IEnumerator Moving()
     {        
-        //if (alerted == true) {
-        //   StartCoroutine(Hunting(objectToChase));
-        //    yield break;
-        //}
-        
         StartCoroutine(Searching());
         yield break;
     }

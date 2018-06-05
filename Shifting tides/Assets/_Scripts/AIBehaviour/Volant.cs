@@ -6,11 +6,10 @@ using UnityEngine;
 
 public class Volant : Agent
 {
-    private Vector3 targetRot, lastPatrolPointVisted;
+    private Vector3 targetRot;
     private Queue<Vector3> path = new Queue<Vector3>();
     private bool isPathing;
 
-    public Transform[] patrolPoints, activityBounds;
     public float movementSpeed;
 
     protected override void Initialize()
@@ -19,14 +18,11 @@ public class Volant : Agent
         lastPatrolPointVisted = patrolPoints[0].position;
     }
 
-    protected override void InitializeLists()
+    protected override void AddBehaviours()
     {
-        base.InitializeLists();
-        spontaneousBehaviours.Add("Roaming");
-       // patternedBehaviours.Add("AirCircling");
-        patternedBehaviours.Add("Patroling");
-       // restingBehaviours.Add("AirRest");
-        restingBehaviours.Add("GroundRest");
+        base.AddBehaviours();
+        spontaneousBehaviours.Add("Roaming");   
+        restingBehaviours.Add("AirRest");
     }
 
     private void Update()
@@ -64,34 +60,6 @@ public class Volant : Agent
         yield break;
 
     }
-
-    protected IEnumerator AirCircling()
-    {
-        //float circleDiameter = DetermineCircleDiameter();
-        //float circleRadius = UnityEngine.Random.Range(circleDiameter /3, circleDiameter / 2);
-        //Vector3 StartOfTheCircle = transform.position;
-        //Vector3 EndOfTheCircle = transform.position + transform.forward * circleDiameter;
-        //List<Vector3> CirclePoints = new List<Vector3>();
-        //List<Vector3> mirroredCirclePoints = new List<Vector3>();
-
-        //CirclePoints = CreateBezierCurvedPath(StartOfTheCircle, EndOfTheCircle, transform.right,transform.forward,48, circleRadius);
-
-        //foreach (Vector3 point in CirclePoints) {
-
-        //    path.Enqueue(point);
-        //}
-
-        //mirroredCirclePoints = CreateBezierCurvedPath(EndOfTheCircle, StartOfTheCircle, -transform.right, transform.forward, 48, circleRadius);
-
-        //foreach (Vector3 point in mirroredCirclePoints)
-        //{
-        //    path.Enqueue(point);
-        //}
-        //yield return StartCoroutine(Pathing());
-        StartCoroutine(FinishStandandrMovementBehaviour(0, 1));
-        yield break;
-    }
-
     protected IEnumerator AirRest()
     {
         overwritingBehaviour = null;
@@ -102,27 +70,26 @@ public class Volant : Agent
         StartCoroutine(FinishStandandrMovementBehaviour(0, 1));
         yield break;
     }
-    protected IEnumerator GroundRest()
+    protected override IEnumerator Patroling()
     {
-        overwritingBehaviour = null;
-        yield break;
-    }
-    protected IEnumerator Patroling()
-    {
-        Vector3 StartOfTheCircle = patrolPoints[0].position;
-        Vector3 EndOfTheCircle = patrolPoints[1].position;
+        Vector3 StartOfTheCircle = patrolRoute.Dequeue();
+        Vector3 EndOfTheCircle = patrolRoute.Dequeue();
+        lastPatrolPointVisted = EndOfTheCircle;
+        patrolRoute.Enqueue(StartOfTheCircle);
+        patrolRoute.Enqueue(EndOfTheCircle);
+
         float pathDistance = Vector3.Distance(StartOfTheCircle, EndOfTheCircle);
+        float shiftValue = pathDistance/2;
         List<Vector3> CirclePoints = new List<Vector3>();
         List<Vector3> mirroredCirclePoints = new List<Vector3>();
-
         path.Enqueue(StartOfTheCircle);
-        CirclePoints = CreateBezierCurvedPath(StartOfTheCircle, EndOfTheCircle, Vector3.right, Vector3.forward, 48, pathDistance);
+        CirclePoints = CreateBezierCurvedPath(StartOfTheCircle, EndOfTheCircle, Vector3.right, Vector3.forward, 96, pathDistance, shiftValue);
         foreach (Vector3 point in CirclePoints)
         {
 
             path.Enqueue(point);
         }
-        mirroredCirclePoints = CreateBezierCurvedPath(EndOfTheCircle, StartOfTheCircle, -Vector3.right, -Vector3.forward, 48, pathDistance);
+        mirroredCirclePoints = CreateBezierCurvedPath(EndOfTheCircle, StartOfTheCircle, -Vector3.right, -Vector3.forward, 96, pathDistance, shiftValue);
         foreach (Vector3 point in mirroredCirclePoints)
         {
             path.Enqueue(point);
@@ -131,7 +98,7 @@ public class Volant : Agent
         StartCoroutine(FinishStandandrMovementBehaviour(0, 1));
         yield break;
     }
-    protected IEnumerator Roaming()
+    protected override IEnumerator Roaming()
     {
         path.Enqueue(wayPoints[UnityEngine.Random.Range(0, wayPoints.Count)].position);
         yield return StartCoroutine(Pathing());
@@ -140,12 +107,12 @@ public class Volant : Agent
     }
 
     private List<Vector3> CreateBezierCurvedPath(Vector3 startPointCurve, Vector3 endPointCurve, Vector3 curveDirection, Vector3 objectFowardDirection,
-    float totalCurveCut, float curvePeak)
+    float totalCurveCut, float curvePeak,float curvePeakShitValue)
     {
         List<Vector3> path = new List<Vector3>();
         //Bezier curve
         Vector3 midPointCurve;
-        midPointCurve = startPointCurve + curveDirection * curvePeak - objectFowardDirection * (curvePeak-10f);
+        midPointCurve = startPointCurve + curveDirection * curvePeak - objectFowardDirection * (curvePeak- curvePeakShitValue);
         float CurveCut = totalCurveCut;
         for (int i = 0; i < CurveCut; i++)
         {

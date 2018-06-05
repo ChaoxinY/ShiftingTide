@@ -4,15 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class Terrestrial : Agent
+public class Terrestrial : Agent 
 {
-    private Queue<Vector3> patrolRoute;
-    private Vector3 lastPatrolPointVisted;
-
     protected NavMeshAgent agent;
 
-    public Transform[] patrolPoints;
-    public Text[] texts;
     public float standardSpeed, currentSpeed;
 
     protected override void Initialize()
@@ -20,25 +15,12 @@ public class Terrestrial : Agent
         base.Initialize();
         agent = GetComponent<NavMeshAgent>();
         agent.speed = standardSpeed;
-        //Initialize partrol route
-        patrolRoute = new Queue<Vector3>();
-        InitializeWaypoints();
     }
 
-    protected override IEnumerator LocalUpdate()
-    { 
-        texts[0].text = desire[0].ToString();
-        texts[1].text = desire[1].ToString();
-        texts[2].text = desire[2].ToString();
-        yield return StartCoroutine(base.LocalUpdate());
-        yield break;
-    }
-    protected override void InitializeLists()
+    protected override void AddBehaviours()
     {
-        base.InitializeLists();
+        base.AddBehaviours();
         spontaneousBehaviours.Add("Roaming");
-        spontaneousBehaviours.Add("ChangePatrolRoute");
-        patternedBehaviours.Add("Patroling");
         restingBehaviours.Add("Circling");
     }
     protected override IEnumerator PauseOnTimeStop()
@@ -54,19 +36,7 @@ public class Terrestrial : Agent
         }
     }
 
-    private void InitializeWaypoints() {
-        for (int i = 0; i < 2; i++)
-        {
-            patrolRoute.Enqueue(patrolPoints[i].position);
-        }
-        foreach (Transform point in patrolPoints)
-        {
-            wayPoints.Add(point);
-        }
-
-    } 
-
-    protected IEnumerator Patroling()
+    protected override IEnumerator Patroling()
     {
         lastPatrolPointVisted = patrolRoute.Peek();
         MoveTowardsTarget(patrolRoute.Dequeue());
@@ -76,7 +46,7 @@ public class Terrestrial : Agent
         yield return StartCoroutine(FinishStandandrMovementBehaviour(15,25));
     }
 
-    private IEnumerator Roaming()
+    protected override IEnumerator Roaming()
     {
         Vector3 currentTarget = wayPoints[Random.Range(0, wayPoints.Count)].position;
         nearestWaypoint = currentTarget;
@@ -90,23 +60,6 @@ public class Terrestrial : Agent
         MoveTowardsTarget(transform.position);      
         yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 1f));
         overwritingBehaviour = null;
-        yield break;
-    }
-
-    private IEnumerator ChangePatrolRoute()
-    {
-        patrolRoute.Clear();
-        List<Vector3> availablePatrolPoints = new List<Vector3>();
-        foreach (Transform point in patrolPoints) {
-
-            if (lastPatrolPointVisted != point.position) {
-                availablePatrolPoints.Add(point.position);
-            }
-        }
-        patrolRoute.Enqueue(availablePatrolPoints[Random.Range(0,availablePatrolPoints.Count)]);
-        patrolRoute.Enqueue(lastPatrolPointVisted);
-        yield return new WaitForSeconds(0.4f);
-        StandardBehaviourFinished = true;     
         yield break;
     }
 
@@ -131,8 +84,5 @@ public class Terrestrial : Agent
     {
         agent.speed = standardSpeed;
     }
-
-
-
 
 }

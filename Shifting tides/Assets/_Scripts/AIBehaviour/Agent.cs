@@ -4,20 +4,21 @@ using UnityEngine;
 using UnityEngine.AI;
 public class Agent : StandardInteractiveGameObject
 {
-
     protected const float boredomInfluencePoint = 0.2f, conscientiousnessInfluencePoint = 0.2f, ExhaustionInfluencePoint = 0.05f, RestInfluencePoint = 0.4f;
-    protected List<string> spontaneousBehaviours;
-    protected List<string> patternedBehaviours;
-    protected List<string> restingBehaviours;
+    protected List<string> spontaneousBehaviours = new List<string>();
+    protected List<string> patternedBehaviours = new List<string>();
+    protected List<string> restingBehaviours = new List<string>();
+    protected Queue<Vector3> patrolRoute = new Queue<Vector3>();
 
     protected Material originMaterial;
-    protected Vector3 currentTarget, destination,nearestWaypoint;
+    protected Vector3 currentTarget, destination,nearestWaypoint, lastPatrolPointVisted;
     protected string overwritingBehaviour;
     protected string standardBehaviour;
     protected bool StandardBehaviourFinished = true;
     protected bool isResting = false;
 
     public List<Transform> wayPoints;
+    public Transform[] patrolPoints;
     public float currentHealth, maxHealth;
     public float[] desire, factorInfluencePoint = { 0, 0, 0, 0, 0, 0 };
     public bool predictable, energetic, perferRandomBehaviours, perferPatternedBehaviours, customized;    
@@ -54,60 +55,52 @@ public class Agent : StandardInteractiveGameObject
     {
         gameMng = GameObject.Find("GameManager").GetComponent<GameManager>();
         meshRenderer = GetComponentInChildren<MeshRenderer>();
-        InitializeLists();
         SetUpAgentFactorInfluencePoint();
+        InitializeWaypoints();
+        AddBehaviours();
         StartCoroutine(DetermineNextAgentBehaviour());
     }
-    protected virtual void InitializeLists()
+
+    protected void InitializeWaypoints()
     {
-        spontaneousBehaviours = new List<string>();
-        patternedBehaviours = new List<string>();
-        restingBehaviours = new List<string>();
-        //Dont initialze list in scripts if its value is assign in editor 
-        //wayPoints = new List<Transform>();
+        for (int i = 0; i < 2; i++)
+        {
+            patrolRoute.Enqueue(patrolPoints[i].position);
+        }
+        foreach (Transform point in patrolPoints)
+        {
+            wayPoints.Add(point);
+        }
+
     }
 
-    private void SetUpAgentFactorInfluencePoint()
+    protected virtual void AddBehaviours() {
+        spontaneousBehaviours.Add("ChangePatrolRoute");
+        patternedBehaviours.Add("Patroling");
+    }
+
+    protected virtual IEnumerator Patroling() { yield break; }
+
+    protected virtual IEnumerator Roaming() { yield break; }
+
+    protected IEnumerator ChangePatrolRoute()
     {
-        if (customized)
+        patrolRoute.Clear();
+        List<Vector3> availablePatrolPoints = new List<Vector3>();
+        foreach (Transform point in patrolPoints)
         {
-            return;
-        }
 
-        if (energetic)
-        {
-            factorInfluencePoint[4] = -0.03f;
-            factorInfluencePoint[5] = 0.12f;
-        }
-
-        if (predictable)
-        {
-            if (perferRandomBehaviours)
+            if (lastPatrolPointVisted != point.position)
             {
-                factorInfluencePoint[1] = 0.19f;
-                factorInfluencePoint[2] = -0.19f;
-                return;
-            }
-            else if (perferPatternedBehaviours)
-            {
-                factorInfluencePoint[2] = 0.19f;
-                factorInfluencePoint[1] = -0.19f;
+                availablePatrolPoints.Add(point.position);
             }
         }
-
+        patrolRoute.Enqueue(availablePatrolPoints[Random.Range(0, availablePatrolPoints.Count)]);
+        patrolRoute.Enqueue(lastPatrolPointVisted);
+        yield return StartCoroutine(FinishStandandrMovementBehaviour(0, 1));
+        yield break;
     }
 
-    private void DetermineRestingBehaviour()
-    {
-        int NumbersCorrect = 0;
-        for (int i = 0; i < 5; i++) {          
-                int agentGuessedNumber = Random.Range(0, 99);
-                if (agentGuessedNumber < desire[2]) NumbersCorrect++;
-            }
-        if (NumbersCorrect >= 2) {
-            EnterRestingState();
-        }
-    }
     protected IEnumerator DetermineNextAgentBehaviour()
     {
 
@@ -204,6 +197,50 @@ public class Agent : StandardInteractiveGameObject
     {
         meshRenderer.material = originMaterial;
     }
+    private void SetUpAgentFactorInfluencePoint()
+    {
+        if (customized)
+        {
+            return;
+        }
+
+        if (energetic)
+        {
+            factorInfluencePoint[4] = -0.03f;
+            factorInfluencePoint[5] = 0.12f;
+        }
+
+        if (predictable)
+        {
+            if (perferRandomBehaviours)
+            {
+                factorInfluencePoint[1] = 0.19f;
+                factorInfluencePoint[2] = -0.19f;
+                return;
+            }
+            else if (perferPatternedBehaviours)
+            {
+                factorInfluencePoint[2] = 0.19f;
+                factorInfluencePoint[1] = -0.19f;
+            }
+        }
+
+    }
+
+    private void DetermineRestingBehaviour()
+    {
+        int NumbersCorrect = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            int agentGuessedNumber = Random.Range(0, 99);
+            if (agentGuessedNumber < desire[2]) NumbersCorrect++;
+        }
+        if (NumbersCorrect >= 2)
+        {
+            EnterRestingState();
+        }
+    }
+
 }
 
 
