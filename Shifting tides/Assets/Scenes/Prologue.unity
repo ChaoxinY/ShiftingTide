@@ -14,9 +14,9 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
+  m_Fog: 1
+  m_FogColor: {r: 0.74074405, g: 0.77059937, b: 0.7735849, a: 0.42745098}
+  m_FogMode: 1
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
@@ -2212,6 +2212,9 @@ MonoBehaviour:
   wayPoints:
   - {fileID: 208841014}
   - {fileID: 923424992}
+  patrolPoints:
+  - {fileID: 2126031765}
+  - {fileID: 1939112152}
   currentHealth: 0
   maxHealth: 0
   desire:
@@ -2230,10 +2233,6 @@ MonoBehaviour:
   perferRandomBehaviours: 0
   perferPatternedBehaviours: 1
   customized: 0
-  patrolPoints:
-  - {fileID: 2126031765}
-  - {fileID: 1939112152}
-  activityBounds: []
   movementSpeed: 8
 --- !u!1 &1543318898
 GameObject:
@@ -3113,6 +3112,7 @@ GameObject:
   - component: {fileID: 1854892244}
   - component: {fileID: 1854892243}
   - component: {fileID: 1854892247}
+  - component: {fileID: 1854892248}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3215,6 +3215,18 @@ MonoBehaviour:
   targetFOV: 60
   smoothSpeed: 20
   mouseSensitivity: 6
+--- !u!114 &1854892248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1854892242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 294bef7a1a55c96458afb70a68dd7928, type: 2}
 --- !u!1 &1897625526
 GameObject:
   m_ObjectHideFlags: 0
