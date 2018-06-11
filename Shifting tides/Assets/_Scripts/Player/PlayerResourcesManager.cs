@@ -52,6 +52,17 @@ public class PlayerResourcesManager : MonoBehaviour
         }
         return resourceAtMax;
     }
+
+    //public static bool AllResourceAtMax() {
+
+    //    bool resourceAtMax = true;
+    //    for (int i = 0; i < 4; i++) {
+    //        if(!IsThisResourceAtMax(i))
+    //            resourceAtMax = false;
+    //    }
+    //    return resourceAtMax;
+    //}
+
     public static void AddScrapSource()
     {
         ScrapSource += 1;
@@ -73,7 +84,7 @@ public class PlayerResourcesManager : MonoBehaviour
             if (playerResources[0] > playerResourcesCaps[0])
             {
                 playerResources[0] = playerResourcesCaps[0];
-                AddScrapSource();
+                if (!IsThisResourceAtMax(5)) AddScrapSource();
             }
         }
     }
@@ -90,7 +101,7 @@ public class PlayerResourcesManager : MonoBehaviour
             else if (playerResources[1] > playerResourcesCaps[1])
             {
                 playerResources[1] = playerResourcesCaps[1];
-                AddScrapSource();
+                if(!IsThisResourceAtMax(5)) AddScrapSource();
             }
             ui.sliders[2].value = SourceReserve;
         }
@@ -112,7 +123,7 @@ public class PlayerResourcesManager : MonoBehaviour
             if (playerResources[2] > playerResourcesCaps[2])
             {
                 playerResources[2] = playerResourcesCaps[2];
-                AddScrapSource();
+                if (!IsThisResourceAtMax(5)) AddScrapSource();
             }
             ui.sliders[0].value = JumpsLeft;
         }
@@ -134,7 +145,7 @@ public class PlayerResourcesManager : MonoBehaviour
             else if (playerResources[3] > playerResourcesCaps[3])
             {
                 playerResources[3] = playerResourcesCaps[3];
-                AddScrapSource();
+                if (!IsThisResourceAtMax(5)) AddScrapSource();
             }
         }
     }
@@ -156,7 +167,6 @@ public class PlayerResourcesManager : MonoBehaviour
             else if (playerResources[4] > playerResourcesCaps[4])
             {   
                 playerResources[4] = playerResourcesCaps[4];
-                ScrapSource += 1;
             }
         }
     }
@@ -190,9 +200,14 @@ public class PlayerResourcesManager : MonoBehaviour
         {
             scrapSource = value;
             ui.texts[2].text = scrapSource.ToString();
+
             if (scrapSource < 0)
             {
                 scrapSource = 0;
+            }
+            else if (IsThisResourceAtMax(5)) {
+                scrapSource = 0;
+                return;
             }
             else if (scrapSource > 10)
             {

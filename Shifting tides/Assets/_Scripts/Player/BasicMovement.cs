@@ -15,6 +15,7 @@ public class BasicMovement : MonoBehaviour
     private bool[] skillObtained = new bool[10];
     private float h, v, inputSpeed, arrowSpeed, slopeAngle;
 
+    public ParticleSystem shootingParticleSystem;
     public Animator aniPlayer;
     public GameObject bow, bowMesh, UI, gameManagerObject;
     public GameObject[] dashesImages;
@@ -228,19 +229,13 @@ public class BasicMovement : MonoBehaviour
         PlayerResourcesManager.Dashes += 1;
     }
 
-    private void ShootArrow()
-    {
-        PlayerResourcesManager.Arrows -= 1;
-        GameObject Arrow = Instantiate(arrow, bow.transform.position, bow.transform.rotation);
-        Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * arrowSpeed, ForceMode.Impulse);
-        if (isAiming) isAiming = !isAiming;
-        ResetArrowSpeed();
-    }
 
     private void ChargeUpArrow()
     {
         AimRotate();
-        arrowSpeed = Mathf.Lerp(arrowSpeed, maxArrowSpeed, Time.deltaTime * 2f);
+
+        arrowSpeed = Mathf.Lerp(arrowSpeed, maxArrowSpeed, Time.deltaTime*1.3f);
+        Debug.Log(arrowSpeed);
         if (!isAiming) isAiming = !isAiming;
     }
 
@@ -263,6 +258,15 @@ public class BasicMovement : MonoBehaviour
         Debug.DrawRay(transform.position - transform.forward, Vector3.down, Color.red);
         //colExtents.x + 1.4f
         return Physics.Raycast(transform.position, Vector3.down, 1.2f);
+    }
+    private void ShootArrow()
+    {
+        PlayerResourcesManager.Arrows -= 1;
+        GameObject Arrow = Instantiate(arrow, bow.transform.position, bow.transform.rotation);
+        Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * arrowSpeed, ForceMode.Impulse);
+        if (isAiming) isAiming = !isAiming;
+        ResetArrowSpeed();
+        shootingParticleSystem.Play(true);
     }
 
     void OnCollisionEnter(Collision other)

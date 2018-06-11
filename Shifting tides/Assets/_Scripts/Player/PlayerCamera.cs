@@ -126,7 +126,7 @@ public class PlayerCamera : MonoBehaviour
             }
         }
         else{
-            targetFOV = 55;
+            targetFOV = 45f;
         }
         return targetFOV;
     }

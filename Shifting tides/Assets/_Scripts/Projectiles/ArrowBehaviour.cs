@@ -14,16 +14,13 @@ public class ArrowBehaviour : Projectile
     {
         base.Initialize();
         arrowPlaceholder = Resources.Load("Prefabs/ArrowPlaceholder") as GameObject;
-        gravity = -10.81f;
+        gravity = -15.81f;
         rbObject = gameObject.GetComponent<Rigidbody>();
     }
 
     protected override IEnumerator LocalUpdate()
     {
         yield return StartCoroutine(base.LocalUpdate());
-        //float angle = Mathf.LerpAngle(transform.eulerAngles.x, 90f, Time.fixedDeltaTime - (rbObject.velocity.y / 300));
-        //transform.eulerAngles = new Vector3(angle, transform.eulerAngles.y, transform.eulerAngles.z);
-        //Vector3 velocity = rbObject.velocity;
         Quaternion rotation = new Quaternion();
         if(rbObject.velocity!= Vector3.zero)
         rotation.SetLookRotation(rbObject.velocity, transform.up);
