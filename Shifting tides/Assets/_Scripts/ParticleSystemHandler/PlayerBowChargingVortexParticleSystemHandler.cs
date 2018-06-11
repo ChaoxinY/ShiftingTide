@@ -3,44 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChargingParticleHandler : MonoBehaviour
+public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandler
 {
 
-    public ParticleSystem chargingParticleSystem;
-    public ParticleSystem shootingParticleSystem;
+    ParticleSystem.MainModule mainModule;
+    ParticleSystem.EmissionModule emissionModule;
+    ParticleSystem.ShapeModule shapeModule;
+    ParticleSystem.NoiseModule noiseModule;
     private ParticleSystem.MinMaxCurve currentLifeTime, targetLifeTime, currentEmissionRate, targetEmissionRate,
         currentNoisePositionAmount, targetNoisePoistionAmount;
     private float currentSimulationSpeed, targetSimulationSpeed, currentRandomPositionAmount, targetRandomPositionAmount,
          currentNoiseFrequency, targetNoiseFrequency, lerpSpeed;
     private bool stageChanged;
 
-    private void Start()
+
+    protected override void LateUpdate()
     {
-
-        ParticleSystem.MainModule mainModule = chargingParticleSystem.main;
-        ParticleSystem.EmissionModule emissionModule = chargingParticleSystem.emission;
-        ParticleSystem.ShapeModule shapeModule = chargingParticleSystem.shape;
-        ParticleSystem.NoiseModule noiseModule = chargingParticleSystem.noise;
-
-        currentLifeTime = mainModule.startLifetime;
-        currentSimulationSpeed = mainModule.simulationSpeed;
-        currentEmissionRate = emissionModule.rateOverTime;
-        currentRandomPositionAmount = shapeModule.randomPositionAmount;
-        currentNoisePositionAmount = noiseModule.positionAmount;
-        currentNoiseFrequency = noiseModule.frequency;
-        lerpSpeed = Time.deltaTime;
-
-        StartCoroutine(ModuleValueManager());
-    }
-
-    void LateUpdate()
-    {
-
-        ParticleSystem.MainModule mainModule = chargingParticleSystem.main;
-        ParticleSystem.EmissionModule emissionModule = chargingParticleSystem.emission;
-        ParticleSystem.ShapeModule shapeModule = chargingParticleSystem.shape;
-        ParticleSystem.NoiseModule noiseModule = chargingParticleSystem.noise;
-
         if (stageChanged)
         {
             currentLifeTime = Mathf.Lerp(currentLifeTime.constant, targetLifeTime.constant, lerpSpeed);
@@ -76,7 +54,6 @@ public class ChargingParticleHandler : MonoBehaviour
 
     private void ChangeToStateTwoValues()
     {
-        Debug.Log("Called");
         targetLifeTime.constant = 9.5f;
         targetSimulationSpeed = 1.2f;
         targetEmissionRate = 10;
@@ -87,7 +64,6 @@ public class ChargingParticleHandler : MonoBehaviour
     }
     private void ChangeToStateThreeValues()
     {
-        Debug.Log("Called1");
         targetLifeTime = 9.5f;
         targetSimulationSpeed = 1.5f;
         targetEmissionRate = 10;
@@ -98,7 +74,6 @@ public class ChargingParticleHandler : MonoBehaviour
     }
     private void ChangeToStateFourValues()
     {
-        Debug.Log("Called2");
         targetLifeTime = 9.5f;
         targetSimulationSpeed = 4f;
         targetEmissionRate = 10;
@@ -108,4 +83,32 @@ public class ChargingParticleHandler : MonoBehaviour
         lerpSpeed = Time.deltaTime * 1.5f;
     }
 
+    protected override void InitializeParticleSystem()
+    {
+        particleSystemToManage = GameObject.Find("ChargingVortex").GetComponent<ParticleSystem>();
+        mainModule = particleSystemToManage.main;
+        emissionModule = particleSystemToManage.emission;
+        shapeModule = particleSystemToManage.shape;
+        noiseModule = particleSystemToManage.noise;
+
+        //0;currentLifeTime , 1:currentSimulationSpeed
+        currentLifeTime = mainModule.startLifetime;
+        currentSimulationSpeed = mainModule.simulationSpeed;
+        currentEmissionRate = emissionModule.rateOverTime;
+        currentRandomPositionAmount = shapeModule.randomPositionAmount;
+        currentNoisePositionAmount = noiseModule.positionAmount;
+        currentNoiseFrequency = noiseModule.frequency;
+        lerpSpeed = Time.deltaTime;
+
+    }
+
+    protected override void GeneratedDefaultProfiel()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void ResetCurrentProfiel()
+    {
+        throw new NotImplementedException();
+    }
 }
