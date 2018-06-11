@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ParticleSystemHandler : MonoBehaviour {
+public abstract class ParticleSystemHandler : MonoBehaviour
+{
 
     protected ParticleSystem particleSystemToManage;
-    private float[] currentProfielValues;
-    private float[] defaultProfielValues;
-    private float[] targetProfielValues;
+    protected float[] currentProfielValues = new float[100];
+    protected float[] defaultProfielValues = new float[100];
+    protected float[] targetProfielValues = new float[100];
 
     private void Start()
     {
@@ -18,11 +19,19 @@ public abstract class ParticleSystemHandler : MonoBehaviour {
 
     protected abstract void InitializeParticleSystem();
 
-    protected abstract void GeneratedDefaultProfiel();
+    protected void GeneratedDefaultProfiel()
+    {
+        defaultProfielValues = (float[])currentProfielValues.Clone();
+    }
 
-    protected abstract void ResetCurrentProfiel();
+    protected void ResetCurrentProfiel()
+    {
+        Array.Clear(currentProfielValues, 0, currentProfielValues.Length);
+        currentProfielValues = (float[])defaultProfielValues.Clone();
+    }
 
-    protected virtual void LateUpdate() {
+    protected virtual void LateUpdate()
+    {
 
 
     }
