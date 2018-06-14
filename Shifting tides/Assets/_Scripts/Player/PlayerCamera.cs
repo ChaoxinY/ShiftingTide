@@ -111,7 +111,7 @@ public class PlayerCamera : MonoBehaviour
 
     }
     public float DetermineCurrentFOV() {
-        float targetFOV = 60f;
+        float targetFOV = 80f;
         if (!basicMovement.isAiming) {
             if (basicMovement.maxInput >= 0f && basicMovement.maxInput <= 0.4f)
             {
@@ -126,7 +126,7 @@ public class PlayerCamera : MonoBehaviour
             }
         }
         else{
-            targetFOV = 45f;
+            targetFOV = 80f;
         }
         return targetFOV;
     }

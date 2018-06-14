@@ -232,8 +232,7 @@ public class BasicMovement : MonoBehaviour
 
     private void ChargeUpArrow()
     {
-        AimRotate();
-
+        AimRotate();        
         arrowSpeed = Mathf.Lerp(arrowSpeed, maxArrowSpeed, Time.deltaTime*1.3f);
         Debug.Log(arrowSpeed);
         if (!isAiming) isAiming = !isAiming;
@@ -267,6 +266,9 @@ public class BasicMovement : MonoBehaviour
         if (isAiming) isAiming = !isAiming;
         ResetArrowSpeed();
         shootingParticleSystem.Play(true);
+        cameraMain.fieldOfView += 1.5f;
+       
+
     }
 
     void OnCollisionEnter(Collision other)

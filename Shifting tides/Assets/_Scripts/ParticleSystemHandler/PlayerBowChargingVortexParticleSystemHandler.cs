@@ -11,7 +11,9 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
     private ParticleSystem.ShapeModule shapeModule;
     private ParticleSystem.NoiseModule noiseModule;
     private float lerpSpeed;
-    private bool stageChanged;
+
+    [HideInInspector]
+    public bool isCharging;
 
     protected override void InitializeParticleSystem()
     {
@@ -34,12 +36,12 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
         currentProfielValues[5] = noiseModule.frequency;
         lerpSpeed = Time.deltaTime;
         GeneratedDefaultProfiel();
-        StartCoroutine(ModuleValueManager());
+        StartCoroutine(ChargeAnimation());
     }
 
     protected override void LateUpdate()
     {
-        if (stageChanged)
+        if (isCharging)
         {
             currentProfielValues[0] = Mathf.Lerp(currentProfielValues[0], targetProfielValues[0], lerpSpeed);
             mainModule.startLifetime = currentProfielValues[0];
@@ -60,15 +62,23 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
         }
     }
 
-    private IEnumerator ModuleValueManager()
+    public IEnumerator ChargeAnimation()
     {
         yield return new WaitForSeconds(1f);
-        stageChanged = true;
+        isCharging = true;
         ChangeToStateTwoValues();
         yield return new WaitForSeconds(0.7f);
         ChangeToStateThreeValues();
         yield return new WaitForSeconds(1.5f);
         ChangeToStateFourValues();
+        yield return new WaitForSeconds(2f);
+        ChangeToStateFiveValues();
+        yield break;
+    }
+
+    public IEnumerator stopAnimation() {
+
+
         yield break;
     }
 
@@ -76,7 +86,7 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
     {
         targetProfielValues[0] = 9.5f;
         targetProfielValues[1] = 1.2f;
-        targetProfielValues[2] = 10;
+        targetProfielValues[2] = 15;
         targetProfielValues[3] = 0.7f;
         targetProfielValues[4] = 0.4f;
         targetProfielValues[5] = 0.6f;
@@ -86,7 +96,7 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
     {
        targetProfielValues[0] = 9.5f;
        targetProfielValues[1] = 1.5f;
-       targetProfielValues[2] = 10;
+       targetProfielValues[2] = 15;
        targetProfielValues[3] = 0.2f;
        targetProfielValues[4] = 0.2f;
        targetProfielValues[5] = 0.4f;
@@ -94,15 +104,24 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
     }
     private void ChangeToStateFourValues()
     {
-        targetProfielValues[0] = 9.5f;
+        targetProfielValues[0] = 10.8f;
         targetProfielValues[1] = 4f;
-        targetProfielValues[2] = 10;
+        targetProfielValues[2] = 5;
         targetProfielValues[3] = 0f;
         targetProfielValues[4] = 0f;
         targetProfielValues[5] = 0;
         lerpSpeed = Time.deltaTime * 1.5f;
     }
 
-
+    private void ChangeToStateFiveValues()
+    {
+        targetProfielValues[0] = 10.8f;
+        targetProfielValues[1] = 1f;
+        targetProfielValues[2] = 7f;
+        targetProfielValues[3] = 0f;
+        targetProfielValues[4] = 0f;
+        targetProfielValues[5] = 0;
+        lerpSpeed = Time.deltaTime * 1.5f;
+    }
 
 }
