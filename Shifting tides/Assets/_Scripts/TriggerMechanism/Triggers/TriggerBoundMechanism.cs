@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public  class TriggerBoundMechanism : StandardInteractiveGameObject
-{
+{   
+    //Bound trigger
     public TriggerJoint boundTrigger;
 
     protected override void Initialize()

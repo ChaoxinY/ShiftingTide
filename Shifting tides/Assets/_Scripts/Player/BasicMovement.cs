@@ -15,7 +15,7 @@ public class BasicMovement : MonoBehaviour
     private bool[] skillObtained = new bool[10];
     private float h, v, inputSpeed, arrowSpeed, slopeAngle;
 
-    public ParticleSystem shootingParticleSystem;
+    public PlayerParticleSystemManager playerParticleSystemManager;
     public Animator aniPlayer;
     public GameObject bow, bowMesh, UI, gameManagerObject;
     public GameObject[] dashesImages;
@@ -235,6 +235,8 @@ public class BasicMovement : MonoBehaviour
         AimRotate();        
         arrowSpeed = Mathf.Lerp(arrowSpeed, maxArrowSpeed, Time.deltaTime*1.3f);
         Debug.Log(arrowSpeed);
+        if(playerParticleSystemManager.isPlayingChargingAnimation == false)
+        playerParticleSystemManager.PlayChargingAnimation();
         if (!isAiming) isAiming = !isAiming;
     }
 
@@ -265,9 +267,8 @@ public class BasicMovement : MonoBehaviour
         Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * arrowSpeed, ForceMode.Impulse);
         if (isAiming) isAiming = !isAiming;
         ResetArrowSpeed();
-        shootingParticleSystem.Play(true);
+        playerParticleSystemManager.PlayerFireAnimation();
         cameraMain.fieldOfView += 1.5f;
-       
 
     }
 

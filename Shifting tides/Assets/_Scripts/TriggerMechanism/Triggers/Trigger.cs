@@ -5,6 +5,7 @@ using UnityEngine;
 public class Trigger : MonoBehaviour {
 
     private TriggerJoint triggerJoint;
+    // BoundMechanisme TriggerBoundMechinsme boundMechanism
     public GameObject boundMechanism;
 
     void Start () {

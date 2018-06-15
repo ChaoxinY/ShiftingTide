@@ -5,22 +5,16 @@ using UnityEngine;
 
 public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandler
 {
-
     private ParticleSystem.MainModule mainModule;
     private ParticleSystem.EmissionModule emissionModule;
     private ParticleSystem.ShapeModule shapeModule;
     private ParticleSystem.NoiseModule noiseModule;
     private float lerpSpeed;
 
-    [HideInInspector]
-    public bool isCharging;
-
     protected override void InitializeParticleSystem()
     {
         particleSystemToManage = GameObject.Find("ChargingVortex").GetComponent<ParticleSystem>();
-        Debug.Log(particleSystemToManage);
         mainModule = particleSystemToManage.main;
-        Debug.Log(mainModule);
         emissionModule = particleSystemToManage.emission;
         shapeModule = particleSystemToManage.shape;
         noiseModule = particleSystemToManage.noise;
@@ -36,12 +30,12 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
         currentProfielValues[5] = noiseModule.frequency;
         lerpSpeed = Time.deltaTime;
         GeneratedDefaultProfiel();
-        StartCoroutine(ChargeAnimation());
+      
     }
 
     protected override void LateUpdate()
     {
-        if (isCharging)
+        if (particleSystemToManage.isPlaying)
         {
             currentProfielValues[0] = Mathf.Lerp(currentProfielValues[0], targetProfielValues[0], lerpSpeed);
             mainModule.startLifetime = currentProfielValues[0];
@@ -61,11 +55,21 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
             noiseModule.frequency = currentProfielValues[5];
         }
     }
+    public override void PlayParticleAnimation()
+    {
+        base.PlayParticleAnimation();
+        StartCoroutine(ChargeAnimation());
+    }
+
+    public override void StopParticleAnimation()
+    {
+        base.StopParticleAnimation();
+        ResetCurrentProfiel();
+    }
 
     public IEnumerator ChargeAnimation()
     {
         yield return new WaitForSeconds(1f);
-        isCharging = true;
         ChangeToStateTwoValues();
         yield return new WaitForSeconds(0.7f);
         ChangeToStateThreeValues();
@@ -73,12 +77,6 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
         ChangeToStateFourValues();
         yield return new WaitForSeconds(2f);
         ChangeToStateFiveValues();
-        yield break;
-    }
-
-    public IEnumerator stopAnimation() {
-
-
         yield break;
     }
 
@@ -92,6 +90,7 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
         targetProfielValues[5] = 0.6f;
         lerpSpeed = Time.deltaTime * 1.2f;
     }
+
     private void ChangeToStateThreeValues()
     {
        targetProfielValues[0] = 9.5f;
@@ -102,6 +101,7 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
        targetProfielValues[5] = 0.4f;
         lerpSpeed = Time.deltaTime * 1.5f;
     }
+
     private void ChangeToStateFourValues()
     {
         targetProfielValues[0] = 10.8f;
