@@ -36,7 +36,7 @@ public class PlayerBlinkersManager : ParticleSystemHandler
         foreach (PlayerBlinkerParticleSystemHandler blinker in blinkers)
         {
             blinker.StopParticleAnimation();
-            yield return new WaitForSeconds(0.05f);
+           // yield return new WaitForSeconds(0.05f);
         }
         yield break;
     }
