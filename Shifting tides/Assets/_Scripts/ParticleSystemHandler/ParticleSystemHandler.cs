@@ -11,11 +11,13 @@ public abstract class ParticleSystemHandler : MonoBehaviour
     protected float[] defaultProfielValues = new float[100];
     protected float[] targetProfielValues = new float[100];
 
-    public virtual void PlayParticleAnimation() {
+    public virtual void PlayParticleAnimation()
+    {
         particleSystemToManage.Play();
     }
 
-    public virtual void StopParticleAnimation() {
+    public virtual void StopParticleAnimation()
+    {
         particleSystemToManage.Stop();
         ResetCurrentProfiel();
     }
@@ -45,5 +47,5 @@ public abstract class ParticleSystemHandler : MonoBehaviour
     {
 
     }
-   
+
 }

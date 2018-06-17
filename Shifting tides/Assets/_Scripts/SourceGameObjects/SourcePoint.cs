@@ -9,7 +9,7 @@ public class SourcePoint : StandardInteractiveGameObject
     /// addResource 0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes
     /// </summary>
     private int[] addResource = new int[5];
-    private int[] addResourceValue = { 5, 10, 1, 1 }; 
+    private int[] addResourceValue = { 5, 10, 1, 1 };
     private float immuneTime, rotationSpeed;
 
     public Vector3 destination;
@@ -19,7 +19,7 @@ public class SourcePoint : StandardInteractiveGameObject
     public float movementSpeed;
     public int colorIndex;
     public bool preSpawned;
- 
+
     protected override void Initialize()
     {
         base.Initialize();
@@ -27,7 +27,8 @@ public class SourcePoint : StandardInteractiveGameObject
         rotationSpeed = Random.Range(1.1f, 3);
         transform.localScale = new Vector3(Random.Range(0.1f, 0.7f), Random.Range(0.1f, 0.7f), Random.Range(0.1f, 0.7f));
         meshRenderer = GetComponent<MeshRenderer>();
-        if (preSpawned) {
+        if (preSpawned)
+        {
             OnSpawnInit(colorIndex, transform.position, 0, colorIndex);
         }
     }
@@ -47,15 +48,15 @@ public class SourcePoint : StandardInteractiveGameObject
         //IEnumerator way of running base code.
         yield return StartCoroutine(base.LocalUpdate());
         transform.Rotate(rotationValue * rotationSpeed);
-      
+
         if (transform.position != destination)
         {
-            transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime*movementSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * movementSpeed);
         }
         if (gameObject.layer == 8)
         {
             WearOffImmunity();
-        }     
+        }
     }
     private void WearOffImmunity()
     {

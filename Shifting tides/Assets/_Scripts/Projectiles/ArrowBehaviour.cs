@@ -14,7 +14,7 @@ public class ArrowBehaviour : Projectile
     {
         base.Initialize();
         arrowPlaceholder = Resources.Load("Prefabs/ArrowPlaceholder") as GameObject;
-        gravity = -15.81f;
+        gravity = -25.81f;
         rbObject = gameObject.GetComponent<Rigidbody>();
     }
 

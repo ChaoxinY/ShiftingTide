@@ -15,7 +15,7 @@ public class PlayerCamera : MonoBehaviour
     private Transform nearestTarget;
     private Vector3 smoothPivotOffset, smoothCamOffset, targetPivotOffset, targetCamOffset, relCameraPos;
     private RaycastHit hits;
-    private float angleV,relCameraPosMag;
+    private float angleV, relCameraPosMag;
     private bool lockedOn;
 
     [HideInInspector]
@@ -28,7 +28,7 @@ public class PlayerCamera : MonoBehaviour
     public Vector3 targetOffeset, pivotOffset, camOffset;
 
     [HideInInspector]
-    public float mouseX, mouseY, cameraMouseY, angleH, targetFOV; 
+    public float mouseX, mouseY, cameraMouseY, angleH, targetFOV;
     public float smoothSpeed, mouseSensitivity;
 
     private void Start()
@@ -49,11 +49,12 @@ public class PlayerCamera : MonoBehaviour
     }
 
     void Update()
-    {       
+    {
         angleH += Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1) * mouseSensitivity;
         angleV += Mathf.Clamp(Input.GetAxis("Mouse Y"), -1, 1) * mouseSensitivity;
         angleV = Mathf.Clamp(angleV, MIN_Y, MAX_Y);
 
+        //Inside combat state class
         if (Input.GetMouseButtonDown(2))
         {
             if (lockedOn)
@@ -64,7 +65,7 @@ public class PlayerCamera : MonoBehaviour
             }
             else
             {
-              
+
                 LockOnTarget();
             }
 
@@ -76,7 +77,8 @@ public class PlayerCamera : MonoBehaviour
         }
     }
     void LateUpdate()
-    {
+    {   
+        //inside combat state class
         basicMovement.bow.transform.LookAt(shootTarget.transform);
         if (lockedOn)
         {
@@ -110,9 +112,11 @@ public class PlayerCamera : MonoBehaviour
         transform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetComponent<Camera>().fieldOfView, DetermineCurrentFOV(), Time.deltaTime * 1.2f);
 
     }
-    public float DetermineCurrentFOV() {
+    public float DetermineCurrentFOV()
+    {
         float targetFOV = 80f;
-        if (!basicMovement.isAiming) {
+        if (!basicMovement.isAiming)
+        {
             if (basicMovement.maxInput >= 0f && basicMovement.maxInput <= 0.4f)
             {
                 return targetFOV;
@@ -121,11 +125,13 @@ public class PlayerCamera : MonoBehaviour
             {
                 return targetFOV = 70f;
             }
-            else if (basicMovement.maxInput > 0.7f) {
+            else if (basicMovement.maxInput > 0.7f)
+            {
                 return targetFOV = 100f;
             }
         }
-        else{
+        else
+        {
             targetFOV = 80f;
         }
         return targetFOV;
@@ -173,12 +179,12 @@ public class PlayerCamera : MonoBehaviour
         return true;
     }
 
-    private RaycastHit[] lookForTarget()
+    private RaycastHit[] LookForTarget()
     {
         int layerMask = 1 << 13;
         RaycastHit[] hits;
         //Vector3 fwd = transform.TransformDirection(Vector3.forward);
-        hits = Physics.BoxCastAll(player.transform.position, new Vector3(10,5,1f), transform.forward, Quaternion.LookRotation(transform.forward), 20f, layerMask);
+        hits = Physics.BoxCastAll(player.transform.position, new Vector3(10, 5, 1f), transform.forward, Quaternion.LookRotation(transform.forward), 20f, layerMask);
         return hits;
     }
 
@@ -187,7 +193,7 @@ public class PlayerCamera : MonoBehaviour
         Transform lastTarget = nearestTarget;
 
         RaycastHit[] hits;
-        hits = lookForTarget();
+        hits = LookForTarget();
         bool TargetInSight = false;
         foreach (RaycastHit rh in hits)
         {
@@ -209,7 +215,7 @@ public class PlayerCamera : MonoBehaviour
     private void LockOnTarget()
     {
         RaycastHit[] hits;
-        hits = lookForTarget();
+        hits = LookForTarget();
         float closestDistanceSqr = Mathf.Infinity;
         if (hits.Length == 0)
         {
@@ -218,7 +224,7 @@ public class PlayerCamera : MonoBehaviour
             Debug.Log(hits.Length.ToString());
             return;
         }
-       
+
         foreach (RaycastHit rh in hits)
         {
             Debug.Log(rh.collider.gameObject);
@@ -227,14 +233,13 @@ public class PlayerCamera : MonoBehaviour
             {
                 Vector3 directionToTarget = rh.collider.gameObject.transform.position - gameObject.transform.position;
                 float dSqrToTarget = directionToTarget.sqrMagnitude;
-               
 
                 if (dSqrToTarget < closestDistanceSqr)
                 {
 
-                    closestDistanceSqr = dSqrToTarget;                  
+                    closestDistanceSqr = dSqrToTarget;
                     nearestTarget = rh.collider.gameObject.transform;
-                   
+
                 }
             }
         }

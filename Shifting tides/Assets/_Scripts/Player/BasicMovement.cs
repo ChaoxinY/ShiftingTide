@@ -13,8 +13,10 @@ public class BasicMovement : MonoBehaviour
     private GameManager gameMng;
     //0: bow , 1: The Source
     private bool[] skillObtained = new bool[10];
-    private float h, v, inputSpeed, arrowSpeed, slopeAngle;
+    private float h, v, inputSpeed, slopeAngle;
 
+    [HideInInspector]
+    public float arrowSpeed;
     public PlayerParticleSystemManager playerParticleSystemManager;
     public Animator aniPlayer;
     public GameObject bow, bowMesh, UI, gameManagerObject;
@@ -37,7 +39,7 @@ public class BasicMovement : MonoBehaviour
 
     void Update()
     {
-      
+
         currentMotion = Input.GetAxisRaw("Vertical") * moveForce * gameManagerObject.transform.forward + Input.GetAxisRaw("Horizontal") * moveForce * gameManagerObject.transform.right;
         h = Input.GetAxis("Horizontal");
         v = Input.GetAxis("Vertical");
@@ -49,7 +51,8 @@ public class BasicMovement : MonoBehaviour
             gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 0f;
             gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 0f;
         }
-        else if (onGround && !IsMoving()) {
+        else if (onGround && !IsMoving())
+        {
             gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 3.34f;
             gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 3.6f;
 
@@ -87,7 +90,8 @@ public class BasicMovement : MonoBehaviour
         arrowSpeed = startArrowSpeed;
     }
 
-    private void ManageInput() {
+    private void ManageInput()
+    {
 
         if (Input.GetKeyDown(KeyCode.F) && PlayerResourcesManager.IsThereEnoughResource(3, 0) && skillObtained[1])
         {
@@ -160,7 +164,7 @@ public class BasicMovement : MonoBehaviour
             LastDirection = desiredDirection;
         }
         if (!IsMoving()) Repositioning();
-        
+
     }
 
     private void Repositioning()
@@ -232,11 +236,11 @@ public class BasicMovement : MonoBehaviour
 
     private void ChargeUpArrow()
     {
-        AimRotate();        
-        arrowSpeed = Mathf.Lerp(arrowSpeed, maxArrowSpeed, Time.deltaTime*1.3f);
-        Debug.Log(arrowSpeed);
-        if(playerParticleSystemManager.isPlayingChargingAnimation == false)
-        playerParticleSystemManager.PlayChargingAnimation();
+        AimRotate();
+        arrowSpeed = Mathf.Lerp(arrowSpeed, maxArrowSpeed, Time.deltaTime * 0.4f);
+        if (playerParticleSystemManager.isPlayingChargingAnimation == false)
+            playerParticleSystemManager.PlayChargingAnimation();
+        //Debug.Log(arrowSpeed);
         if (!isAiming) isAiming = !isAiming;
     }
 
@@ -266,10 +270,9 @@ public class BasicMovement : MonoBehaviour
         GameObject Arrow = Instantiate(arrow, bow.transform.position, bow.transform.rotation);
         Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * arrowSpeed, ForceMode.Impulse);
         if (isAiming) isAiming = !isAiming;
-        ResetArrowSpeed();
-        playerParticleSystemManager.PlayerFireAnimation();
+        StartCoroutine(playerParticleSystemManager.PlayerFireAnimation());
         cameraMain.fieldOfView += 1.5f;
-
+        ResetArrowSpeed();
     }
 
     void OnCollisionEnter(Collision other)

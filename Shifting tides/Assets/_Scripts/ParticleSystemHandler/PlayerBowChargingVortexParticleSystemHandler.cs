@@ -9,11 +9,13 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
     private ParticleSystem.EmissionModule emissionModule;
     private ParticleSystem.ShapeModule shapeModule;
     private ParticleSystem.NoiseModule noiseModule;
+    private ParticleSystem.Particle[] particles;
     private float lerpSpeed;
 
     protected override void InitializeParticleSystem()
     {
         particleSystemToManage = GameObject.Find("ChargingVortex").GetComponent<ParticleSystem>();
+        particles = new ParticleSystem.Particle[particleSystemToManage.main.maxParticles];
         mainModule = particleSystemToManage.main;
         emissionModule = particleSystemToManage.emission;
         shapeModule = particleSystemToManage.shape;
@@ -21,7 +23,6 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
 
         //0;currentLifeTime , 1:currentSimulationSpeed, 2: currentEmissionRate,3 : currentRandomPositionAmount, 4: currentNoisePositionAmount
         //5:currentNoiseFrequency;
-        Debug.Log(mainModule.startLifetime.constant);
         currentProfielValues[0] = mainModule.startLifetime.constant;
         currentProfielValues[1] = mainModule.simulationSpeed;
         currentProfielValues[2] = emissionModule.rateOverTime.constant;
@@ -30,7 +31,7 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
         currentProfielValues[5] = noiseModule.frequency;
         lerpSpeed = Time.deltaTime;
         GeneratedDefaultProfiel();
-      
+
     }
 
     protected override void LateUpdate()
@@ -63,8 +64,9 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
 
     public override void StopParticleAnimation()
     {
+        particleSystemToManage.Clear();
         base.StopParticleAnimation();
-        ResetCurrentProfiel();
+
     }
 
     public IEnumerator ChargeAnimation()
@@ -93,12 +95,12 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
 
     private void ChangeToStateThreeValues()
     {
-       targetProfielValues[0] = 9.5f;
-       targetProfielValues[1] = 1.5f;
-       targetProfielValues[2] = 15;
-       targetProfielValues[3] = 0.2f;
-       targetProfielValues[4] = 0.2f;
-       targetProfielValues[5] = 0.4f;
+        targetProfielValues[0] = 9.5f;
+        targetProfielValues[1] = 1.5f;
+        targetProfielValues[2] = 15;
+        targetProfielValues[3] = 0.2f;
+        targetProfielValues[4] = 0.2f;
+        targetProfielValues[5] = 0.4f;
         lerpSpeed = Time.deltaTime * 1.5f;
     }
 
