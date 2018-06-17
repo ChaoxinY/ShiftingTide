@@ -239,8 +239,13 @@ public class BasicMovement : MonoBehaviour
         AimRotate();
         arrowSpeed = Mathf.Lerp(arrowSpeed, maxArrowSpeed, Time.deltaTime * 0.4f);
         if (playerParticleSystemManager.isPlayingChargingAnimation == false)
+        {
             playerParticleSystemManager.PlayChargingAnimation();
-        //Debug.Log(arrowSpeed);
+        }
+        if (arrowSpeed > maxArrowSpeed * 0.3f && playerParticleSystemManager.isPlayingChargedUpAnimation == false) {
+            playerParticleSystemManager.PlayChargedUpAnimation();
+        }
+
         if (!isAiming) isAiming = !isAiming;
     }
 

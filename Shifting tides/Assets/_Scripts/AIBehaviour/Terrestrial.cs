@@ -56,7 +56,6 @@ public class Terrestrial : Agent
     }
     private IEnumerator Circling()
     {
-        Debug.Log(destination);
         MoveTowardsTarget(transform.position);      
         yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 1f));
         overwritingBehaviour = null;
