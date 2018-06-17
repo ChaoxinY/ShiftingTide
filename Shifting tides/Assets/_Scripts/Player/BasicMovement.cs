@@ -242,7 +242,7 @@ public class BasicMovement : MonoBehaviour
         {
             playerParticleSystemManager.PlayChargingAnimation();
         }
-        if (arrowSpeed > maxArrowSpeed * 0.3f && playerParticleSystemManager.isPlayingChargedUpAnimation == false) {
+        if (arrowSpeed > maxArrowSpeed * 0.25f && playerParticleSystemManager.isPlayingChargedUpAnimation == false) {
             playerParticleSystemManager.PlayChargedUpAnimation();
         }
 

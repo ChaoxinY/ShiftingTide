@@ -9,7 +9,6 @@ public class PlayerVortexShatterParticleSystemHandler : ParticleSystemHandler
 
     public int minBurstCount;
     public int maxBurstCount;
-    public float lerpSpeed;
 
     protected override void InitializeParticleSystem()
     {

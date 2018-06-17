@@ -17,10 +17,7 @@ public class PlayerBlinkersManager : ParticleSystemHandler
 
     public override void StopParticleAnimation()
     {
-        foreach (PlayerBlinkerParticleSystemHandler blinker in blinkers)
-        {
-            blinker.StopParticleAnimation();           
-        }
+       StartCoroutine(StopBlinkerAnimation());
     }
 
     private IEnumerator BlinkerAnimation() {
@@ -28,7 +25,18 @@ public class PlayerBlinkersManager : ParticleSystemHandler
         foreach (PlayerBlinkerParticleSystemHandler blinker in blinkers)
         {
             blinker.PlayParticleAnimation();
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(1.5f);
+        }
+        yield break;
+    }
+
+    private IEnumerator StopBlinkerAnimation()
+    {
+
+        foreach (PlayerBlinkerParticleSystemHandler blinker in blinkers)
+        {
+            blinker.StopParticleAnimation();
+            yield return new WaitForSeconds(0.05f);
         }
         yield break;
     }
