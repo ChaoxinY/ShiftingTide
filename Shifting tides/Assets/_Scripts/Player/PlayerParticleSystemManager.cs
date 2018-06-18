@@ -26,12 +26,12 @@ public class PlayerParticleSystemManager : MonoBehaviour
         managedSystems[0].StopParticleAnimation();
         managedSystems[1].StopParticleAnimation();
         managedSystems[3].StopParticleAnimation();
-        managedSystems[4].StopParticleAnimation();      
+        managedSystems[4].StopParticleAnimation();
+        isPlayingChargedUpAnimation = false;
         managedSystems[2].PlayParticleAnimation();
         yield return new WaitForSeconds(0.1f);
         managedSystems[2].StopParticleAnimation();
         isPlayingChargingAnimation = false;
-        isPlayingChargedUpAnimation = false;
         yield break;
     }
 

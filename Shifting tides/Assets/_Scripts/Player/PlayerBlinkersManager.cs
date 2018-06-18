@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerBlinkersManager : ParticleSystemHandler
 {
-    public PlayerBlinkerParticleSystemHandler[] blinkers;
-    
+    public PlayerBlinkerParticleSystemHandler[] blinkers; 
+    private List<PlayerBlinkerParticleSystemHandler> activedBlinkers =  new List<PlayerBlinkerParticleSystemHandler>();
+    private IEnumerator blinkerAnimationCoroutine;
+
     protected override void InitializeParticleSystem()
     {
       
@@ -12,12 +15,18 @@ public class PlayerBlinkersManager : ParticleSystemHandler
 
     public override void PlayParticleAnimation()
     {
-        StartCoroutine(BlinkerAnimation());
+        blinkerAnimationCoroutine = BlinkerAnimation();
+        StartCoroutine(blinkerAnimationCoroutine);
     }
 
     public override void StopParticleAnimation()
     {
-       StartCoroutine(StopBlinkerAnimation());
+        foreach (PlayerBlinkerParticleSystemHandler blinker in activedBlinkers)
+        {
+            blinker.StopParticleAnimation();
+        }
+        activedBlinkers.Clear();
+        StopCoroutine(blinkerAnimationCoroutine);
     }
 
     private IEnumerator BlinkerAnimation() {
@@ -25,19 +34,11 @@ public class PlayerBlinkersManager : ParticleSystemHandler
         foreach (PlayerBlinkerParticleSystemHandler blinker in blinkers)
         {
             blinker.PlayParticleAnimation();
+            activedBlinkers.Add(blinker);
+            Debug.Log(activedBlinkers.Count);
             yield return new WaitForSeconds(1.5f);
         }
         yield break;
     }
 
-    private IEnumerator StopBlinkerAnimation()
-    {
-
-        foreach (PlayerBlinkerParticleSystemHandler blinker in blinkers)
-        {
-            blinker.StopParticleAnimation();
-           // yield return new WaitForSeconds(0.05f);
-        }
-        yield break;
-    }
 }

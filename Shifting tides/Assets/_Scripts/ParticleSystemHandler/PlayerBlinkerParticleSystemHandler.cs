@@ -27,7 +27,6 @@ public class PlayerBlinkerParticleSystemHandler : ParticleSystemHandler
         base.StopParticleAnimation();
         particleSystemToManage.Clear();
         StopCoroutine(prolongParticleLifeTimeCoroutine);
-        Debug.Log(prolongParticleLifeTimeCoroutine.Current);
     }
     private IEnumerator ProlongLifeTime()
     {
