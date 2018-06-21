@@ -37,8 +37,8 @@ public class Enemy : Agent
     /// <param name="CombatSpeed">Maximum attack range of the enemy</param>
     public void Init(int MaxHealth, float AttackRange, float VisionRange, float SightRange, float ChaseRange, float StandByspeed, float CombatSpeed)
     {
-        maxHealth = MaxHealth;
-        currentHealth = maxHealth;
+        //maxHealth = MaxHealth;
+        //currentHealth = maxHealth;
         attackRange = AttackRange;
         visionRange = VisionRange;
         sightRange = SightRange;

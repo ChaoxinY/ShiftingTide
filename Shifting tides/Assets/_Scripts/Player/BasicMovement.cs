@@ -25,7 +25,7 @@ public class BasicMovement : MonoBehaviour
     public PlayerCamera plyCamera;
     public bool onGround, isAiming;
     public float defaultMoveForce, moveForce, speedLimit, runLimit, moveLimit, dashForce, DashLimit,
-        jumpVel, gravity, maxInput, startArrowSpeed, maxArrowSpeed;
+        jumpVel, gravity, maxInput, startArrowSpeed, maxArrowSpeed,arrowBaseDamage;
 
     void Start()
     {
@@ -236,13 +236,13 @@ public class BasicMovement : MonoBehaviour
 
     private void ChargeUpArrow()
     {
-        AimRotate();
-        arrowSpeed = Mathf.Lerp(arrowSpeed, maxArrowSpeed, Time.deltaTime * 0.4f);
+        AimRotate();       
         if (playerParticleSystemManager.isPlayingChargingAnimation == false)
         {
             playerParticleSystemManager.PlayChargingAnimation();
         }
-        if (arrowSpeed > maxArrowSpeed * 0.25f && playerParticleSystemManager.isPlayingChargedUpAnimation == false) {
+        if (playerParticleSystemManager.isPlayingChargedUpAnimation == false) {
+            arrowSpeed = 1f;
             playerParticleSystemManager.PlayChargedUpAnimation();
         }
 
@@ -274,10 +274,11 @@ public class BasicMovement : MonoBehaviour
         PlayerResourcesManager.Arrows -= 1;
         GameObject Arrow = Instantiate(arrow, bow.transform.position, bow.transform.rotation);
         Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * arrowSpeed, ForceMode.Impulse);
+        Arrow.GetComponent<ArrowBehaviour>().baseDamage = arrowBaseDamage;
         if (isAiming) isAiming = !isAiming;
         StartCoroutine(playerParticleSystemManager.PlayerFireAnimation());
         cameraMain.fieldOfView += 1.5f;
-        ResetArrowSpeed();
+       // ResetArrowSpeed();
     }
 
     void OnCollisionEnter(Collision other)

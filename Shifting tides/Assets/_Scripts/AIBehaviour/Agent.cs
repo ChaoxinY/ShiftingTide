@@ -19,7 +19,6 @@ public class Agent : StandardInteractiveGameObject
 
     public List<Transform> wayPoints;
     public Transform[] patrolPoints;
-    public float currentHealth, maxHealth;
     public float[] desire, factorInfluencePoint = { 0, 0, 0, 0, 0, 0 };
     public bool predictable, energetic, perferRandomBehaviours, perferPatternedBehaviours, customized;    
   

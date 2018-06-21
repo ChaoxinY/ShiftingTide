@@ -227,7 +227,6 @@ public class PlayerCamera : MonoBehaviour
 
         foreach (RaycastHit rh in hits)
         {
-            Debug.Log(rh.collider.gameObject);
             Transform transform = rh.collider.gameObject.GetComponent<Transform>();
             if (transform != null)
             {

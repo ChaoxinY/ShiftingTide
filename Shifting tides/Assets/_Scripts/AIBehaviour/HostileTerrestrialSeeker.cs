@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HostileTerrestrialSeeker : Terrestrial
 {
@@ -8,10 +9,10 @@ public class HostileTerrestrialSeeker : Terrestrial
 
     public float visionRange, sightRange, chaseRange, attackRange;
 
-    protected  IEnumerator Moving()
-    {        
-        StartCoroutine(Searching());
-        yield break;
+    protected override void Initialize()
+    {
+        base.Initialize();
+ 
     }
 
     IEnumerator Searching()
@@ -37,18 +38,19 @@ public class HostileTerrestrialSeeker : Terrestrial
         MoveTowardsTarget(hunted.transform.position);
         if (distanceToPray <= attackRange)
         {
-           
+
             EngageClassBehavior();
             //yield return new WaitForSeconds(0.5f);
             UpdatePrayDistance(hunted);
-           // finishedBehaviour = false;
+            // finishedBehaviour = false;
             yield break;
         }
-        if (distanceToPray >= chaseRange) {
-            
+        if (distanceToPray >= chaseRange)
+        {
+
             ResetVelocity();
             yield break;
-        }    
+        }
     }
     private void UpdatePrayDistance(GameObject hunted)
     {
@@ -56,23 +58,19 @@ public class HostileTerrestrialSeeker : Terrestrial
     }
     protected void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Arrow" || collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Arrow")
         {
             objectToChase = GameObject.Find("Player");
-            GotHit();            
+            GotHit(collision.gameObject);
         }
     }
-    protected  void GotHit()
+    protected void GotHit(GameObject arrow)
     {
-        meshRenderer.material = Resources.Load("Hurt") as Material;
-        this.currentHealth -= 1;
-        if (currentHealth == 0)
-        {
-            Destroy(gameObject);
-        }
+     
     }
     protected virtual void EngageClassBehavior()
     {
 
     }
+
 }

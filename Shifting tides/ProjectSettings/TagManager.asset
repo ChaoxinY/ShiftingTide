@@ -12,6 +12,7 @@ TagManager:
   - Bow
   - TheSource
   - Slope
+  - EnemyCritSpot
   layers:
   - Default
   - TransparentFX
