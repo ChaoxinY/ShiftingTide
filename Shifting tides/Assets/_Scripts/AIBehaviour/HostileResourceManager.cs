@@ -29,10 +29,46 @@ public class HostileResourceManager : MonoBehaviour
             healthBars[i].value = maxHealth;
         }
     }
-    public virtual void GotHitOnCritSpot(float basedamage)
-    {
-        CurrentHealth -= basedamage * 2;
+
+    public virtual void GotHit(float baseDamage) {
+        CurrentHealth -= baseDamage;
+        StartCoroutine(OnHitDrops(1,2));
     }
+
+    public virtual void GotHitOnCritSpot(float baseDamage)
+    {
+        CurrentHealth -= baseDamage * 2;
+        StartCoroutine(OnHitDrops(2,4));
+        SpawnSourcePoint();
+    }
+
+    public void SpawnSourcePoint() {
+        Debug.Log("Spawned");
+        GameObject sourcePoint = Instantiate(Resources.Load("Prefabs/Source") as GameObject, transform.position, Quaternion.identity);
+        sourcePoint.GetComponent<SourcePoint>().OnSpawnInit(4, GameObject.Find("Player").transform.position, 15);
+        sourcePoint.GetComponent<SourcePoint>().objectToChase = GameObject.Find("Player");
+    }
+
+    public virtual IEnumerator OnHitDrops(int minDrop, int maxDrop) {
+        for (int i = 0; i < Random.Range(minDrop, maxDrop); i++)
+        {
+            GameObject scrap = Instantiate(Resources.Load("Prefabs/Source") as GameObject, transform.position, Quaternion.identity);
+            Vector3 randomPoistion = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+            scrap.GetComponent<SourcePoint>().OnSpawnInit(4, GameObject.Find("Player").transform.position + randomPoistion,20, 4);
+            scrap.GetComponent<SourcePoint>().objectToChase = GameObject.Find("Player");
+            yield return new WaitForSeconds(0.2f);
+        }
+        yield break;
+    }
+
+
+    public virtual IEnumerator OnDeathDrops()
+    {
+        OnHitDrops(3, 5);
+        SpawnSourcePoint();
+        yield break;
+    }
+
     public float CurrentHealth
     {
         get { return currentHealth; }
@@ -40,7 +76,10 @@ public class HostileResourceManager : MonoBehaviour
         {
             currentHealth = value;
             if (currentHealth < 0) {
-                //Destroy(gameObject); 
+                OnDeathDrops();
+                //death animation
+                Destroy(gameObject,0.5f);
+                this.enabled = false;
             }
             if (currentHealth > maxHealth) { currentHealth = maxHealth; }
             StartCoroutine(LerpHealthBarValue(currentHealth));

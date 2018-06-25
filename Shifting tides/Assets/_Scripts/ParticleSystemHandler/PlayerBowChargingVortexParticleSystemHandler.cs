@@ -22,14 +22,18 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
         noiseModule = particleSystemToManage.noise;
 
         //0;currentLifeTime , 1:currentSimulationSpeed, 2: currentEmissionRate,3 : currentRandomPositionAmount, 4: currentNoisePositionAmount
-        //5:currentNoiseFrequency;
+        //5:currentNoiseFrequency; 6 : currentsize
         currentProfielValues[0] = mainModule.startLifetime.constant;
         currentProfielValues[1] = mainModule.simulationSpeed;
+        currentProfielValues[6] = mainModule.startSize.constant;
+
         currentProfielValues[2] = emissionModule.rateOverTime.constant;
+
         currentProfielValues[3] = shapeModule.randomPositionAmount;
+
         currentProfielValues[4] = noiseModule.positionAmount.constant;
         currentProfielValues[5] = noiseModule.frequency;
-        lerpSpeed = Time.deltaTime;
+         lerpSpeed = Time.deltaTime;
         GeneratedDefaultProfiel();
 
     }
@@ -42,6 +46,8 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
             mainModule.startLifetime = currentProfielValues[0];
             currentProfielValues[1] = Mathf.Lerp(currentProfielValues[1], targetProfielValues[1], lerpSpeed);
             mainModule.simulationSpeed = currentProfielValues[1];
+            currentProfielValues[6] = Mathf.Lerp(currentProfielValues[6], targetProfielValues[6], lerpSpeed);
+            mainModule.startSize = currentProfielValues[6];
 
             currentProfielValues[2] = Mathf.Lerp(currentProfielValues[2], targetProfielValues[2], lerpSpeed);
             emissionModule.rateOverTime = currentProfielValues[2];
@@ -54,6 +60,8 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
 
             currentProfielValues[5] = Mathf.Lerp(currentProfielValues[5], targetProfielValues[5], lerpSpeed);
             noiseModule.frequency = currentProfielValues[5];
+
+          
         }
     }
     public override void PlayParticleAnimation()
@@ -66,7 +74,6 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
     {
         particleSystemToManage.Clear();
         base.StopParticleAnimation();
-
     }
 
     public IEnumerator ChargeAnimation()
@@ -88,8 +95,9 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
         targetProfielValues[1] = 1.2f;
         targetProfielValues[2] = 15;
         targetProfielValues[3] = 0.7f;
-        targetProfielValues[4] = 0.4f;
-        targetProfielValues[5] = 0.6f;
+        targetProfielValues[4] = 0.3f;
+        targetProfielValues[5] = 0.3f;
+        targetProfielValues[6] = 0.2f;
         lerpSpeed = Time.deltaTime * 1.2f;
     }
 

@@ -11,7 +11,7 @@ public class PlayerResourcesManager : MonoBehaviour
     private static int scrapSource;
 
     /// <summary>
-    ///  0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes 4 : arrows
+    ///  0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes 4 : arrows 5： SourceFused Arrows
     /// </summary>
     public static float[] playerResourcesCaps = { 100, 40, 1, 0, 100, 3 };
     public static Ui ui;
@@ -209,7 +209,7 @@ public class PlayerResourcesManager : MonoBehaviour
                 scrapSource = 0;
                 return;
             }
-            else if (scrapSource > 10)
+            else if (scrapSource > 20)
             {
                 SourceFusedArrows += 1;
                 scrapSource = 0;

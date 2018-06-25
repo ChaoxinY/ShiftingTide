@@ -108,12 +108,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a85f8c1c107c734c8595cbd71e35cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFloating: 1
+  destination: {x: 0, y: 0, z: 0}
+  objectToChase: {fileID: 0}
   surfaceColors:
   - {fileID: 2100000, guid: 609b5fb25e012b542bbedba87eb5eab0, type: 2}
   - {fileID: 2100000, guid: f5ebbaed4083fd34cb9d24dae2e0e93b, type: 2}
   - {fileID: 2100000, guid: 7f5925eb881a12f48ba9d87e5b5a5f1b, type: 2}
   - {fileID: 2100000, guid: bfd597acdbdac054b9046853f3b7a8fe, type: 2}
+  - {fileID: 2100000, guid: fd302da43f5a2d5429ff97138c40424e, type: 2}
   negativeSurfaceColors:
   - {fileID: 2100000, guid: c13d3b0b24285e44b9ee5224e53166c0, type: 2}
   - {fileID: 0}
@@ -122,5 +124,3 @@ MonoBehaviour:
   movementSpeed: 0
   colorIndex: 0
   preSpawned: 0
-  destination: {x: 0, y: 0, z: 0}
-  objectToChase: {fileID: 0}

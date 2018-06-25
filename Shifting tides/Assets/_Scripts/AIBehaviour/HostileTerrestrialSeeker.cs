@@ -60,7 +60,7 @@ public class HostileTerrestrialSeeker : Terrestrial
     {
         if (collision.gameObject.tag == "Arrow")
         {
-            objectToChase = GameObject.Find("Player");
+            //objectToChase = GameObject.Find("Player");
             GotHit(collision.gameObject);
         }
     }

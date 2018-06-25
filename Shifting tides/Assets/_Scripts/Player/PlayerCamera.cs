@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System;
+
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -77,7 +77,7 @@ public class PlayerCamera : MonoBehaviour
         }
     }
     void LateUpdate()
-    {   
+    {
         //inside combat state class
         basicMovement.bow.transform.LookAt(shootTarget.transform);
         if (lockedOn)
@@ -109,8 +109,7 @@ public class PlayerCamera : MonoBehaviour
         smoothPivotOffset = Vector3.Lerp(smoothPivotOffset, targetPivotOffset, smoothSpeed * Time.deltaTime);
         smoothCamOffset = Vector3.Lerp(smoothCamOffset, noCollisionOffset, smoothSpeed * Time.deltaTime);
         transform.position = player.position + camYRotation * smoothPivotOffset + aimRotation * smoothCamOffset;
-        transform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetComponent<Camera>().fieldOfView, DetermineCurrentFOV(), Time.deltaTime * 1.2f);
-
+        transform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetComponent<Camera>().fieldOfView, DetermineCurrentFOV(), Time.deltaTime * 1.2f);       
     }
     public float DetermineCurrentFOV()
     {
@@ -135,6 +134,23 @@ public class PlayerCamera : MonoBehaviour
             targetFOV = 80f;
         }
         return targetFOV;
+    }
+
+    public IEnumerator DoShake(int timesToShake, float shakeInterval, float shakeAmout)
+    {
+        Vector3 camPos = cameraMain.transform.position;
+        for (int i = 0; i < timesToShake; i++)
+        {
+            Debug.Log("Called");
+            float shakeAmtX = Random.Range(-shakeAmout, shakeAmout);
+            float shakeAmtY = Random.Range(-shakeAmout, shakeAmout);
+            camPos.x += shakeAmtX;
+            camPos.y += shakeAmtY;
+            Debug.Log(camPos);
+            cameraMain.transform.position = camPos;
+            yield return new WaitForSeconds(shakeInterval);
+        }
+        yield break;
     }
     public void ResetTargetOffsets()
     {

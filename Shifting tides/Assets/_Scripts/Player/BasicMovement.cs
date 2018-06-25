@@ -23,6 +23,7 @@ public class BasicMovement : MonoBehaviour
     public GameObject[] dashesImages;
     public Ui ui;
     public PlayerCamera plyCamera;
+    public AudioSource[] bowSoundSources;
     public bool onGround, isAiming;
     public float defaultMoveForce, moveForce, speedLimit, runLimit, moveLimit, dashForce, DashLimit,
         jumpVel, gravity, maxInput, startArrowSpeed, maxArrowSpeed,arrowBaseDamage;
@@ -236,9 +237,12 @@ public class BasicMovement : MonoBehaviour
 
     private void ChargeUpArrow()
     {
+       
         AimRotate();       
         if (playerParticleSystemManager.isPlayingChargingAnimation == false)
         {
+
+            bowSoundSources[1].Play();
             playerParticleSystemManager.PlayChargingAnimation();
         }
         if (playerParticleSystemManager.isPlayingChargedUpAnimation == false) {
@@ -270,15 +274,14 @@ public class BasicMovement : MonoBehaviour
         return Physics.Raycast(transform.position, Vector3.down, 1.2f);
     }
     private void ShootArrow()
-    {
+    {       
         PlayerResourcesManager.Arrows -= 1;
         GameObject Arrow = Instantiate(arrow, bow.transform.position, bow.transform.rotation);
         Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * arrowSpeed, ForceMode.Impulse);
-        Arrow.GetComponent<ArrowBehaviour>().baseDamage = arrowBaseDamage;
+        Arrow.GetComponent<ArrowBehaviour>().baseDamage = arrowBaseDamage;    
         if (isAiming) isAiming = !isAiming;
-        StartCoroutine(playerParticleSystemManager.PlayerFireAnimation());
-        cameraMain.fieldOfView += 1.5f;
-       // ResetArrowSpeed();
+        StartCoroutine(playerParticleSystemManager.PlayerFireAnimation());      
+        bowSoundSources[0].Play();
     }
 
     void OnCollisionEnter(Collision other)

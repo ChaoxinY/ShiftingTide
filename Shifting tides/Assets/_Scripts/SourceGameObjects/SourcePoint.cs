@@ -6,11 +6,12 @@ public class SourcePoint : StandardInteractiveGameObject
 {
     private Vector3 rotationValue;
     /// <summary>
-    /// addResource 0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes
+    /// addResource 0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes, 4: Scraps
     /// </summary>
     private int[] addResource = new int[5];
-    private int[] addResourceValue = { 5, 10, 1, 1 };
+    private int[] addResourceValue = { 5, 10, 1, 1,1 };
     private float immuneTime, rotationSpeed;
+    //private Coroutine pickedUpCorutine;
 
     public Vector3 destination;
     public GameObject objectToChase;
@@ -25,7 +26,7 @@ public class SourcePoint : StandardInteractiveGameObject
         base.Initialize();
         rotationValue = new Vector3(Random.Range(-1, 2), Random.Range(-1, 2), Random.Range(-1, 2));
         rotationSpeed = Random.Range(1.1f, 3);
-        transform.localScale = new Vector3(Random.Range(0.1f, 0.7f), Random.Range(0.1f, 0.7f), Random.Range(0.1f, 0.7f));
+        transform.localScale = new Vector3(Random.Range(0.1f, 0.4f), Random.Range(0.1f, 0.4f), Random.Range(0.1f, 0.4f));
         meshRenderer = GetComponent<MeshRenderer>();
         if (preSpawned)
         {
@@ -40,6 +41,7 @@ public class SourcePoint : StandardInteractiveGameObject
         {
             destination = objectToChase.transform.position;
             transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * movementSpeed);
+            transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(0.05f, 0.05f, 0.05f),Time.deltaTime*0.3f);
         }
     }
 
@@ -68,7 +70,12 @@ public class SourcePoint : StandardInteractiveGameObject
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+      
+    //}
+
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -98,6 +105,7 @@ public class SourcePoint : StandardInteractiveGameObject
         this.destination = destination;
         meshRenderer = GetComponent<MeshRenderer>();
         this.movementSpeed = movementSpeed;
+        //Needs to be reworked
         if (colorIndex < 0)
         {
             addResource[colorIndex] = -addResourceValue[colorIndex];
@@ -114,6 +122,7 @@ public class SourcePoint : StandardInteractiveGameObject
         PlayerResourcesManager.SourceReserve += addResource[1];
         PlayerResourcesManager.JumpsLeft += addResource[2];
         PlayerResourcesManager.Dashes += addResource[3];
+        PlayerResourcesManager.ScrapSource += addResource[4];
         Destroy(gameObject);
     }
 }
