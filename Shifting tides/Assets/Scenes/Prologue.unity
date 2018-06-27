@@ -16724,7 +16724,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 343821161}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.9111345, y: -2.26, z: 2.2266846}
+  m_LocalPosition: {x: 3.9111345, y: -4.77, z: 2.2266846}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1189495417}
@@ -44486,7 +44486,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 888197728}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -8.9, y: -11.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1408258264}
@@ -49462,7 +49462,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &916250779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50001,7 +50001,7 @@ MonoBehaviour:
   healthBars:
   - {fileID: 1847592454}
   - {fileID: 1444135063}
-  maxHealth: 200
+  maxHealth: 2000
 --- !u!114 &977415904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50091,7 +50091,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 977415900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.96, y: 0.358, z: -1190.076}
+  m_LocalPosition: {x: -19.4, y: -13.3, z: -1190.076}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 753618965}
@@ -50649,7 +50649,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1037539774}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.8088655, y: -4.88, z: -5.4733887}
+  m_LocalPosition: {x: -6.8088655, y: -3.6, z: -5.4733887}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1189495417}
@@ -50968,7 +50968,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1067381800}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.508865, y: -3.51, z: 2.7565918}
+  m_LocalPosition: {x: -19.508865, y: -4.49, z: 2.7565918}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 888197729}
@@ -62691,7 +62691,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1408258260}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.018865585, y: -5.07, z: -10.963379}
+  m_LocalPosition: {x: -0.018865585, y: -3.73, z: -10.963379}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 888197729}
@@ -69574,7 +69574,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1646045516}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.27, y: -4.1, z: 14.31}
+  m_LocalPosition: {x: -8.27, y: -5, z: 14.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 888197729}
@@ -74698,7 +74698,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1, z: 1.5}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.07, z: 0}
 --- !u!1 &1705995750
 GameObject:
@@ -85324,7 +85324,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 286226013}
   m_FillRect: {fileID: 228188679}
   m_HandleRect: {fileID: 286226012}
@@ -85696,13 +85696,14 @@ MonoBehaviour:
   targetOffeset: {x: 5, y: 5, z: -1}
   pivotOffset: {x: 0, y: 0.4, z: 0}
   camOffset: {x: 0.55, y: 0.5, z: -0.9}
+  refVelocity: {x: 0, y: 0, z: 0}
   mouseX: 0
   mouseY: 0
   cameraMouseY: 0
   angleH: 0
   targetFOV: 60
-  smoothSpeed: 0
-  mouseSensitivity: 4.59
+  smoothSpeed: 20
+  mouseSensitivity: 3
 --- !u!114 &1854892248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86316,7 +86317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1907224043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96588,7 +96589,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!114 &1962718923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102640,7 +102641,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5, z: 1.5}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &2081026816
 MeshFilter:

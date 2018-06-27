@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf24fbc8db97c284f8e2cf14e6fc9232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyObjectAfterSeconds: 0.1
+  destroyObjectAfterSeconds: 0.3
 --- !u!198 &198343005625852428
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1331,19 +1331,19 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.7242346, g: 0.88068104, b: 0.990566, a: 1}
-        key1: {r: 0.4039216, g: 0.74509805, b: 0.9686275, a: 0.6117647}
-        key2: {r: 0.2783019, g: 0.7143279, b: 1, a: 1}
-        key3: {r: 1, g: 0.627451, b: 0.21176472, a: 0}
-        key4: {r: 0.9450981, g: 0.41960788, b: 0.16078432, a: 0}
+        key0: {r: 0.96724814, g: 0.97541517, b: 0.9811321, a: 1}
+        key1: {r: 0.7242346, g: 0.88068104, b: 0.990566, a: 0.6117647}
+        key2: {r: 0.4039216, g: 0.74509805, b: 0.9686275, a: 1}
+        key3: {r: 0.4039216, g: 0.74509805, b: 0.9686275, a: 0}
+        key4: {r: 0.4039216, g: 0.74509805, b: 0.9686275, a: 0}
         key5: {r: 0.9058824, g: 0.3137255, b: 0.14901961, a: 0}
         key6: {r: 0.8745099, g: 0.20784315, b: 0.1254902, a: 0}
         key7: {r: 0.8745099, g: 0.20784315, b: 0.1254902, a: 0}
-        ctime0: 13493
-        ctime1: 20239
-        ctime2: 26407
-        ctime3: 35273
-        ctime4: 47609
+        ctime0: 964
+        ctime1: 19275
+        ctime2: 39707
+        ctime3: 53777
+        ctime4: 53777
         ctime5: 59560
         ctime6: 65535
         ctime7: 65535
@@ -1356,7 +1356,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 6
+        m_NumColorKeys: 4
         m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2

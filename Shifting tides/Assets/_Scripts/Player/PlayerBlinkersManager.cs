@@ -51,7 +51,7 @@ public class PlayerBlinkersManager : ParticleSystemHandler
         blinkers[2].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[2]);
         basicMovement.arrowSpeed = 60f;
-        basicMovement.arrowBaseDamage = 25;
+        basicMovement.arrowBaseDamage += 25;
 
         yield return new WaitForSeconds(0.3f);
         blinkers[3].PlayParticleAnimation();
