@@ -7,7 +7,7 @@ public class ArrowBehaviour : Projectile
 {
     [HideInInspector]
     public float baseDamage;
-    public GameObject bleedEffect;
+    public GameObject[] bleedEffect;
     private AudioSource onHitSoundSource;
     public AudioClip[] onHitSounds;
 
@@ -63,14 +63,17 @@ public class ArrowBehaviour : Projectile
     private void EnemyHit(Collision other)
     {
         
-        SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect);
+        SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[0]);
         if (other.collider.name == "CritSpot")
         {
             onHitSoundSource.clip = onHitSounds[2];
             onHitSoundSource.Play();
             other.gameObject.GetComponent<HostileResourceManager>().GotHitOnCritSpot(baseDamage);
+            SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[1]);
+            SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[3]);
             return;
         }
+        SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[2]);
         onHitSoundSource.clip = onHitSounds[1];
         onHitSoundSource.Play();
         other.gameObject.GetComponentInParent<HostileResourceManager>().GotHit(baseDamage);

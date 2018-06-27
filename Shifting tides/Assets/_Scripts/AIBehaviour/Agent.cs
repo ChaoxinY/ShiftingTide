@@ -14,7 +14,7 @@ public class Agent : StandardInteractiveGameObject
     protected Vector3 currentTarget, destination,nearestWaypoint, lastPatrolPointVisted;
     protected string overwritingBehaviour;
     protected string standardBehaviour;
-    protected bool StandardBehaviourFinished = true;
+    protected bool StandardBehaviourFinished = false;
     protected bool isResting = false;
 
     public List<Transform> wayPoints;
@@ -24,6 +24,12 @@ public class Agent : StandardInteractiveGameObject
   
     protected override IEnumerator LocalUpdate()
     {
+        Debug.Log("UpdateRunning");
+        Debug.Log("Is resting = "  + isResting);
+        Debug.Log("StandardBehaviourFinished = "+ StandardBehaviourFinished);
+        Debug.Log(standardBehaviour);
+
+
         yield return StartCoroutine(base.LocalUpdate());
         if (isResting)
         {
@@ -40,7 +46,7 @@ public class Agent : StandardInteractiveGameObject
             yield return StartCoroutine(overwritingBehaviour);
         }
         if (StandardBehaviourFinished)
-        {
+        {           
             StandardBehaviourFinished = false;
             yield return StartCoroutine(DetermineNextAgentBehaviour());
             StartCoroutine(standardBehaviour);
@@ -58,6 +64,7 @@ public class Agent : StandardInteractiveGameObject
         InitializeWaypoints();
         AddBehaviours();
         StartCoroutine(DetermineNextAgentBehaviour());
+        StartCoroutine(standardBehaviour);
     }
 
     protected void InitializeWaypoints()
@@ -74,6 +81,7 @@ public class Agent : StandardInteractiveGameObject
     }
 
     protected virtual void AddBehaviours() {
+        spontaneousBehaviours.Add("Roaming");
         spontaneousBehaviours.Add("ChangePatrolRoute");
         patternedBehaviours.Add("Patroling");
     }
@@ -88,7 +96,6 @@ public class Agent : StandardInteractiveGameObject
         List<Vector3> availablePatrolPoints = new List<Vector3>();
         foreach (Transform point in patrolPoints)
         {
-
             if (lastPatrolPointVisted != point.position)
             {
                 availablePatrolPoints.Add(point.position);
@@ -140,10 +147,11 @@ public class Agent : StandardInteractiveGameObject
 
     protected IEnumerator FinishStandandrMovementBehaviour(float baseRestTime,float maxRestTime)
     {
-        isResting = true;
-        yield return new WaitForSeconds(Random.Range(baseRestTime, maxRestTime * (1 + desire[2])));
+        isResting = true;   
+        yield return new WaitForSeconds(Random.Range(baseRestTime, maxRestTime * 2));
         isResting = false;
         StandardBehaviourFinished = true;
+        Debug.Log("Finished");
         yield break;
     }
 

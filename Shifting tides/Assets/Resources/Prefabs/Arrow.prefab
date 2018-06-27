@@ -378,8 +378,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDamage: 0
-  bleedEffect: {fileID: 1130865180375760, guid: 0674c3a496bc6d440a2e8f08e6ffe58d,
-    type: 2}
+  bleedEffect:
+  - {fileID: 1401143639888062, guid: 4bed7f08b0e8ef54c8163229b20fa7c1, type: 2}
+  - {fileID: 1070533824818104, guid: ecf38ef5d9a733749a82f51b3e989a57, type: 2}
+  - {fileID: 1258155573022268, guid: 9649b3fb7fb35cd48ab5a02a4aecebac, type: 2}
   onHitSounds:
   - {fileID: 8300000, guid: cc4dd72fa683be847b68cbf3c59e8391, type: 3}
   - {fileID: 8300000, guid: ad4487a1d80d3d1428447b32e4f9ce8a, type: 3}

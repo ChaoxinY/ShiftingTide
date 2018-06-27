@@ -78,13 +78,13 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
 
     public IEnumerator ChargeAnimation()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.3f);
         ChangeToStateTwoValues();
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.4f);
         ChangeToStateThreeValues();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         ChangeToStateFourValues();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         ChangeToStateFiveValues();
         yield break;
     }
@@ -92,7 +92,7 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
     private void ChangeToStateTwoValues()
     {
         targetProfielValues[0] = 9.5f;
-        targetProfielValues[1] = 1.2f;
+        targetProfielValues[1] = 2f;
         targetProfielValues[2] = 15;
         targetProfielValues[3] = 0.7f;
         targetProfielValues[4] = 0.3f;
@@ -104,7 +104,7 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
     private void ChangeToStateThreeValues()
     {
         targetProfielValues[0] = 9.5f;
-        targetProfielValues[1] = 1.5f;
+        targetProfielValues[1] = 3f;
         targetProfielValues[2] = 15;
         targetProfielValues[3] = 0.2f;
         targetProfielValues[4] = 0.2f;

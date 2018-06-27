@@ -25,7 +25,7 @@ public class PlayerCamera : MonoBehaviour
     public Transform player;
     public BasicMovement basicMovement;
     public GameObject shootTarget;
-    public Vector3 targetOffeset, pivotOffset, camOffset;
+    public Vector3 targetOffeset, pivotOffset, camOffset,refVelocity = Vector3.zero;
 
     [HideInInspector]
     public float mouseX, mouseY, cameraMouseY, angleH, targetFOV;
@@ -50,10 +50,7 @@ public class PlayerCamera : MonoBehaviour
 
     void Update()
     {
-        angleH += Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1) * mouseSensitivity;
-        angleV += Mathf.Clamp(Input.GetAxis("Mouse Y"), -1, 1) * mouseSensitivity;
-        angleV = Mathf.Clamp(angleV, MIN_Y, MAX_Y);
-
+      
         //Inside combat state class
         if (Input.GetMouseButtonDown(2))
         {
@@ -76,21 +73,13 @@ public class PlayerCamera : MonoBehaviour
             CheckIfTargetIsInVision();
         }
     }
-    void LateUpdate()
+   
+    private void FixedUpdate()
     {
-        //inside combat state class
-        basicMovement.bow.transform.LookAt(shootTarget.transform);
-        if (lockedOn)
-        {
-            shootTarget.transform.position = nearestTarget.position;
-        }
-        else
-        {
-            shootTarget.transform.position = cameraMain.transform.position + cameraMain.transform.forward * 30f + cameraMain.transform.right * targetOffeset.x
-            + cameraMain.transform.up * targetOffeset.y;
-        }
+        angleH += Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1) * mouseSensitivity;
+        angleV += Mathf.Clamp(Input.GetAxis("Mouse Y"), -1, 1) * mouseSensitivity;
+        angleV = Mathf.Clamp(angleV, MIN_Y, MAX_Y);
 
-        cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
         Quaternion aimRotation = Quaternion.Euler(-angleV, angleH, 0);
         Quaternion camYRotation = Quaternion.Euler(0, angleH, 0);
         transform.rotation = aimRotation;
@@ -108,9 +97,29 @@ public class PlayerCamera : MonoBehaviour
         }
         smoothPivotOffset = Vector3.Lerp(smoothPivotOffset, targetPivotOffset, smoothSpeed * Time.deltaTime);
         smoothCamOffset = Vector3.Lerp(smoothCamOffset, noCollisionOffset, smoothSpeed * Time.deltaTime);
-        transform.position = player.position + camYRotation * smoothPivotOffset + aimRotation * smoothCamOffset;
-        transform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetComponent<Camera>().fieldOfView, DetermineCurrentFOV(), Time.deltaTime * 1.2f);       
+
+        transform.position = Vector3.SmoothDamp(transform.position, player.position + camYRotation * smoothPivotOffset + aimRotation * smoothCamOffset, ref refVelocity, Time.deltaTime * 3f);
     }
+
+    void LateUpdate()
+    {
+        //inside combat state class
+        basicMovement.bow.transform.LookAt(shootTarget.transform);
+        if (lockedOn)
+        {
+            shootTarget.transform.position = nearestTarget.position;
+        }
+        else
+        {
+            shootTarget.transform.position = cameraMain.transform.position + cameraMain.transform.forward * 30f + cameraMain.transform.right * targetOffeset.x
+            + cameraMain.transform.up * targetOffeset.y;
+        }
+
+        cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
+
+        transform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetComponent<Camera>().fieldOfView, DetermineCurrentFOV(), Time.deltaTime * 1.2f);
+    }
+
     public float DetermineCurrentFOV()
     {
         float targetFOV = 80f;
@@ -157,6 +166,8 @@ public class PlayerCamera : MonoBehaviour
         targetPivotOffset = pivotOffset;
         targetCamOffset = camOffset;
     }
+
+
     bool DoubleViewingPosCheck(Vector3 checkPos, float offset)
     {
         float playerFocusHeight = player.GetComponentInChildren<CapsuleCollider>().center.y;

@@ -9,11 +9,11 @@ public class HostileTerrestrialSeeker : Terrestrial
 
     public float visionRange, sightRange, chaseRange, attackRange;
 
-    protected override void Initialize()
-    {
-        base.Initialize();
+    //protected override void Initialize()
+    //{
+    //    base.Initialize();
  
-    }
+    //}
 
     IEnumerator Searching()
     {

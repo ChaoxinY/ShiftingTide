@@ -2,12 +2,15 @@
 using UnityEngine.UI;
 using System.Collections;
 
+
 public class HostileResourceManager : MonoBehaviour
 {
     public Slider[] healthBars;
     public float maxHealth;
+
     private Canvas uiCanvas;
     private float currentHealth;
+    private IEnumerator healthBarVisibilityCoroutine;
 
     private void Start()
     {
@@ -28,6 +31,8 @@ public class HostileResourceManager : MonoBehaviour
             healthBars[i].maxValue = maxHealth;
             healthBars[i].value = maxHealth;
         }
+        healthBarVisibilityCoroutine = HideHealthBars(0);
+        StartCoroutine(healthBarVisibilityCoroutine);
     }
 
     public virtual void GotHit(float baseDamage) {
@@ -39,7 +44,6 @@ public class HostileResourceManager : MonoBehaviour
     {
         CurrentHealth -= baseDamage * 2;
         StartCoroutine(OnHitDrops(2,4));
-        SpawnSourcePoint();
     }
 
     public void SpawnSourcePoint() {
@@ -82,13 +86,30 @@ public class HostileResourceManager : MonoBehaviour
                 this.enabled = false;
             }
             if (currentHealth > maxHealth) { currentHealth = maxHealth; }
+            ShowHealthBars();
             StartCoroutine(LerpHealthBarValue(currentHealth));
+            StopCoroutine(healthBarVisibilityCoroutine);
+            healthBarVisibilityCoroutine = HideHealthBars(6);
+            StartCoroutine(healthBarVisibilityCoroutine);
         }
+    }
+
+    private void ShowHealthBars()
+    {
+        healthBars[0].gameObject.SetActive(true);
+        healthBars[1].gameObject.SetActive(true);
+    }
+
+    private IEnumerator HideHealthBars(int hideInSecond) {
+        yield return new WaitForSeconds(hideInSecond);
+        healthBars[0].gameObject.SetActive(false);
+        healthBars[1].gameObject.SetActive(false);
+        yield break;
     }
 
     private IEnumerator LerpHealthBarValue(float targetValue) {
 
-        while (!(healthBars[1].value + 0.5f >= targetValue) || !(healthBars[1].value - 0.5f <= targetValue))
+        while (!(healthBars[1].value - 0.5f <= targetValue))
         {
             if (healthBars[0].value != targetValue)
             {

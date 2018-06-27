@@ -6,21 +6,20 @@ using UnityEngine.UI;
 
 public class Terrestrial : Agent 
 {
-    protected NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     public float standardSpeed, currentSpeed;
 
     protected override void Initialize()
     {
         base.Initialize();
-        agent = GetComponent<NavMeshAgent>();
+        agent = gameObject.GetComponent<NavMeshAgent>();
         agent.speed = standardSpeed;
     }
 
     protected override void AddBehaviours()
     {
         base.AddBehaviours();
-        spontaneousBehaviours.Add("Roaming");
         restingBehaviours.Add("Circling");
     }
     protected override IEnumerator PauseOnTimeStop()
@@ -42,22 +41,25 @@ public class Terrestrial : Agent
         MoveTowardsTarget(patrolRoute.Dequeue());
         patrolRoute.Enqueue(lastPatrolPointVisted);
         nearestWaypoint = lastPatrolPointVisted;
-        yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 1f));
-        yield return StartCoroutine(FinishStandandrMovementBehaviour(15,25));
+        yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 2f));
+        Debug.Log("Arrived patrol");
+        yield return StartCoroutine(FinishStandandrMovementBehaviour(10,20));
     }
-
+    
     protected override IEnumerator Roaming()
     {
         Vector3 currentTarget = wayPoints[Random.Range(0, wayPoints.Count)].position;
         nearestWaypoint = currentTarget;
         MoveTowardsTarget(currentTarget);
-        yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 1f));
-        yield return StartCoroutine(FinishStandandrMovementBehaviour(15,25));
+        yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 2f));
+        Debug.Log("Arrived");
+        yield return StartCoroutine(FinishStandandrMovementBehaviour(10,20));
     }
     private IEnumerator Circling()
     {
+        Debug.Log("Circling");
         MoveTowardsTarget(transform.position);      
-        yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 1f));
+        yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 0.5f));
         overwritingBehaviour = null;
         yield break;
     }
@@ -65,6 +67,7 @@ public class Terrestrial : Agent
     protected void MoveTowardsTarget(Vector3 currentTarget)
     {
         destination = currentTarget + new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
+        Debug.Log(destination);
         agent.SetDestination(destination);
     }
 
