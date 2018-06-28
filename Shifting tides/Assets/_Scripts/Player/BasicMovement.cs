@@ -11,6 +11,7 @@ public class BasicMovement : MonoBehaviour
     private GameObject arrow;
     private Camera cameraMain;
     private GameManager gameMng;
+    private PlayerTideComboManager playerTideComboManager;
     //0: bow , 1: The Source
     private bool[] skillObtained = new bool[10];
     private float h, v, inputSpeed, slopeAngle;
@@ -36,6 +37,7 @@ public class BasicMovement : MonoBehaviour
         ResetArrowSpeed();
         rbPlayer = GetComponent<Rigidbody>();
         colExtents = GetComponent<Collider>().bounds.extents;
+        playerTideComboManager = GetComponent<PlayerTideComboManager>();
     }
 
     void Update()
@@ -85,6 +87,8 @@ public class BasicMovement : MonoBehaviour
         horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, speedLimit);
         rbPlayer.velocity = new Vector3(horizontalVelocity.x, rbPlayer.velocity.y, horizontalVelocity.y);
     }
+
+  
 
     private void ResetArrowSpeed()
     {
@@ -210,8 +214,9 @@ public class BasicMovement : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        ui.dashCharges[(int)PlayerResourcesManager.Dashes - 1].enabled = false;
+        playerTideComboManager.StartCombo();
         PlayerResourcesManager.Dashes -= 1;
+        dashesImages[(int)PlayerResourcesManager.Dashes].SetActive(false);
         moveForce = dashForce;
         speedLimit = DashLimit;
         maxInput = 1f;
@@ -222,18 +227,9 @@ public class BasicMovement : MonoBehaviour
             speedLimit = Mathf.Lerp(speedLimit, runLimit, Time.deltaTime * 5f);
             maxInput = Mathf.Lerp(maxInput, 0.5f, Time.deltaTime * 5f);
             yield return new WaitForSeconds(0.03f);
-        }
-        if (PlayerResourcesManager.Dashes == 0)
-            Invoke("ChargeUpDash", 0.7f);
+        }      
         yield break;
     }
-
-    private void ChargeUpDash()
-    {
-        ui.dashCharges[(int)PlayerResourcesManager.Dashes].enabled = true;
-        PlayerResourcesManager.Dashes += 1;
-    }
-
 
     private void ChargeUpArrow()
     {
@@ -298,12 +294,14 @@ public class BasicMovement : MonoBehaviour
             case "TheSource":
                 GameObject.Destroy(other.gameObject);
                 skillObtained[1] = true;
-                UI.SetActive(true);
-                dashesImages[0].SetActive(true);
-                PlayerResourcesManager.playerResourcesCaps[3] = 1;
-                PlayerResourcesManager.playerResourcesCaps[2] = 2;
-                Debug.Log(PlayerResourcesManager.playerResourcesCaps[2]);
-                PlayerResourcesManager.Dashes += 1;
+                UI.SetActive(true); 
+              
+                PlayerResourcesManager.playerResourcesCaps[3] = 3;
+                for (int i = 0; i < 3; i++)
+                {                 
+                    StartCoroutine(PlayerResourcesManager.ChargeUpDash(0));
+                }
+                PlayerResourcesManager.playerResourcesCaps[2] = 4;
                 break;
         }
     }

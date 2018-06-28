@@ -9,24 +9,48 @@ public class PlayerResourcesManager : MonoBehaviour
     /// </summary>
     private static float[] playerResources = new float[6];
     private static int scrapSource;
-
+ 
     /// <summary>
     ///  0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes 4 : arrows 5： SourceFused Arrows
     /// </summary>
-    public static float[] playerResourcesCaps = { 100, 40, 1, 0, 100, 3 };
+    public static float[] playerResourcesCaps = { 100, 40, 4, 3, 100, 3 };
     public static Ui ui;
+
+    private float rechargeTimer = 5;
 
     private void Start()
     {
         ui = GameObject.Find("UI").GetComponent<Ui>();
         Health = playerResourcesCaps[0];
         SourceReserve = 0;
-        JumpsLeft = playerResourcesCaps[2];
-        Dashes = playerResourcesCaps[3];
+        JumpsLeft = 0;
+        Dashes = 0;
         Arrows = 100;
         SourceFusedArrows = 0;
         ScrapSource = 0;
 
+    }
+
+    void Update() {
+        if (!IsThisResourceAtMax(3))
+        {
+            rechargeTimer -= Time.deltaTime;
+            if (rechargeTimer <= 0)
+            {
+                StartCoroutine(ChargeUpDash(0));
+                rechargeTimer = 5;
+            }
+        }
+    }
+
+    public static IEnumerator ChargeUpDash(float timeToWait)
+    {
+        yield return new WaitForSeconds(timeToWait);
+        Dashes += 1;
+        for (int i = 0; i < Dashes; i++)
+        {
+            ui.dashCharges[i].gameObject.SetActive (true);
+        }
     }
 
     /// <summary>

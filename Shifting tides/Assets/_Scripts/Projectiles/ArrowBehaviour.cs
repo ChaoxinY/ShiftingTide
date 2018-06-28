@@ -8,12 +8,13 @@ public class ArrowBehaviour : Projectile
     [HideInInspector]
     public float baseDamage;
     public GameObject[] bleedEffect;
-    private AudioSource onHitSoundSource;
     public AudioClip[] onHitSounds;
 
     private Vector3 arrowPlaceholderRotation;
     private GameObject arrowPlaceholder;
     private Quaternion localRotation;
+    private AudioSource onHitSoundSource;
+    private PlayerTideComboManager playerTideComboManager;
 
     public float penetrationStrength;
 
@@ -24,6 +25,7 @@ public class ArrowBehaviour : Projectile
         gravity = -25.81f;
         rbObject = gameObject.GetComponent<Rigidbody>();
         onHitSoundSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+        playerTideComboManager = GameObject.Find("Player").GetComponent<PlayerTideComboManager>();
     }
 
     protected override IEnumerator LocalUpdate()
@@ -71,6 +73,7 @@ public class ArrowBehaviour : Projectile
             other.gameObject.GetComponent<HostileResourceManager>().GotHitOnCritSpot(baseDamage);
             SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[1], hitSpeed);
             SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[3], hitSpeed);
+            playerTideComboManager.AddCombo();
             return;
         }
         SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[2],hitSpeed);

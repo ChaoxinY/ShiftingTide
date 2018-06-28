@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class PlayerBlinkersManager : ParticleSystemHandler
 {
     public PlayerBlinkerParticleSystemHandler[] blinkers;
+    public float blinkerCooldownReduction;
 
     private List<PlayerBlinkerParticleSystemHandler> activedBlinkers =  new List<PlayerBlinkerParticleSystemHandler>();
     private IEnumerator blinkerAnimationCoroutine;
@@ -35,25 +36,25 @@ public class PlayerBlinkersManager : ParticleSystemHandler
 
     private IEnumerator BlinkerAnimation() {
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f/(1+ blinkerCooldownReduction));
         blinkers[0].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[0]);
         basicMovement.arrowSpeed = 25f;
         basicMovement.arrowBaseDamage += 10;
 
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.6f/(1 + blinkerCooldownReduction));
         blinkers[1].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[1]);
         basicMovement.arrowSpeed = 35f;
         basicMovement.arrowBaseDamage += 15;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.4f/(1 + blinkerCooldownReduction));
         blinkers[2].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[2]);
         basicMovement.arrowSpeed = 60f;
         basicMovement.arrowBaseDamage += 25;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f/(1 + blinkerCooldownReduction));
         blinkers[3].PlayParticleAnimation();
         basicMovement.arrowSpeed = 100f;
         basicMovement.arrowBaseDamage += 50;
