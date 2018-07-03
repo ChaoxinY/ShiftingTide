@@ -13,13 +13,14 @@ public class PlayerBlinkerParticleSystemHandler : ParticleSystemHandler
         particleSystemToManage = GetComponent<ParticleSystem>();
         mainModule = particleSystemToManage.main;
         lifeTime = mainModule.startLifetime.constant;
+        currentProfielValues[0] = mainModule.simulationSpeed;
         particles = new ParticleSystem.Particle[particleSystemToManage.main.maxParticles];
     }
     public override void PlayParticleAnimation()
     {
         base.PlayParticleAnimation();
-        mainModule.loop = false;
         prolongParticleLifeTimeCoroutine = ProlongLifeTime();
+        mainModule.simulationSpeed = currentProfielValues[0];
         StartCoroutine(prolongParticleLifeTimeCoroutine);
     }
     public override void StopParticleAnimation()
@@ -30,18 +31,8 @@ public class PlayerBlinkerParticleSystemHandler : ParticleSystemHandler
     }
     private IEnumerator ProlongLifeTime()
     {
-        yield return new WaitForSeconds(lifeTime * 0.6f);
-    
-        while (true) {
-            int numParticlesAlive = particleSystemToManage.GetParticles(particles);       
-            for (int i = 0; i < numParticlesAlive; i++)
-        {
-            particles[i].remainingLifetime += 0.5f;
-        }
-
-        particleSystemToManage.SetParticles(particles, numParticlesAlive);
-        yield return new WaitForSeconds(0.5f);
-        }
-
+        yield return new WaitForSeconds(lifeTime*0.9f);
+        currentProfielValues[0] = 0;
+        mainModule.simulationSpeed = currentProfielValues[0];
     }
 }

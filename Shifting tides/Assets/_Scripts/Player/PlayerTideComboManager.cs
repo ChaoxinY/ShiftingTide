@@ -63,12 +63,16 @@ public class PlayerTideComboManager : MonoBehaviour
 
     public void ResetCombo()
     {
-        currentCombo = 0;
-        bowChargeSpeedReduction = 0;
-        playerBlinkersManager.blinkerCooldownReduction = bowChargeSpeedReduction;
-        comboSlider.gameObject.SetActive(false);
-        comboDisplay.gameObject.SetActive(false);
-        comboDisplay.text = ("HIT : " + currentCombo);
+        if (comboActive)
+        {
+            currentCombo = 0;
+            bowChargeSpeedReduction = 0;
+            playerBlinkersManager.blinkerCooldownReduction = bowChargeSpeedReduction;
+            comboSlider.gameObject.SetActive(false);
+            comboDisplay.gameObject.SetActive(false);
+            comboActive = false;
+            comboDisplay.text = ("HIT : " + currentCombo);
+        }
     }
 
     public float ComboTimeLeft

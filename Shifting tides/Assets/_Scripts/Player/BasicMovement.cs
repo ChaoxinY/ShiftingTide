@@ -14,6 +14,7 @@ public class BasicMovement : MonoBehaviour
     private PlayerTideComboManager playerTideComboManager;
     //0: bow , 1: The Source
     private bool[] skillObtained = new bool[10];
+    private bool dashWarmUp;
     private float h, v, inputSpeed, slopeAngle;
 
     [HideInInspector]
@@ -62,7 +63,6 @@ public class BasicMovement : MonoBehaviour
         }
         else if (onGround)
         {
-
             gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 0.34f;
             gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 0.6f;
         }
@@ -88,8 +88,6 @@ public class BasicMovement : MonoBehaviour
         rbPlayer.velocity = new Vector3(horizontalVelocity.x, rbPlayer.velocity.y, horizontalVelocity.y);
     }
 
-  
-
     private void ResetArrowSpeed()
     {
         arrowSpeed = startArrowSpeed;
@@ -98,7 +96,7 @@ public class BasicMovement : MonoBehaviour
     private void ManageInput()
     {
 
-        if (Input.GetKeyDown(KeyCode.F) && PlayerResourcesManager.IsThereEnoughResource(3, 0) && skillObtained[1])
+        if (Input.GetKeyDown(KeyCode.F) && PlayerResourcesManager.IsThereEnoughResource(3, 0) && skillObtained[1] && !dashWarmUp)
         {
             StartCoroutine(Dash());
         }
@@ -152,7 +150,6 @@ public class BasicMovement : MonoBehaviour
 
     private void Rotate(float horizontal, float vertical)
     {
-
         Vector3 desiredDirection;
         Vector3 cameraForward = cameraMain.transform.TransformDirection(Vector3.forward);
 
@@ -209,11 +206,15 @@ public class BasicMovement : MonoBehaviour
     private void ChangeMoveSpeedLimit(bool isWalking, float targetLimit)
     {
         speedLimit = Mathf.Lerp(speedLimit, targetLimit, Time.deltaTime);
-        maxInput = isWalking ? maxInput = Mathf.Lerp(maxInput, 0.2f, Time.deltaTime * 5f) : maxInput = Mathf.Lerp(maxInput, 0.7f, Time.deltaTime * 1.2f);
+        maxInput = isWalking ? maxInput = Mathf.Lerp(maxInput, 0.2f, Time.deltaTime * 5f) :
+            maxInput = Mathf.Lerp(maxInput, 0.7f, Time.deltaTime * 1.2f);
     }
 
     private IEnumerator Dash()
     {
+        dashWarmUp = true;
+        yield return new WaitUntil(() => IsMoving());
+        dashWarmUp = false;
         playerTideComboManager.StartCombo();
         PlayerResourcesManager.Dashes -= 1;
         dashesImages[(int)PlayerResourcesManager.Dashes].SetActive(false);

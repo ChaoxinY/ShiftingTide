@@ -30,8 +30,7 @@ public abstract class TimeBoundGameObject : MonoBehaviour
 
     protected IEnumerator LocalUpdateController() {
 
-        Coroutine controledUpdate = StartCoroutine(LocalUpdate());
-        yield return controledUpdate;
+        yield return StartCoroutine(LocalUpdate());
         ShiftLocalUpdateState();
     }
 

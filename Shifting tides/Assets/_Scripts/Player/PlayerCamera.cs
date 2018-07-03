@@ -12,20 +12,17 @@ public class PlayerCamera : MonoBehaviour
     private const float MIN_Y = -60.0f;
     private const float cameraMouseMIN_Y = -20.0f;
     private float targetDistance;
-    private Transform nearestTarget;
     private Vector3 smoothPivotOffset, smoothCamOffset, targetPivotOffset, targetCamOffset, relCameraPos;
     private RaycastHit hits;
     private float angleV, relCameraPosMag;
-    private bool lockedOn;
+    private PlayerAimModule playerAimModule;
+    private PlayerPhysicsModule playerPhysicsModule;
 
     [HideInInspector]
     public Camera cameraMain;
-    public Image cursor;
-    public Sprite lockOnCursor, lockOffCursor;
     public Transform player;
-    public BasicMovement basicMovement;
-    public GameObject shootTarget;
-    public Vector3 targetOffeset, pivotOffset, camOffset,refVelocity = Vector3.zero;
+
+    public Vector3 pivotOffset, camOffset,refVelocity = Vector3.zero;
 
     [HideInInspector]
     public float mouseX, mouseY, cameraMouseY, angleH, targetFOV;
@@ -33,11 +30,9 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-        lockedOn = false;
-        //Cursor.visible = false;
+       //Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        cursor.sprite = lockOffCursor;
-        cameraMain = Camera.main;
+         cameraMain = Camera.main;
         relCameraPos = transform.position - player.position;
         relCameraPosMag = relCameraPos.magnitude - 0.5f;
         transform.position = player.position + Quaternion.identity * pivotOffset + Quaternion.identity * camOffset;
@@ -46,34 +41,10 @@ public class PlayerCamera : MonoBehaviour
         angleH = player.eulerAngles.y;
         targetFOV = 60f;
         ResetTargetOffsets();
+        playerAimModule = player.gameObject.GetComponent<PlayerAimModule>();
+        playerPhysicsModule = player.gameObject.GetComponent<PlayerPhysicsModule>();
     }
-
-    void Update()
-    {
-      
-        //Inside combat state class
-        if (Input.GetMouseButtonDown(2))
-        {
-            if (lockedOn)
-            {
-                cursor.GetComponent<Image>().sprite = lockOffCursor;
-                lockedOn = false;
-                nearestTarget = null;
-            }
-            else
-            {
-
-                LockOnTarget();
-            }
-
-        }
-
-        if (lockedOn)
-        {
-            CheckIfTargetIsInVision();
-        }
-    }
-   
+ 
     private void FixedUpdate()
     {
         angleH += Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1) * mouseSensitivity;
@@ -103,37 +74,24 @@ public class PlayerCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        //inside combat state class
-        basicMovement.bow.transform.LookAt(shootTarget.transform);
-        if (lockedOn)
-        {
-            shootTarget.transform.position = nearestTarget.position;
-        }
-        else
-        {
-            shootTarget.transform.position = cameraMain.transform.position + cameraMain.transform.forward * 30f + cameraMain.transform.right * targetOffeset.x
-            + cameraMain.transform.up * targetOffeset.y;
-        }
-
-        cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
-
+        //inside combat state class   
         transform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(transform.GetComponent<Camera>().fieldOfView, DetermineCurrentFOV(), Time.deltaTime * 1.2f);
     }
 
     public float DetermineCurrentFOV()
     {
         float targetFOV = 80f;
-        if (!basicMovement.isAiming)
+        if (!playerAimModule.isAiming)
         {
-            if (basicMovement.maxInput >= 0f && basicMovement.maxInput <= 0.4f)
+            if (playerPhysicsModule.maxInput >= 0f && playerPhysicsModule.maxInput <= 0.4f)
             {
                 return targetFOV;
             }
-            else if (basicMovement.maxInput > 0.4f && basicMovement.maxInput <= 0.7f)
+            else if (playerPhysicsModule.maxInput > 0.4f && playerPhysicsModule.maxInput <= 0.7f)
             {
                 return targetFOV = 70f;
             }
-            else if (basicMovement.maxInput > 0.7f)
+            else if (playerPhysicsModule.maxInput > 0.7f)
             {
                 return targetFOV = 100f;
             }
@@ -150,7 +108,6 @@ public class PlayerCamera : MonoBehaviour
         Vector3 camPos = cameraMain.transform.position;
         for (int i = 0; i < timesToShake; i++)
         {
-            Debug.Log("Called");
             float shakeAmtX = Random.Range(-shakeAmout, shakeAmout);
             float shakeAmtY = Random.Range(-shakeAmout, shakeAmout);
             camPos.x += shakeAmtX;
@@ -205,74 +162,5 @@ public class PlayerCamera : MonoBehaviour
         }
         return true;
     }
-
-    private RaycastHit[] LookForTarget()
-    {
-        int layerMask = 1 << 13;
-        RaycastHit[] hits;
-        //Vector3 fwd = transform.TransformDirection(Vector3.forward);
-        hits = Physics.BoxCastAll(player.transform.position, new Vector3(10, 5, 1f), transform.forward, Quaternion.LookRotation(transform.forward), 20f, layerMask);
-        return hits;
-    }
-
-    private void CheckIfTargetIsInVision()
-    {
-        Transform lastTarget = nearestTarget;
-
-        RaycastHit[] hits;
-        hits = LookForTarget();
-        bool TargetInSight = false;
-        foreach (RaycastHit rh in hits)
-        {
-            if (rh.collider.gameObject.transform == lastTarget)
-            {
-                TargetInSight = true;
-                return;
-            }
-        }
-
-        if (!TargetInSight)
-        {
-            Debug.Log("Target OutofSight");
-            lockedOn = false;
-            cursor.GetComponent<Image>().sprite = lockOffCursor;
-        }
-    }
-
-    private void LockOnTarget()
-    {
-        RaycastHit[] hits;
-        hits = LookForTarget();
-        float closestDistanceSqr = Mathf.Infinity;
-        if (hits.Length == 0)
-        {
-            cursor.GetComponent<Image>().sprite = lockOffCursor;
-            lockedOn = false;
-            Debug.Log(hits.Length.ToString());
-            return;
-        }
-
-        foreach (RaycastHit rh in hits)
-        {
-            Transform transform = rh.collider.gameObject.GetComponent<Transform>();
-            if (transform != null)
-            {
-                Vector3 directionToTarget = rh.collider.gameObject.transform.position - gameObject.transform.position;
-                float dSqrToTarget = directionToTarget.sqrMagnitude;
-
-                if (dSqrToTarget < closestDistanceSqr)
-                {
-
-                    closestDistanceSqr = dSqrToTarget;
-                    nearestTarget = rh.collider.gameObject.transform;
-
-                }
-            }
-        }
-
-        lockedOn = true;
-        cursor.GetComponent<Image>().sprite = lockOnCursor;
-    }
-
 
 }

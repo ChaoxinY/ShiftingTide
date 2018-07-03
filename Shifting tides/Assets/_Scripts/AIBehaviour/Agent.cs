@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class Agent : StandardInteractiveGameObject
+public class Agent : TimeBoundGameObject
 {
     protected const float boredomInfluencePoint = 0.2f, conscientiousnessInfluencePoint = 0.2f, ExhaustionInfluencePoint = 0.05f, RestInfluencePoint = 0.4f;
     protected List<string> spontaneousBehaviours = new List<string>();
@@ -20,17 +20,16 @@ public class Agent : StandardInteractiveGameObject
     public List<Transform> wayPoints;
     public Transform[] patrolPoints;
     public float[] desire, factorInfluencePoint = { 0, 0, 0, 0, 0, 0 };
-    public bool predictable, energetic, perferRandomBehaviours, perferPatternedBehaviours, customized;    
+    public bool isTimeStoped,predictable, energetic, perferRandomBehaviours, perferPatternedBehaviours, customized;    
   
     protected override IEnumerator LocalUpdate()
     {
+        yield return StartCoroutine(base.LocalUpdate());
         Debug.Log("UpdateRunning");
-        Debug.Log("Is resting = "  + isResting);
-        Debug.Log("StandardBehaviourFinished = "+ StandardBehaviourFinished);
+        Debug.Log("Is resting = " + isResting);
+        Debug.Log("StandardBehaviourFinished = " + StandardBehaviourFinished);
         Debug.Log(standardBehaviour);
 
-
-        yield return StartCoroutine(base.LocalUpdate());
         if (isResting)
         {
             desire[2] = Mathf.Lerp(desire[2], 40, ExhaustionInfluencePoint + factorInfluencePoint[4]);

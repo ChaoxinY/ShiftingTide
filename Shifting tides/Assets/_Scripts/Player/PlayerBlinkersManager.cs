@@ -9,11 +9,11 @@ public class PlayerBlinkersManager : ParticleSystemHandler
 
     private List<PlayerBlinkerParticleSystemHandler> activedBlinkers =  new List<PlayerBlinkerParticleSystemHandler>();
     private IEnumerator blinkerAnimationCoroutine;
-    private BasicMovement basicMovement;
+    private PlayerAimModule playerAimModule;
 
     protected override void InitializeParticleSystem()
     {
-        basicMovement = GameObject.Find("Player").GetComponent<BasicMovement>();
+        playerAimModule = GameObject.Find("Player").GetComponent<PlayerAimModule>();
     }
 
     public override void PlayParticleAnimation()
@@ -30,8 +30,8 @@ public class PlayerBlinkersManager : ParticleSystemHandler
         }
         activedBlinkers.Clear();
         StopCoroutine(blinkerAnimationCoroutine);
-        basicMovement.arrowSpeed = 0f;
-        basicMovement.arrowBaseDamage = 0;    
+        playerAimModule.arrowSpeed = 0f;
+        playerAimModule.arrowBaseDamage = 0;    
     }
 
     private IEnumerator BlinkerAnimation() {
@@ -39,25 +39,25 @@ public class PlayerBlinkersManager : ParticleSystemHandler
         yield return new WaitForSeconds(0.5f/(1+ blinkerCooldownReduction));
         blinkers[0].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[0]);
-        basicMovement.arrowSpeed = 25f;
-        basicMovement.arrowBaseDamage += 10;
+        playerAimModule.arrowSpeed = 25f;
+        playerAimModule.arrowBaseDamage += 10;
 
         yield return new WaitForSeconds(0.6f/(1 + blinkerCooldownReduction));
         blinkers[1].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[1]);
-        basicMovement.arrowSpeed = 35f;
-        basicMovement.arrowBaseDamage += 15;
+        playerAimModule.arrowSpeed = 35f;
+        playerAimModule.arrowBaseDamage += 15;
 
         yield return new WaitForSeconds(0.4f/(1 + blinkerCooldownReduction));
         blinkers[2].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[2]);
-        basicMovement.arrowSpeed = 60f;
-        basicMovement.arrowBaseDamage += 25;
+        playerAimModule.arrowSpeed = 60f;
+        playerAimModule.arrowBaseDamage += 25;
 
         yield return new WaitForSeconds(0.3f/(1 + blinkerCooldownReduction));
         blinkers[3].PlayParticleAnimation();
-        basicMovement.arrowSpeed = 100f;
-        basicMovement.arrowBaseDamage += 50;
+        playerAimModule.arrowSpeed = 100f;
+        playerAimModule.arrowBaseDamage += 50;
         activedBlinkers.Add(blinkers[3]);      
         yield break;
     }

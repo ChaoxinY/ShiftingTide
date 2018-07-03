@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 using System.Collections;
 
 
@@ -38,14 +39,37 @@ public class HostileResourceManager : MonoBehaviour
     public virtual void GotHit(float baseDamage) {
         CurrentHealth -= baseDamage;
         StartCoroutine(OnHitDrops(1,2));
+        StartCoroutine(OnHitPhysicsFeedBack());
     }
 
     public virtual void GotHitOnCritSpot(float baseDamage)
     {
         CurrentHealth -= baseDamage * 2;
         StartCoroutine(OnHitDrops(2,4));
+        StartCoroutine(OnHitPhysicsFeedBack());
     }
 
+    protected virtual IEnumerator OnHitPhysicsFeedBack() {
+
+        gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        gameObject.GetComponent<Agent>().isTimeStoped = true;
+        gameObject.GetComponent<NavMeshAgent>().updatePosition = false;
+        gameObject.GetComponent<NavMeshAgent>().updateRotation = false;
+        yield return new WaitForSeconds(0.5f);
+        gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        gameObject.GetComponent<NavMeshAgent>().updatePosition = true;
+        gameObject.GetComponent<NavMeshAgent>().updateRotation = true;
+        gameObject.GetComponent<Agent>().isTimeStoped = false;        
+        yield break; 
+    }
+    protected virtual IEnumerator OnDeathFeedBack()
+    {
+        //gameObject.GetComponent<Agent>().isTimeStoped = true;
+        //gameObject.GetComponent<NavMeshAgent>().enabled = false;
+        //gameObject.GetComponent<Rigidbody>().mass = 8;
+        //gameObject.GetComponent<Rigidbody>().isKinematic = false;   
+        yield break;
+    }
     public void SpawnSourcePoint() {
         Debug.Log("Spawned");
         GameObject sourcePoint = Instantiate(Resources.Load("Prefabs/Source") as GameObject, transform.position, Quaternion.identity);
@@ -82,8 +106,9 @@ public class HostileResourceManager : MonoBehaviour
             if (currentHealth < 0) {
                 OnDeathDrops();
                 //death animation
-                Destroy(gameObject,0.5f);
-                this.enabled = false;
+                //StartCoroutine(OnDeathPhysicsFeedBack());
+                enabled = false;
+                gameObject.GetComponent<Agent>().enabled = false;
             }
             if (currentHealth > maxHealth) { currentHealth = maxHealth; }
             ShowHealthBars();
