@@ -752,6 +752,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb2e197ca0002047961ffd152f384e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bleedEffect: []
+  onHitSounds: []
+  baseDamage: 0
   penetrationStrength: 0.001
 --- !u!114 &114778676146065810
 MonoBehaviour:
@@ -764,6 +767,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb2e197ca0002047961ffd152f384e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bleedEffect: []
+  onHitSounds: []
+  baseDamage: 0
   penetrationStrength: 0.001
 --- !u!114 &114943964801235792
 MonoBehaviour:
@@ -776,4 +782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb2e197ca0002047961ffd152f384e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bleedEffect: []
+  onHitSounds: []
+  baseDamage: 0
   penetrationStrength: 0.001

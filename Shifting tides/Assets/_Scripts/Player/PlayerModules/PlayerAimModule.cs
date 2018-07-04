@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 public class PlayerAimModule : PlayerModule
 {
-    private GameObject arrow;
     private Camera cameraMain;
     private PlayerParticleSystemManager playerParticleSystemManager;
     private PlayerCamera plyCamera;
@@ -14,7 +15,7 @@ public class PlayerAimModule : PlayerModule
 
     public Image cursor;
     public Sprite lockOnCursor, lockOffCursor;
-    public GameObject bow, bowMesh, shootTarget;
+    public GameObject bow, bowMesh, shootTarget, currentArrowhead;
     public AudioSource[] bowSoundSources;
     public Vector3 targetOffset;
     public bool isAiming;
@@ -25,9 +26,8 @@ public class PlayerAimModule : PlayerModule
     protected override void Initialize()
     {
         cameraMain = Camera.main;
-        arrow = Resources.Load("Prefabs/Arrow") as GameObject;
         playerParticleSystemManager = GameObject.Find("Player").GetComponentInChildren<PlayerParticleSystemManager>();
-        plyCamera = GameObject.Find("Main Camera").GetComponent<PlayerCamera>();
+        plyCamera = GameObject.Find("Main Camera").GetComponent<PlayerCamera>();       
         ResetArrowSpeed();
         lockedOn = false;
         cursor.sprite = lockOffCursor;
@@ -62,6 +62,9 @@ public class PlayerAimModule : PlayerModule
 
     public override void ModuleUpdate()
     {
+        bow.transform.LookAt(shootTarget.transform);
+        cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
+
         if (Input.GetMouseButton(1) && PlayerResourcesManager.IsThereEnoughResource(4, 0))
         {
             ChargeUpArrow();
@@ -80,25 +83,16 @@ public class PlayerAimModule : PlayerModule
                 lockedOn = false;
                 nearestTarget = null;
             }
-            else
-            {
-
-                LockOnTarget();
-            }
-
+            else { LockOnTarget(); }
         }
+
 
         if (lockedOn)
         {
             CheckIfTargetIsInVision();
-        }
-
-        bow.transform.LookAt(shootTarget.transform);
-        if (lockedOn)
-
-        {
             shootTarget.transform.position = nearestTarget.position;
         }
+
         else
         {
             shootTarget.transform.position = 
@@ -106,8 +100,8 @@ public class PlayerAimModule : PlayerModule
             + cameraMain.transform.right * targetOffset.x
             + cameraMain.transform.up * targetOffset.y;
         }
-        cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
-    }
+     }
+  
 
     private void ResetArrowSpeed()
     {
@@ -137,7 +131,7 @@ public class PlayerAimModule : PlayerModule
     private void ShootArrow()
     {
         PlayerResourcesManager.Arrows -= 1;
-        GameObject Arrow = Instantiate(arrow, bow.transform.position, bow.transform.rotation);
+        GameObject Arrow = Instantiate(currentArrowhead, bow.transform.position, bow.transform.rotation);
         Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * arrowSpeed, ForceMode.Impulse);
         Arrow.GetComponent<ArrowBehaviour>().baseDamage = arrowBaseDamage;
         if (isAiming) isAiming = !isAiming;

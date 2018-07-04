@@ -6,23 +6,20 @@ using UnityEngine.AI;
 
 public class ArrowBehaviour : Projectile
 {
-    [HideInInspector]
-    public float baseDamage;
     public GameObject[] bleedEffect;
     public AudioClip[] onHitSounds;
-
-    private Vector3 arrowPlaceholderRotation;
+    [HideInInspector]
+    public float baseDamage;
+    public float penetrationStrength;
+    
     private GameObject arrowPlaceholder;
-    private Quaternion localRotation;
     private AudioSource onHitSoundSource;
     private PlayerTideComboManager playerTideComboManager;
-
-    public float penetrationStrength;
 
     protected override void Initialize()
     {
         base.Initialize();
-        arrowPlaceholder = Resources.Load("Prefabs/ArrowPlaceholder") as GameObject;
+        arrowPlaceholder = Resources.Load("Prefabs/Arrows/ArrowPlaceholder") as GameObject;
         gravity = -25.81f;
         rbObject = gameObject.GetComponent<Rigidbody>();
         onHitSoundSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
@@ -40,7 +37,7 @@ public class ArrowBehaviour : Projectile
         yield break;
     }
 
-    private void OnCollisionEnter(Collision other)
+    protected virtual void OnCollisionEnter(Collision other)
     {
         Debug.Log(other.collider.name);
         switch (other.gameObject.tag)
@@ -93,9 +90,9 @@ public class ArrowBehaviour : Projectile
               
     }
 
-    private void SpawnOnHitEffect(Transform transformHit, ContactPoint contact,GameObject prefabToSpawn,Vector3 hitSpeed)
+    protected void SpawnOnHitEffect(Transform transformHit, ContactPoint contact,GameObject prefabToSpawn,Vector3 hitSpeed)
     {
-        GameObject spawnedOnHitEffect = GameObject.Instantiate(prefabToSpawn, contact.point + (hitSpeed.normalized*1.3f), Quaternion.LookRotation(hitSpeed.normalized));
+        GameObject spawnedOnHitEffect = Instantiate(prefabToSpawn, contact.point + (hitSpeed.normalized*1.3f), Quaternion.LookRotation(hitSpeed.normalized));
         spawnedOnHitEffect.transform.SetParent(transformHit);
     }
 
@@ -105,7 +102,7 @@ public class ArrowBehaviour : Projectile
     {
         //Vector3 nomalizedHitspeed = Vector3.Normalize(hitSpeed);
         Vector3 spawnPosition = contactPoint + hitSpeed.normalized * penetrationStrength;
-        arrowPlaceholderRotation = transform.eulerAngles;
+        Vector3 arrowPlaceholderRotation  = transform.eulerAngles;
         GameObject arrowDummy = Instantiate(arrowPlaceholder, spawnPosition, arrowPlaceholder.transform.rotation = Quaternion.Euler(arrowPlaceholderRotation));
         if (movingTargetHit != null)
         {

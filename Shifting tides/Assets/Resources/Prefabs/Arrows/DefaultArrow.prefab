@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 54194890793928894}
   - component: {fileID: 114240012270298280}
   m_Layer: 12
-  m_Name: Arrow
+  m_Name: DefaultArrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -377,7 +377,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb2e197ca0002047961ffd152f384e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDamage: 0
   bleedEffect:
   - {fileID: 1401143639888062, guid: 4bed7f08b0e8ef54c8163229b20fa7c1, type: 2}
   - {fileID: 1401143639888062, guid: 3ea079730b6de784bb9e70f8091c81f1, type: 2}
@@ -387,6 +386,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cc4dd72fa683be847b68cbf3c59e8391, type: 3}
   - {fileID: 8300000, guid: ad4487a1d80d3d1428447b32e4f9ce8a, type: 3}
   - {fileID: 8300000, guid: a8fcb412c16448a4d865cf2e7201d426, type: 3}
+  baseDamage: 0
   penetrationStrength: 0.4
 --- !u!198 &198439218312682206
 ParticleSystem:

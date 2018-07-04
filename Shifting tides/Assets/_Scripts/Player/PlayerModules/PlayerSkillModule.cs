@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerSkillModule : PlayerModule
 {
-    private bool dashWarmUp;
+    private Queue<GameObject> availableArrowheads = new Queue<GameObject>();
+    private GameObject defaultArrowHead;
     private PlayerTideComboManager playerTideComboManager;
     private PlayerPhysicsModule playerPhysicsModule;
+    private PlayerAimModule playerAimModule;
+    private bool dashWarmUp;
 
-    public GameObject[] dashesImages;
+    public GameObject[] dashesImages , arrowheadPrefabs;
     public float jumpVel, dashForce, dashLimit;
     public bool isTimeStopped;
 
@@ -15,6 +19,10 @@ public class PlayerSkillModule : PlayerModule
     {
         playerTideComboManager = GetComponentInParent<PlayerTideComboManager>();
         playerPhysicsModule = GameObject.Find("Player").GetComponentInChildren<PlayerPhysicsModule>();
+        playerAimModule = GameObject.Find("Player").GetComponentInChildren<PlayerAimModule>();
+        InitializeArrowheads();
+        defaultArrowHead = availableArrowheads.Peek();
+        playerAimModule.currentArrowhead = defaultArrowHead;
     }
 
     public override void InitializeModuleID()
@@ -31,6 +39,11 @@ public class PlayerSkillModule : PlayerModule
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jumping();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SwitchArrowHead();
         }
     }
 
@@ -56,6 +69,18 @@ public class PlayerSkillModule : PlayerModule
             yield return new WaitForSeconds(0.03f);
         }
         yield break;
+    }
+    private void InitializeArrowheads()
+    {
+        foreach (GameObject arrowhead in arrowheadPrefabs)
+        {
+            availableArrowheads.Enqueue(arrowhead);
+        }
+    }
+    private void SwitchArrowHead()
+    {
+        availableArrowheads.Enqueue(availableArrowheads.Dequeue());
+        playerAimModule.currentArrowhead = availableArrowheads.Peek();
     }
 
     private void GatherSource()
