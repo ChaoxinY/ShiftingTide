@@ -11,10 +11,15 @@ public class PlayerSkillModule : PlayerModule
     public float jumpVel, dashForce, dashLimit;
     public bool isTimeStopped;
 
-    void Start()
+    protected override void Initialize()
     {
-        playerTideComboManager = GetComponent<PlayerTideComboManager>();
-        playerPhysicsModule = GetComponent<PlayerPhysicsModule>();
+        playerTideComboManager = GetComponentInParent<PlayerTideComboManager>();
+        playerPhysicsModule = GameObject.Find("Player").GetComponentInChildren<PlayerPhysicsModule>();
+    }
+
+    public override void InitializeModuleID()
+    {
+        ModuleID = 3;
     }
 
     public override void ModuleUpdate()

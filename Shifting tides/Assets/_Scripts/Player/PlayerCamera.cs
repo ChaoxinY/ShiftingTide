@@ -41,8 +41,8 @@ public class PlayerCamera : MonoBehaviour
         angleH = player.eulerAngles.y;
         targetFOV = 60f;
         ResetTargetOffsets();
-        playerAimModule = player.gameObject.GetComponent<PlayerAimModule>();
-        playerPhysicsModule = player.gameObject.GetComponent<PlayerPhysicsModule>();
+        playerAimModule = player.gameObject.GetComponentInChildren<PlayerAimModule>();
+        playerPhysicsModule = player.gameObject.GetComponentInChildren<PlayerPhysicsModule>();
     }
  
     private void FixedUpdate()

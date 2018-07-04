@@ -8,26 +8,36 @@ public class PlayerPhysicsModule : PlayerModule
     [HideInInspector]
     public float horizontalInput, verticalInput;
     public float defaultMoveForce, moveForce, speedLimit, runLimit, maxInput;
-   
+
+    protected override void Initialize()
+    {
+        InitializeModuleID();
+    }
+
+    public override void InitializeModuleID()
+    {
+        ModuleID = 0;
+    }
+
     public override void ModuleUpdate()
     {
         onGround = IsGrounded();
 
         if (!onGround)
         {
-            gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 0f;
-            gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 0f;
+            GetComponentInParent<CapsuleCollider>().material.dynamicFriction = 0f;
+            GetComponentInParent<CapsuleCollider>().material.staticFriction = 0f;
         }
         else if (onGround && !IsMoving())
         {
-            gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 3.34f;
-            gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 3.6f;
+            GetComponentInParent<CapsuleCollider>().material.dynamicFriction = 3.34f;
+            GetComponentInParent<CapsuleCollider>().material.staticFriction = 3.6f;
 
         }
         else if (onGround)
         {
-            gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 0.34f;
-            gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 0.6f;
+            GetComponentInParent<CapsuleCollider>().material.dynamicFriction = 0.34f;
+            GetComponentInParent<CapsuleCollider>().material.staticFriction = 0.6f;
         }
     }
 

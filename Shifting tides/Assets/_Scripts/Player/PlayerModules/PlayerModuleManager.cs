@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PlayerModuleManager : MonoBehaviour
 {
     public List<PlayerModule> AvailableModules = new List<PlayerModule>();
-    private List<PlayerModule> ActiveModules = new List<PlayerModule>();
+    public List<PlayerModule> ActiveModules = new List<PlayerModule>();
 
     private void Start()
     {
@@ -15,15 +15,17 @@ public class PlayerModuleManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             foreach (PlayerModule module in ActiveModules)
-                if (module == AvailableModules[2])
+            {
+                if (module.ModuleID == AvailableModules[2].ModuleID)
                 {
                     module.ModuleRemove();
                     ActiveModules.Remove(module);
                     return;
                 }
+            }
             ActiveModules.Add(AvailableModules[2]);
         }
         foreach (PlayerModule module in ActiveModules)
@@ -40,11 +42,18 @@ public class PlayerModuleManager : MonoBehaviour
     }
 }
 
-public class PlayerModule : MonoBehaviour
+public abstract class PlayerModule : MonoBehaviour
 {
-
+    private int moduleID;
+    private void Start()
+    {
+        Initialize();
+    }
+    protected virtual void Initialize() { InitializeModuleID(); }
+    public abstract void InitializeModuleID();
     public virtual void ModuleUpdate() { }
     public virtual void ModuleFixedUpdate() { }
     public virtual void ModuleStartUp() { }
     public virtual void ModuleRemove() { }
+    public int ModuleID { get { return moduleID; }set { moduleID = value; } }
 }

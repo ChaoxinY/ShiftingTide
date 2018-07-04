@@ -12,12 +12,18 @@ public class PlayerMovementModule : PlayerModule
     public GameObject gameManagerObject;
     public float moveLimit;
 
-    void Start()
-    {
+    protected override void Initialize()
+    {  
         cameraMain = Camera.main;
-        colExtents = GetComponent<Collider>().bounds.extents;
-        aniPlayer = GetComponent<Animator>();
-        playerPhysicsModule = GetComponent<PlayerPhysicsModule>();
+        colExtents = GetComponentInParent<Collider>().bounds.extents;
+        aniPlayer = GetComponentInParent<Animator>();
+        playerPhysicsModule = GameObject.Find("Player").GetComponentInChildren<PlayerPhysicsModule>();
+        InitializeModuleID();
+    }
+
+    public override void InitializeModuleID()
+    {
+        ModuleID = 1;
     }
 
     public override void ModuleUpdate()
@@ -102,4 +108,5 @@ public class PlayerMovementModule : PlayerModule
         return (playerPhysicsModule.horizontalInput != 0) || (playerPhysicsModule.verticalInput != 0);
     }
 
+ 
 }

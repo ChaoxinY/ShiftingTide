@@ -13,7 +13,7 @@ public class PlayerBlinkersManager : ParticleSystemHandler
 
     protected override void InitializeParticleSystem()
     {
-        playerAimModule = GameObject.Find("Player").GetComponent<PlayerAimModule>();
+        playerAimModule = GameObject.Find("Player").GetComponentInChildren<PlayerAimModule>();
     }
 
     public override void PlayParticleAnimation()

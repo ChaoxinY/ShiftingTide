@@ -12,7 +12,7 @@ public class PlayerVortexShatterParticleSystemHandler : ParticleSystemHandler
 
     protected override void InitializeParticleSystem()
     {
-        playerAimModule = GameObject.Find("Player").GetComponent<PlayerAimModule>();
+        playerAimModule = GameObject.Find("Player").GetComponentInChildren<PlayerAimModule>();
         particleSystemToManage = GameObject.Find("VortexShatter").GetComponent<ParticleSystem>();
         emissionModule = particleSystemToManage.emission;
         currentProfielValues[0] = minBurstCount;

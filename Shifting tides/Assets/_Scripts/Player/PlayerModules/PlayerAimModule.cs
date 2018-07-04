@@ -21,16 +21,22 @@ public class PlayerAimModule : PlayerModule
     [HideInInspector]
     public float arrowSpeed;
     public float startArrowSpeed, maxArrowSpeed, arrowBaseDamage;
-   
-    void Start()
+
+    protected override void Initialize()
     {
         cameraMain = Camera.main;
         arrow = Resources.Load("Prefabs/Arrow") as GameObject;
-        playerParticleSystemManager = GetComponent<PlayerParticleSystemManager>();
+        playerParticleSystemManager = GameObject.Find("Player").GetComponentInChildren<PlayerParticleSystemManager>();
         plyCamera = GameObject.Find("Main Camera").GetComponent<PlayerCamera>();
         ResetArrowSpeed();
         lockedOn = false;
         cursor.sprite = lockOffCursor;
+        InitializeModuleID();
+    }
+
+    public override void InitializeModuleID()
+    {
+        ModuleID = 2;
     }
 
     private void ResetArrowSpeed()
@@ -42,7 +48,6 @@ public class PlayerAimModule : PlayerModule
     {
         if (Input.GetMouseButton(1) && PlayerResourcesManager.IsThereEnoughResource(4, 0))
         {
-            Debug.Log("Called");
             ChargeUpArrow();
         }
         if (Input.GetMouseButtonUp(1) && isAiming)
