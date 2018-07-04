@@ -39,9 +39,25 @@ public class PlayerAimModule : PlayerModule
         ModuleID = 2;
     }
 
-    private void ResetArrowSpeed()
+    public override void ModuleStartUp()
     {
-        arrowSpeed = startArrowSpeed;
+        cursor.gameObject.SetActive(true);
+        plyCamera.pivotOffset = new Vector3(0, 0.5f, 0);
+        plyCamera.camOffset = new Vector3(0.55f, 0.5f, -0.9f);
+        plyCamera.ResetSmoothOffsets();
+        plyCamera.ResetTargetOffsets();
+    }
+
+    public override void ModuleRemove()
+    {
+        arrowSpeed = 0;
+        isAiming = false;
+        playerParticleSystemManager.StopAllShootingParticleSystems();
+        cursor.gameObject.SetActive(false);
+        plyCamera.pivotOffset = new Vector3(0, 0.5f, 0);
+        plyCamera.camOffset = new Vector3(0, 0.5f, -3);
+        plyCamera.ResetSmoothOffsets();
+        plyCamera.ResetTargetOffsets();
     }
 
     public override void ModuleUpdate()
@@ -50,10 +66,12 @@ public class PlayerAimModule : PlayerModule
         {
             ChargeUpArrow();
         }
+
         if (Input.GetMouseButtonUp(1) && isAiming)
         {
             ShootArrow();
         }
+
         if (Input.GetMouseButtonDown(2))
         {
             if (lockedOn)
@@ -74,8 +92,10 @@ public class PlayerAimModule : PlayerModule
         {
             CheckIfTargetIsInVision();
         }
+
         bow.transform.LookAt(shootTarget.transform);
         if (lockedOn)
+
         {
             shootTarget.transform.position = nearestTarget.position;
         }
@@ -87,6 +107,11 @@ public class PlayerAimModule : PlayerModule
             + cameraMain.transform.up * targetOffset.y;
         }
         cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
+    }
+
+    private void ResetArrowSpeed()
+    {
+        arrowSpeed = startArrowSpeed;
     }
 
     private void ChargeUpArrow()

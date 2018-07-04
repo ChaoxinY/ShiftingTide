@@ -123,8 +123,11 @@ public class PlayerCamera : MonoBehaviour
         targetPivotOffset = pivotOffset;
         targetCamOffset = camOffset;
     }
-
-
+    public void ResetSmoothOffsets()
+    {
+        smoothPivotOffset = pivotOffset;
+        smoothCamOffset = camOffset;
+    }
     bool DoubleViewingPosCheck(Vector3 checkPos, float offset)
     {
         float playerFocusHeight = player.GetComponentInChildren<CapsuleCollider>().center.y;

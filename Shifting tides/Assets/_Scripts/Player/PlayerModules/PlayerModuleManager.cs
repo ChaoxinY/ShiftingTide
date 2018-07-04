@@ -11,6 +11,7 @@ public class PlayerModuleManager : MonoBehaviour
     {
         ActiveModules.Add(AvailableModules[0]);
         ActiveModules.Add(AvailableModules[1]);
+        ActiveModules.Add(AvailableModules[3]);
     }
 
     private void Update()
@@ -27,6 +28,7 @@ public class PlayerModuleManager : MonoBehaviour
                 }
             }
             ActiveModules.Add(AvailableModules[2]);
+            ActiveModules[ActiveModules.Count-1].ModuleStartUp();
         }
         foreach (PlayerModule module in ActiveModules)
         {

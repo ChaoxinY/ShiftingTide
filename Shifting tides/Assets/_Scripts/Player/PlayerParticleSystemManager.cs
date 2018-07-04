@@ -8,6 +8,14 @@ public class PlayerParticleSystemManager : MonoBehaviour
     public ParticleSystemHandler[] managedSystems;
     public bool isPlayingChargingAnimation,isPlayingChargedUpAnimation;
 
+    public void StopAllShootingParticleSystems() {
+        for (int i = 0; i < 5; i ++) {
+            managedSystems[i].StopParticleAnimation();
+            isPlayingChargingAnimation = false;
+            isPlayingChargedUpAnimation = false;
+        }
+    }
+
     public void PlayChargingAnimation()
     {
         managedSystems[0].PlayParticleAnimation();
