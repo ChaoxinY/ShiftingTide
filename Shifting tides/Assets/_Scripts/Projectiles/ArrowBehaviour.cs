@@ -11,11 +11,12 @@ public class ArrowBehaviour : Projectile
     [HideInInspector]
     public float baseDamage;
     public float penetrationStrength;
-    
+
+    protected PlayerTideComboManager playerTideComboManager;
+
     private GameObject arrowPlaceholder;
     private AudioSource onHitSoundSource;
-    private PlayerTideComboManager playerTideComboManager;
-
+  
     protected override void Initialize()
     {
         base.Initialize();
@@ -30,11 +31,15 @@ public class ArrowBehaviour : Projectile
     {
         yield return StartCoroutine(base.LocalUpdate());
         Quaternion rotation = new Quaternion();
-        if(rbObject.velocity!= Vector3.zero)
-        rotation.SetLookRotation(rbObject.velocity, transform.up);
+        if (rbObject.velocity != Vector3.zero)
+            rotation.SetLookRotation(rbObject.velocity, transform.up);
         transform.localRotation = rotation;
-       // Debug.Log(baseDamage);
+        // Debug.Log(baseDamage);
         yield break;
+    }
+
+    public void ApplyArrowStageValues(int stage)
+    {
     }
 
     protected virtual void OnCollisionEnter(Collision other)
@@ -54,20 +59,15 @@ public class ArrowBehaviour : Projectile
                 DefaultHit();
                 SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized);
                 break;
-        }    
+        }
     }
 
-    private void DefaultHit() {
-        onHitSoundSource.clip = onHitSounds[0];
-        onHitSoundSource.Play();
-        playerTideComboManager.ResetCombo();
-    }
-
-    private void EnemyHit(Collision other)
+   
+    protected virtual void EnemyHit(Collision other)
     {
         Vector3 hitSpeed = other.relativeVelocity;
-        SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[0],hitSpeed);
-     
+        SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[0], hitSpeed);
+
         if (other.collider.name == "CritSpot")
         {
             onHitSoundSource.clip = onHitSounds[2];
@@ -78,7 +78,7 @@ public class ArrowBehaviour : Projectile
             playerTideComboManager.AddCombo();
             return;
         }
-        SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[2],hitSpeed);
+        SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[2], hitSpeed);
 
         //SoundManager
         onHitSoundSource.clip = onHitSounds[1];
@@ -86,12 +86,11 @@ public class ArrowBehaviour : Projectile
 
         other.gameObject.GetComponentInParent<HostileResourceManager>().GotHit(baseDamage);
         playerTideComboManager.ResetCombo();
-              
     }
 
-    protected void SpawnOnHitEffect(Transform transformHit, ContactPoint contact,GameObject prefabToSpawn,Vector3 hitSpeed)
+    protected void SpawnOnHitEffect(Transform transformHit, ContactPoint contact, GameObject prefabToSpawn, Vector3 hitSpeed)
     {
-        GameObject spawnedOnHitEffect = Instantiate(prefabToSpawn, contact.point + (hitSpeed.normalized*1.3f), Quaternion.LookRotation(hitSpeed.normalized));
+        GameObject spawnedOnHitEffect = Instantiate(prefabToSpawn, contact.point + (hitSpeed.normalized * 1.3f), Quaternion.LookRotation(hitSpeed.normalized));
         spawnedOnHitEffect.transform.SetParent(transformHit);
     }
 
@@ -101,7 +100,7 @@ public class ArrowBehaviour : Projectile
     {
         //Vector3 nomalizedHitspeed = Vector3.Normalize(hitSpeed);
         Vector3 spawnPosition = contactPoint + hitSpeed.normalized * penetrationStrength;
-        Vector3 arrowPlaceholderRotation  = transform.eulerAngles;
+        Vector3 arrowPlaceholderRotation = transform.eulerAngles;
         GameObject arrowDummy = Instantiate(arrowPlaceholder, spawnPosition, arrowPlaceholder.transform.rotation = Quaternion.Euler(arrowPlaceholderRotation));
         if (movingTargetHit != null)
         {
@@ -109,4 +108,12 @@ public class ArrowBehaviour : Projectile
         }
         Destroy(gameObject);
     }
+
+    private void DefaultHit()
+    {
+        onHitSoundSource.clip = onHitSounds[0];
+        onHitSoundSource.Play();
+        playerTideComboManager.ResetCombo();
+    }
+
 }

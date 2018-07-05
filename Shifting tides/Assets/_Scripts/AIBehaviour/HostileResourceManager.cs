@@ -6,12 +6,13 @@ using System.Collections;
 
 public class HostileResourceManager : MonoBehaviour
 {
-    public Slider[] healthBars;
-    public float maxHealth;
+    public Slider[] healthBars,armorBars;
+    public float maxHealth, maxArmor;
 
     private Canvas uiCanvas;
-    private float currentHealth;
-    private IEnumerator healthBarVisibilityCoroutine;
+    private float currentHealth,currentArmor;
+   
+    private IEnumerator healthBarVisibilityCoroutine, armorhBarVisibilityCoroutine;
 
     private void Start()
     {
@@ -26,27 +27,42 @@ public class HostileResourceManager : MonoBehaviour
     protected virtual void Initialize()
     {
         currentHealth = maxHealth;
+        currentArmor = maxArmor;
         uiCanvas = GetComponentInChildren<Canvas>();
+
         for (int i = 0; i < healthBars.Length; i++)
         {
             healthBars[i].maxValue = maxHealth;
             healthBars[i].value = maxHealth;
+            armorBars[i].maxValue = maxArmor;
+            armorBars[i].value = maxArmor;
         }
-        healthBarVisibilityCoroutine = HideHealthBars(0);
+        armorhBarVisibilityCoroutine = HideSliderBars(armorBars,0);
+        healthBarVisibilityCoroutine = HideSliderBars(healthBars, 0);
+        StartCoroutine(armorhBarVisibilityCoroutine);
         StartCoroutine(healthBarVisibilityCoroutine);
     }
 
     public virtual void GotHit(float baseDamage) {
+        if (CurrentArmor != 0) {
+            CurrentArmor -= baseDamage * 0.5f;
+            return;
+        }
         CurrentHealth -= baseDamage;
         StartCoroutine(OnHitDrops(1,2));
-        StartCoroutine(OnHitPhysicsFeedBack());
+       // StartCoroutine(OnHitPhysicsFeedBack());
     }
 
     public virtual void GotHitOnCritSpot(float baseDamage)
     {
+        if (CurrentArmor != 0)
+        {
+            CurrentArmor -= baseDamage * 0.75f;
+            return;
+        }
         CurrentHealth -= baseDamage * 2;
         StartCoroutine(OnHitDrops(2,4));
-        StartCoroutine(OnHitPhysicsFeedBack());
+      //  StartCoroutine(OnHitPhysicsFeedBack());
     }
 
     protected virtual IEnumerator OnHitPhysicsFeedBack() {
@@ -97,13 +113,41 @@ public class HostileResourceManager : MonoBehaviour
         yield break;
     }
 
+    private void ShowSliderBars(Slider[] sliderBars)
+    {
+        sliderBars[0].gameObject.SetActive(true);
+        sliderBars[1].gameObject.SetActive(true);
+    }
+
+    private IEnumerator HideSliderBars(Slider[] sliderBars,int hideInSecond) {
+        yield return new WaitForSeconds(hideInSecond);
+        sliderBars[0].gameObject.SetActive(false);
+        sliderBars[1].gameObject.SetActive(false);
+        yield break;
+    }
+
+    private IEnumerator LerpSliderBarValue(Slider[] sliderBars,float targetValue,float foreGroundDecreaseSpeed, float backGroundDecreaseSpeed,float updateSpeed) {
+
+        while (!(sliderBars[0].value - 0.2f <= targetValue))
+        {
+            if (sliderBars[0].value != targetValue)
+            {
+                sliderBars[0].value = Mathf.Lerp(sliderBars[0].value, targetValue, foreGroundDecreaseSpeed);
+            }
+            sliderBars[1].value = Mathf.Lerp(sliderBars[1].value, sliderBars[0].value, backGroundDecreaseSpeed);
+            yield return new WaitForSeconds(updateSpeed);
+        }
+        yield break;
+    }
+
     public float CurrentHealth
     {
         get { return currentHealth; }
         set
         {
             currentHealth = value;
-            if (currentHealth < 0) {
+            if (currentHealth < 0)
+            {
                 OnDeathDrops();
                 //death animation
                 //StartCoroutine(OnDeathPhysicsFeedBack());
@@ -111,38 +155,28 @@ public class HostileResourceManager : MonoBehaviour
                 gameObject.GetComponent<Agent>().enabled = false;
             }
             if (currentHealth > maxHealth) { currentHealth = maxHealth; }
-            ShowHealthBars();
-            StartCoroutine(LerpHealthBarValue(currentHealth));
+            ShowSliderBars(healthBars);
+            StartCoroutine(LerpSliderBarValue(healthBars,currentHealth,0.3f,0.2f,0.05f));
             StopCoroutine(healthBarVisibilityCoroutine);
-            healthBarVisibilityCoroutine = HideHealthBars(6);
+            healthBarVisibilityCoroutine = HideSliderBars(healthBars,6);
             StartCoroutine(healthBarVisibilityCoroutine);
         }
     }
-
-    private void ShowHealthBars()
+    public float CurrentArmor
     {
-        healthBars[0].gameObject.SetActive(true);
-        healthBars[1].gameObject.SetActive(true);
-    }
-
-    private IEnumerator HideHealthBars(int hideInSecond) {
-        yield return new WaitForSeconds(hideInSecond);
-        healthBars[0].gameObject.SetActive(false);
-        healthBars[1].gameObject.SetActive(false);
-        yield break;
-    }
-
-    private IEnumerator LerpHealthBarValue(float targetValue) {
-
-        while (!(healthBars[1].value - 0.5f <= targetValue))
+        get { return currentArmor; }
+        set
         {
-            if (healthBars[0].value != targetValue)
+            currentArmor = value;
+            if (currentArmor < 0)
             {
-                healthBars[0].value = Mathf.Lerp(healthBars[0].value, targetValue, 0.3f);
+                currentArmor = 0;
             }
-            healthBars[1].value = Mathf.Lerp(healthBars[1].value, targetValue, 0.1f);
-            yield return new WaitForSeconds(0.02f);
+            ShowSliderBars(armorBars);
+            StartCoroutine(LerpSliderBarValue(armorBars, currentArmor, 0.03f, 0.2f,0.01f));
+            StopCoroutine(armorhBarVisibilityCoroutine);
+            armorhBarVisibilityCoroutine = HideSliderBars(armorBars, 6);
+            StartCoroutine(armorhBarVisibilityCoroutine);
         }
-        yield break;
     }
 }

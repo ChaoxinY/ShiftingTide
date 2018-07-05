@@ -10,7 +10,7 @@ public class PlayerMovementModule : PlayerModule
     private float gravity;
 
     public GameObject gameManagerObject;
-    public float moveLimit;
+    public float moveLimit, jumpVel;
 
     protected override void Initialize()
     {  
@@ -47,6 +47,10 @@ public class PlayerMovementModule : PlayerModule
         {
             ChangeMoveSpeedLimit(false, playerPhysicsModule.runLimit);
         }
+        if (Input.GetKeyDown(KeyCode.Space) && playerPhysicsModule.onGround)
+        {
+            Jumping();
+        }
         Rotate(playerPhysicsModule.horizontalInput, playerPhysicsModule.verticalInput);
     }
     private void Rotate(float horizontal, float vertical)
@@ -69,6 +73,14 @@ public class PlayerMovementModule : PlayerModule
         if (!IsMoving()) Repositioning();
 
     }
+    public override void ModuleFixedUpdate()
+    {
+        gravity = playerPhysicsModule.rigidbodyPlayer.velocity.y >= -1 ? 0 : gravity -= 0.7f;
+        playerPhysicsModule.rigidbodyPlayer.AddForce(currentMotion + Vector3.up * gravity, ForceMode.Acceleration);
+        Vector2 horizontalVelocity = new Vector2(playerPhysicsModule.rigidbodyPlayer.velocity.x, playerPhysicsModule.rigidbodyPlayer.velocity.z);
+        horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, playerPhysicsModule.speedLimit);
+        playerPhysicsModule.rigidbodyPlayer.velocity = new Vector3(horizontalVelocity.x, playerPhysicsModule.rigidbodyPlayer.velocity.y, horizontalVelocity.y);
+    }
     private void Repositioning()
     {
         if (lastDirection != Vector3.zero)
@@ -79,14 +91,10 @@ public class PlayerMovementModule : PlayerModule
             playerPhysicsModule.rigidbodyPlayer.MoveRotation(newRotation);
         }
     }
-
-    public override void ModuleFixedUpdate()
+    private void Jumping()
     {
-        gravity = playerPhysicsModule.rigidbodyPlayer.velocity.y >= -1 ? 0 : gravity -= 0.7f;
-        playerPhysicsModule.rigidbodyPlayer.AddForce(currentMotion + Vector3.up * gravity, ForceMode.Acceleration);
-        Vector2 horizontalVelocity = new Vector2(playerPhysicsModule.rigidbodyPlayer.velocity.x, playerPhysicsModule.rigidbodyPlayer.velocity.z);
-        horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, playerPhysicsModule.speedLimit);
-        playerPhysicsModule.rigidbodyPlayer.velocity = new Vector3(horizontalVelocity.x, playerPhysicsModule.rigidbodyPlayer.velocity.y, horizontalVelocity.y);
+     
+       playerPhysicsModule.rigidbodyPlayer.AddForce((Vector3.up * jumpVel), ForceMode.Impulse);      
     }
 
     private void ChangeMoveSpeedLimit(bool isWalking, float targetLimit)

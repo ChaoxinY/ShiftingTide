@@ -12,7 +12,7 @@ public class PlayerSkillModule : PlayerModule
     private bool dashWarmUp;
 
     public GameObject[] dashesImages , arrowheadPrefabs;
-    public float jumpVel, dashForce, dashLimit;
+    public float dashForce, dashLimit;
     public bool isTimeStopped;
 
     protected override void Initialize()
@@ -32,11 +32,13 @@ public class PlayerSkillModule : PlayerModule
 
     public override void ModuleUpdate()
     {
+        GatherSource();
+
         if (Input.GetKeyDown(KeyCode.F) && PlayerResourcesManager.IsThereEnoughResource(3, 0) && !dashWarmUp)
         {
             StartCoroutine(Dash());
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !playerPhysicsModule.onGround)
         {
             Jumping();
         }
@@ -97,11 +99,7 @@ public class PlayerSkillModule : PlayerModule
     }
     private void Jumping()
     {
-        if (playerPhysicsModule.onGround)
-        {
-            playerPhysicsModule.rigidbodyPlayer.AddForce((Vector3.up * jumpVel), ForceMode.Impulse);
-        }
-        else if (PlayerResourcesManager.IsThereEnoughResource(2, 0) && !playerPhysicsModule.onGround && isTimeStopped)
+       if (PlayerResourcesManager.IsThereEnoughResource(2, 0)  && isTimeStopped)
         {
             Vector3 spawnPosition = gameObject.transform.position - new Vector3(0, 1.2f, 0) + transform.forward * playerPhysicsModule.speedLimit / 2.4f;
             if (!IsMoving())

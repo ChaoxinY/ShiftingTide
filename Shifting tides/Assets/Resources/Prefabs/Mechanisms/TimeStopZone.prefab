@@ -23,7 +23,8 @@ GameObject:
   - component: {fileID: 33653014566763712}
   - component: {fileID: 54673328493163202}
   - component: {fileID: 135175076165525650}
-  m_Layer: 0
+  - component: {fileID: 114049348051347076}
+  m_Layer: 9
   m_Name: Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +41,6 @@ GameObject:
   - component: {fileID: 4671136171899990}
   - component: {fileID: 199847186520106906}
   - component: {fileID: 198629008261689898}
-  - component: {fileID: 114567398969568566}
   m_Layer: 0
   m_Name: TimeStopZone
   m_TagString: Untagged
@@ -132,17 +132,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114567398969568566
+--- !u!114 &114049348051347076
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1678965657642776}
+  m_GameObject: {fileID: 1266394565720840}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07f20621c0cb7894680bb2efadfd49bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  influencedGameObjects: []
 --- !u!135 &135175076165525650
 SphereCollider:
   m_ObjectHideFlags: 1
