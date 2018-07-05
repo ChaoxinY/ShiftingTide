@@ -24,12 +24,12 @@ public class Terrestrial : Agent
     }
     protected override IEnumerator PauseOnTimeStop()
     {
-        if (isTimeStoped)
+        if (isTimeStopped)
         {
             RestrictVelocity();
-            yield return new WaitUntil(() => !isTimeStoped);
+            yield return new WaitUntil(() => !isTimeStopped);
         }
-        else if (!isTimeStoped)
+        else if (!isTimeStopped)
         {
             ResumeVelocity();
         }

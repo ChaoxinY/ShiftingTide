@@ -44,18 +44,17 @@ public class ArrowBehaviour : Projectile
         {
             case "Player":
                 PlayerResourcesManager.Health -= 10;
+                SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized, other.gameObject);
                 break;
             case "Enemy":
                 EnemyHit(other);
+                SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized, other.gameObject);
                 break;
             default:
                 DefaultHit();
+                SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized);
                 break;
-
-        }
-
-      SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized,other.gameObject);
-
+        }    
     }
 
     private void DefaultHit() {
@@ -98,7 +97,7 @@ public class ArrowBehaviour : Projectile
 
     // This method calls CopyPositionAndRotationForArrowPlaceholder.
     // Then it instantiates the ArrowPlaceholder with the values from CopyPositionAndRotationForArrowPlaceholder and destroys the current arrow.
-    private void SetupArrowPlaceholder(Vector3 contactPoint, Vector3 hitSpeed, GameObject movingTargetHit = null)
+    protected void SetupArrowPlaceholder(Vector3 contactPoint, Vector3 hitSpeed, GameObject movingTargetHit = null)
     {
         //Vector3 nomalizedHitspeed = Vector3.Normalize(hitSpeed);
         Vector3 spawnPosition = contactPoint + hitSpeed.normalized * penetrationStrength;

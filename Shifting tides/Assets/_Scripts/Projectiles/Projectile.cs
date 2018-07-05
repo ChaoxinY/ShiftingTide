@@ -10,12 +10,12 @@ public class Projectile : TimeBoundGameObject
 
     protected override IEnumerator PauseOnTimeStop()
     {
-        if (gameMng.isTimeStoped && rbObject.velocity != Vector3.zero)
+        if (isTimeStopped && rbObject.velocity != Vector3.zero)
         {
             RestrictVelocity();
-            yield return new WaitUntil(() => !gameMng.isTimeStoped);
+            yield return new WaitUntil(() => !isTimeStopped);
         }
-        else if (!gameMng.isTimeStoped)
+        else if (!isTimeStopped)
         {
             if (startVelocity != Vector3.zero)
             {

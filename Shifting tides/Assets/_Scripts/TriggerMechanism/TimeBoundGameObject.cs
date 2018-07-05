@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class TimeBoundGameObject : MonoBehaviour
-{   
+{
+    public bool isTimeStopped;
+
     protected GameManager gameMng;
     protected MeshRenderer meshRenderer;
     protected bool isRunningLocalUpdate; 

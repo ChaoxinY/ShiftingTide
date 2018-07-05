@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4225760400290412}
   - component: {fileID: 65317149097114688}
   - component: {fileID: 54194890793928894}
-  - component: {fileID: 114240012270298280}
+  - component: {fileID: 114943558720668802}
   m_Layer: 12
   m_Name: TimeZoneArrow
   m_TagString: Arrow
@@ -366,7 +366,7 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &114240012270298280
+--- !u!114 &114943558720668802
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -374,9 +374,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1534344314762968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb2e197ca0002047961ffd152f384e1, type: 3}
+  m_Script: {fileID: 11500000, guid: ba52d9762ba71e843a8aefc43f534aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTimeStopped: 0
   bleedEffect:
   - {fileID: 1401143639888062, guid: 4bed7f08b0e8ef54c8163229b20fa7c1, type: 2}
   - {fileID: 1401143639888062, guid: 3ea079730b6de784bb9e70f8091c81f1, type: 2}
@@ -388,6 +389,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a8fcb412c16448a4d865cf2e7201d426, type: 3}
   baseDamage: 0
   penetrationStrength: 0.4
+  TimeStopZone: {fileID: 1678965657642776, guid: fa7e190bbe7f1ce4b910a8d5fa491313,
+    type: 2}
 --- !u!198 &198439218312682206
 ParticleSystem:
   m_ObjectHideFlags: 1

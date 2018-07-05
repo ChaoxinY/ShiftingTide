@@ -20,7 +20,7 @@ public class Agent : TimeBoundGameObject
     public List<Transform> wayPoints;
     public Transform[] patrolPoints;
     public float[] desire, factorInfluencePoint = { 0, 0, 0, 0, 0, 0 };
-    public bool isTimeStoped,predictable, energetic, perferRandomBehaviours, perferPatternedBehaviours, customized;    
+    public bool predictable, energetic, perferRandomBehaviours, perferPatternedBehaviours, customized;    
   
     protected override IEnumerator LocalUpdate()
     {

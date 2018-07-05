@@ -52,14 +52,14 @@ public class HostileResourceManager : MonoBehaviour
     protected virtual IEnumerator OnHitPhysicsFeedBack() {
 
         gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        gameObject.GetComponent<Agent>().isTimeStoped = true;
+        gameObject.GetComponent<Agent>().isTimeStopped = true;
         gameObject.GetComponent<NavMeshAgent>().updatePosition = false;
         gameObject.GetComponent<NavMeshAgent>().updateRotation = false;
         yield return new WaitForSeconds(0.5f);
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
         gameObject.GetComponent<NavMeshAgent>().updatePosition = true;
         gameObject.GetComponent<NavMeshAgent>().updateRotation = true;
-        gameObject.GetComponent<Agent>().isTimeStoped = false;        
+        gameObject.GetComponent<Agent>().isTimeStopped = false;        
         yield break; 
     }
     protected virtual IEnumerator OnDeathFeedBack()

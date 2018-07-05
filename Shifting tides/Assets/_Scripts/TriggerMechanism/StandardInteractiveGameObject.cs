@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class StandardInteractiveGameObject : TimeBoundGameObject {
 
-    public bool isTimeStoped = false;
-
     protected override IEnumerator PauseOnTimeStop()
     {
-        if (isTimeStoped)
+        if (isTimeStopped)
         {
-            yield return new WaitUntil(() => !isTimeStoped);
+            yield return new WaitUntil(() => !isTimeStopped);
         }
         yield break;
     }
