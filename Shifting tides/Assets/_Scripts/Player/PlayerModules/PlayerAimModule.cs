@@ -119,6 +119,7 @@ public class PlayerAimModule : PlayerModule
             bowSoundSources[1].Play();
             playerParticleSystemManager.PlayChargingAnimation();
         }
+        //Simplified
         if (playerParticleSystemManager.isPlayingChargedUpAnimation == false)
         {
             arrowSpeed = 1f;
