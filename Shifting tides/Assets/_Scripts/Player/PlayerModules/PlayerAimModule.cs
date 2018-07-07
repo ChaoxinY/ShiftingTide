@@ -20,18 +20,17 @@ public class PlayerAimModule : PlayerModule
     public Vector3 targetOffset;
     public bool isAiming;
     [HideInInspector]
-    public float arrowSpeed;
-    public float startArrowSpeed, maxArrowSpeed, arrowBaseDamage;
+    public int arrowChargingState;
 
     protected override void Initialize()
     {
         cameraMain = Camera.main;
         playerParticleSystemManager = GameObject.Find("Player").GetComponentInChildren<PlayerParticleSystemManager>();
         plyCamera = GameObject.Find("Main Camera").GetComponent<PlayerCamera>();       
-        ResetArrowSpeed();
         lockedOn = false;
         cursor.sprite = lockOffCursor;
         InitializeModuleID();
+        playerParticleSystemManager.SetCurrentArrowParticleSystem();
     }
 
     public override void InitializeModuleID()
@@ -50,7 +49,6 @@ public class PlayerAimModule : PlayerModule
 
     public override void ModuleRemove()
     {
-        arrowSpeed = 0;
         isAiming = false;
         playerParticleSystemManager.StopAllShootingParticleSystems();
         cursor.gameObject.SetActive(false);
@@ -103,26 +101,19 @@ public class PlayerAimModule : PlayerModule
      }
   
 
-    private void ResetArrowSpeed()
-    {
-        arrowSpeed = startArrowSpeed;
-    }
-
     private void ChargeUpArrow()
     {
-
+       
         AimRotate();
 
         if (playerParticleSystemManager.isPlayingChargingAnimation == false)
         {
-
             bowSoundSources[1].Play();
             playerParticleSystemManager.PlayChargingAnimation();
         }
-        //Simplified
+
         if (playerParticleSystemManager.isPlayingChargedUpAnimation == false)
         {
-            arrowSpeed = 1f;
             playerParticleSystemManager.PlayChargedUpAnimation();
         }
 
@@ -133,10 +124,10 @@ public class PlayerAimModule : PlayerModule
     {
         PlayerResourcesManager.Arrows -= 1;
         GameObject Arrow = Instantiate(currentArrowhead, bow.transform.position, bow.transform.rotation);
-        Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * arrowSpeed, ForceMode.Impulse);
-        Arrow.GetComponent<ArrowBehaviour>().baseDamage = arrowBaseDamage;
+        Arrow.GetComponent<ArrowBehaviour>().ApplyArrowStageValues(arrowChargingState);
+        Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * Arrow.GetComponent<ArrowBehaviour>().arrowSpeed, ForceMode.Impulse);
         if (isAiming) isAiming = !isAiming;
-        StartCoroutine(playerParticleSystemManager.PlayerFireAnimation());
+        playerParticleSystemManager.PlayerFireAnimation();
         bowSoundSources[0].Play();
     }
 

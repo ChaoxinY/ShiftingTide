@@ -6,17 +6,19 @@ public class PlayerSkillModule : PlayerModule
 {
     private Queue<GameObject> availableArrowheads = new Queue<GameObject>();
     private GameObject defaultArrowHead;
+    private PlayerParticleSystemManager playerParticleSystemManager;
     private PlayerTideComboManager playerTideComboManager;
     private PlayerPhysicsModule playerPhysicsModule;
     private PlayerAimModule playerAimModule;
     private bool dashWarmUp;
 
-    public GameObject[] dashesImages , arrowheadPrefabs;
+    public GameObject[] dashesImages, arrowheadPrefabs;
     public float dashForce, dashLimit;
     public bool isTimeStopped;
 
     protected override void Initialize()
     {
+        playerParticleSystemManager = GetComponentInParent<PlayerParticleSystemManager>();
         playerTideComboManager = GetComponentInParent<PlayerTideComboManager>();
         playerPhysicsModule = GameObject.Find("Player").GetComponentInChildren<PlayerPhysicsModule>();
         playerAimModule = GameObject.Find("Player").GetComponentInChildren<PlayerAimModule>();
@@ -83,6 +85,11 @@ public class PlayerSkillModule : PlayerModule
     {
         availableArrowheads.Enqueue(availableArrowheads.Dequeue());
         playerAimModule.currentArrowhead = availableArrowheads.Peek();
+        int bowChargeState = playerAimModule.arrowChargingState;
+        playerParticleSystemManager.StopAllShootingParticleSystems();
+        playerParticleSystemManager.SetCurrentArrowParticleSystem();
+        playerParticleSystemManager.InherentBlinkerCount(bowChargeState);
+        playerParticleSystemManager.PlayChargingAnimation();
     }
 
     private void GatherSource()
@@ -99,7 +106,7 @@ public class PlayerSkillModule : PlayerModule
     }
     private void Jumping()
     {
-       if (PlayerResourcesManager.IsThereEnoughResource(2, 0)  && isTimeStopped)
+        if (PlayerResourcesManager.IsThereEnoughResource(2, 0) && isTimeStopped)
         {
             Vector3 spawnPosition = gameObject.transform.position - new Vector3(0, 1.2f, 0) + transform.forward * playerPhysicsModule.speedLimit / 2.4f;
             if (!IsMoving())
@@ -116,5 +123,5 @@ public class PlayerSkillModule : PlayerModule
         return (playerPhysicsModule.horizontalInput != 0) || (playerPhysicsModule.verticalInput != 0);
     }
 
- 
+
 }

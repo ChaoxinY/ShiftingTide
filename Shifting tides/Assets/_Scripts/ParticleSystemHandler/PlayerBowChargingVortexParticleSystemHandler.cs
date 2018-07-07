@@ -14,7 +14,7 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
 
     protected override void InitializeParticleSystem()
     {
-        particleSystemToManage = GameObject.Find("ChargingVortex").GetComponent<ParticleSystem>();
+        particleSystemToManage = GetComponent<ParticleSystem>();
         particles = new ParticleSystem.Particle[particleSystemToManage.main.maxParticles];
         mainModule = particleSystemToManage.main;
         emissionModule = particleSystemToManage.emission;

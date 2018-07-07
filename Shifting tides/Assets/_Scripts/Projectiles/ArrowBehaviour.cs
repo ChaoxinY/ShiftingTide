@@ -9,7 +9,7 @@ public class ArrowBehaviour : Projectile
     public GameObject[] bleedEffect;
     public AudioClip[] onHitSounds;
     [HideInInspector]
-    public float baseDamage;
+    public float baseDamage,arrowSpeed;
     public float penetrationStrength;
 
     protected PlayerTideComboManager playerTideComboManager;
@@ -38,8 +38,9 @@ public class ArrowBehaviour : Projectile
         yield break;
     }
 
-    public void ApplyArrowStageValues(int stage)
+    public virtual void ApplyArrowStageValues(int stage)
     {
+
     }
 
     protected virtual void OnCollisionEnter(Collision other)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBowConeRadiatorParticleSystemHandler : ParticleSystemHandler
+public class PlayerLightingVortexParticleSystemHandler : ParticleSystemHandler
 {
     protected override void InitializeParticleSystem()
     {

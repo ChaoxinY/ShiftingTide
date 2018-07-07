@@ -10,7 +10,7 @@ public class PlayerBowConeCoreParticleSystemHandler : ParticleSystemHandler
 
     protected override void InitializeParticleSystem()
     {
-        particleSystemToManage = GameObject.Find("ConeRadiaterCore").GetComponent<ParticleSystem>();
+        particleSystemToManage = GetComponent<ParticleSystem>();
         mainModule = particleSystemToManage.main;
         lifeTime = mainModule.startLifetime.constant;
         currentProfielValues[0] = mainModule.simulationSpeed;

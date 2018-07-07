@@ -277,7 +277,7 @@ public class BasicMovement : MonoBehaviour
         Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * arrowSpeed, ForceMode.Impulse);
         Arrow.GetComponent<ArrowBehaviour>().baseDamage = arrowBaseDamage;    
         if (isAiming) isAiming = !isAiming;
-        StartCoroutine(playerParticleSystemManager.PlayerFireAnimation());      
+       // StartCoroutine(playerParticleSystemManager.PlayerFireAnimation());      
         bowSoundSources[0].Play();
     }
 

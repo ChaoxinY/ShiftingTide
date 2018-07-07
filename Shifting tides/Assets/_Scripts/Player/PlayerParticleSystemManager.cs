@@ -7,60 +7,63 @@ public class PlayerParticleSystemManager : MonoBehaviour
     //0 :charing vortex ,1 : cone radiator  2: conde shatter 3： cone radiator core 
     //4 : Blinkers 
     public ParticleSystemHandler[] managedSystems;
-    public List<ParticleSystemHandler> activeSystems = new List<ParticleSystemHandler>();
-    public bool isPlayingChargingAnimation,isPlayingChargedUpAnimation;
+    public PlayerArrowParticleSystemManager[] managedPlayerArrowParticle;
+    public PlayerArrowParticleSystemManager currentPlayerArrowParticle;
+    public PlayerAimModule playerAimModule;
 
-    public void StopAllShootingParticleSystems() {
+    public bool isPlayingChargingAnimation, isPlayingChargedUpAnimation;
 
-        if (activeSystems.Count == 0 ) {
-            return;
-        }
-
-        foreach (ParticleSystemHandler activeSystem in activeSystems) {
-            activeSystem.StopParticleAnimation();
-        }
+    public void StopAllShootingParticleSystems()
+    {
         isPlayingChargingAnimation = false;
         isPlayingChargedUpAnimation = false;
-        activeSystems.Clear();
+        currentPlayerArrowParticle.StopAllShootingParticleSystems();
+    }
+
+    public void InherentBlinkerCount(int amount)
+    {      
+        isPlayingChargedUpAnimation = true;
+        foreach (ParticleSystemHandler particleSystemHandler in currentPlayerArrowParticle.managedSystems)
+        {
+            if (particleSystemHandler is PlayerBlinkersManager)
+            {               
+                PlayerBlinkersManager playerBlinkersManager = particleSystemHandler.gameObject.GetComponent<PlayerBlinkersManager>();
+                StartCoroutine(playerBlinkersManager.SpawnBlinkers(amount));
+            }
+        }
     }
 
     public void PlayChargingAnimation()
     {
-        managedSystems[0].PlayParticleAnimation();
-        managedSystems[1].PlayParticleAnimation();
-        managedSystems[3].PlayParticleAnimation();
-        AddToList(activeSystems, managedSystems[0], managedSystems[1], managedSystems[3]);
         isPlayingChargingAnimation = true;
+        currentPlayerArrowParticle.PlayChargingAnimation();
     }
 
-    public void PlayChargedUpAnimation() {
-        managedSystems[4].PlayParticleAnimation();
-        AddToList(activeSystems, managedSystems[4]);
-        isPlayingChargedUpAnimation = true;
-    }
-
-    public IEnumerator PlayerFireAnimation()
+    public void PlayChargedUpAnimation()
     {
-        managedSystems[0].StopParticleAnimation();
-        managedSystems[1].StopParticleAnimation();
-        managedSystems[3].StopParticleAnimation();
-        if (isPlayingChargedUpAnimation)
-        {
-            managedSystems[4].StopParticleAnimation();
-            isPlayingChargedUpAnimation = false;
-        }
-        managedSystems[2].PlayParticleAnimation();
-        AddToList(activeSystems, managedSystems[2]);
-        yield return new WaitForSeconds(0.1f);
-        managedSystems[2].StopParticleAnimation();
+        isPlayingChargedUpAnimation = true;
+        currentPlayerArrowParticle.PlayChargedUpAnimation();
+    }
+
+    public void PlayerFireAnimation()
+    {
+        StartCoroutine(currentPlayerArrowParticle.PlayerFireAnimation());
         isPlayingChargingAnimation = false;
-        activeSystems.Clear();
-        yield break;
     }
 
-    private void AddToList(List<ParticleSystemHandler> activeSystem, params ParticleSystemHandler[] elements) {
+    public void SetCurrentArrowParticleSystem()
+    {
 
-        activeSystem.AddRange(elements);
+        switch (playerAimModule.currentArrowhead.name)
+        {
+
+            case "DefaultArrow":
+                currentPlayerArrowParticle = managedPlayerArrowParticle[0];
+                break;
+            case "TimeZoneArrow":
+                currentPlayerArrowParticle = managedPlayerArrowParticle[1];
+                break;
+        }
+
     }
-
 }

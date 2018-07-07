@@ -6,6 +6,29 @@ public class TimeZoneArrowBehaviour : ArrowBehaviour
 {
     public GameObject TimeStopZone;
 
+    public override void ApplyArrowStageValues(int stage)
+    {
+        switch (stage)
+        {
+            case 0:
+                arrowSpeed = 1f;              
+                break;
+            case 1:
+                arrowSpeed = 25f;
+                break;
+            case 2:
+                arrowSpeed = 35f;
+                break;
+            case 3:
+                arrowSpeed = 60f;
+                break;
+            case 4:
+                arrowSpeed = 80f;
+                break;
+        }
+        baseDamage = 0;
+    }
+
     protected override void OnCollisionEnter(Collision other)
     {
         Vector3 hitSpeed = other.relativeVelocity;

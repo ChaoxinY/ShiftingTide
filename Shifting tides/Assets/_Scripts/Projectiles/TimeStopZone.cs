@@ -37,48 +37,34 @@ public class TimeStopZone : MonoBehaviour
     {
         foreach (GameObject influencedGameObject in influencedGameObjects)
         {
-            if (influencedGameObject.GetComponent<TimeBoundGameObject>())
-            {
-                TimeBoundGameObject tbGameObject = influencedGameObject.GetComponent<TimeBoundGameObject>();
-                tbGameObject.isTimeStopped = false;
-            }
-            if (influencedGameObject.gameObject.tag == "Enemy")
-            {
-                TimeBoundGameObject tbGameObject = influencedGameObject.GetComponentInParent<TimeBoundGameObject>();
-                tbGameObject.isTimeStopped = false;
-            }
-            if (influencedGameObject.gameObject.name == "Player")
-            {
-                PlayerSkillModule playerSkillModule = influencedGameObject.GetComponentInChildren<PlayerSkillModule>();
-                playerSkillModule.isTimeStopped = false;
-            }
+            CheckForGameObjectToInfluence(influencedGameObject, false);
         }
         yield break;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        CheckForGameObjectToInfluence(other.gameObject);
+        CheckForGameObjectToInfluence(other.gameObject,true);
     }
 
-    private void CheckForGameObjectToInfluence(GameObject gameObjectCaught)
+    private void CheckForGameObjectToInfluence(GameObject gameObjectCaught,bool turnOn)
     {
         if (gameObjectCaught.GetComponent<TimeBoundGameObject>())
         {
             TimeBoundGameObject tbGameObject = gameObjectCaught.GetComponent<TimeBoundGameObject>();
-            tbGameObject.isTimeStopped = true;
+            tbGameObject.isTimeStopped = turnOn;
             influencedGameObjects.Add(gameObjectCaught.gameObject);
         }
         if (gameObjectCaught.gameObject.tag == "Enemy")
         {
             TimeBoundGameObject tbGameObject = gameObjectCaught.GetComponentInParent<TimeBoundGameObject>();
-            tbGameObject.isTimeStopped = true;
+            tbGameObject.isTimeStopped = turnOn;
             influencedGameObjects.Add(gameObjectCaught.gameObject);
         }
         if (gameObjectCaught.gameObject.name == "Player")
         {
             PlayerSkillModule playerSkillModule = gameObjectCaught.GetComponentInChildren<PlayerSkillModule>();
-            playerSkillModule.isTimeStopped = true;
+            playerSkillModule.isTimeStopped = turnOn;
             influencedGameObjects.Add(gameObjectCaught.gameObject);
         }
     }
