@@ -21,14 +21,15 @@ public class PlayerParticleSystemManager : MonoBehaviour
     }
 
     public void InherentBlinkerCount(int amount)
-    {      
+    {
+        Debug.Log("Called");
         isPlayingChargedUpAnimation = true;
         foreach (ParticleSystemHandler particleSystemHandler in currentPlayerArrowParticle.managedSystems)
         {
             if (particleSystemHandler is PlayerBlinkersManager)
             {               
                 PlayerBlinkersManager playerBlinkersManager = particleSystemHandler.gameObject.GetComponent<PlayerBlinkersManager>();
-                StartCoroutine(playerBlinkersManager.SpawnBlinkers(amount));
+                playerBlinkersManager.SpawnBlinkers(amount);
             }
         }
     }

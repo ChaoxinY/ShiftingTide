@@ -26182,7 +26182,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0.1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -31429,23 +31429,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 19
       objectReference: {fileID: 0}
-    - target: {fileID: 4994175639633820, guid: fa7e190bbe7f1ce4b910a8d5fa491313, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4994175639633820, guid: fa7e190bbe7f1ce4b910a8d5fa491313, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4994175639633820, guid: fa7e190bbe7f1ce4b910a8d5fa491313, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 198629008261689898, guid: fa7e190bbe7f1ce4b910a8d5fa491313,
-        type: 2}
-      propertyPath: SizeModule.curve.scalar
-      value: 8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa7e190bbe7f1ce4b910a8d5fa491313, type: 2}
   m_IsPrefabAsset: 0
@@ -31765,7 +31748,7 @@ ParticleSystem:
   stopAction: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -46684,7 +46667,6 @@ MonoBehaviour:
   arrowheadPrefabs:
   - {fileID: 1534344314762968, guid: 49eb9e0c64d04c14da84648b693438d7, type: 2}
   - {fileID: 1534344314762968, guid: a97b49538c229394d90614d171f56a02, type: 2}
-  - {fileID: 1534344314762968, guid: 82049ec023f528b4ba6dd1b40d61ec47, type: 2}
   dashForce: 200
   dashLimit: 17
   isTimeStopped: 0
@@ -51849,7 +51831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &798734699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52220,7 +52202,7 @@ ParticleSystem:
   stopAction: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -76255,7 +76237,9 @@ MonoBehaviour:
   - {fileID: 954861359}
   - {fileID: 152420162}
   - {fileID: 584297938}
+  playerArrowParticleSystemManager: {fileID: 861425817}
   blinkerCooldownReduction: 0
+  activedBlinkers: []
 --- !u!1 &947389818
 GameObject:
   m_ObjectHideFlags: 0
@@ -76288,7 +76272,9 @@ MonoBehaviour:
   - {fileID: 1719367711}
   - {fileID: 839070329}
   - {fileID: 1386023803}
+  playerArrowParticleSystemManager: {fileID: 1073586991}
   blinkerCooldownReduction: 0
+  activedBlinkers: []
 --- !u!4 &947389820
 Transform:
   m_ObjectHideFlags: 0
@@ -92211,10 +92197,7 @@ MonoBehaviour:
   - {fileID: 400237592}
   targetOffset: {x: 0, y: 0, z: 0}
   isAiming: 0
-  arrowSpeed: 0
-  startArrowSpeed: 2
-  maxArrowSpeed: 80
-  arrowBaseDamage: 0
+  arrowChargingState: 0
 --- !u!1 &1267223652
 GameObject:
   m_ObjectHideFlags: 0
@@ -128501,7 +128484,7 @@ ParticleSystemRenderer:
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -128516,7 +128499,7 @@ ParticleSystem:
   lengthInSec: 0.1
   simulationSpeed: 1
   stopAction: 0
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -128913,7 +128896,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1.5707963
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -129072,7 +129055,7 @@ ParticleSystem:
     randomizeRotationDirection: 0
     maxNumParticles: 200
     size3D: 0
-    rotation3D: 0
+    rotation3D: 1
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0

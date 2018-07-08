@@ -83,13 +83,18 @@ public class PlayerSkillModule : PlayerModule
     }
     private void SwitchArrowHead()
     {
+        int bowChargeState = playerAimModule.arrowChargingState;
+
+        playerParticleSystemManager.StopAllShootingParticleSystems();
         availableArrowheads.Enqueue(availableArrowheads.Dequeue());
         playerAimModule.currentArrowhead = availableArrowheads.Peek();
-        int bowChargeState = playerAimModule.arrowChargingState;
-        playerParticleSystemManager.StopAllShootingParticleSystems();
         playerParticleSystemManager.SetCurrentArrowParticleSystem();
-        playerParticleSystemManager.InherentBlinkerCount(bowChargeState);
-        playerParticleSystemManager.PlayChargingAnimation();
+
+        if (bowChargeState > 0)
+        {
+            playerParticleSystemManager.PlayChargingAnimation();
+            playerParticleSystemManager.InherentBlinkerCount(bowChargeState);
+        }
     }
 
     private void GatherSource()

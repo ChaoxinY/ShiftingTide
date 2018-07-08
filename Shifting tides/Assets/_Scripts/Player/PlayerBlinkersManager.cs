@@ -5,9 +5,10 @@ using System.Collections.Generic;
 public class PlayerBlinkersManager : ParticleSystemHandler
 {
     public PlayerBlinkerParticleSystemHandler[] blinkers;
+    public PlayerArrowParticleSystemManager playerArrowParticleSystemManager;
     public float blinkerCooldownReduction;
 
-    private List<PlayerBlinkerParticleSystemHandler> activedBlinkers =  new List<PlayerBlinkerParticleSystemHandler>();
+    public List<PlayerBlinkerParticleSystemHandler> activedBlinkers = new List<PlayerBlinkerParticleSystemHandler>();
     private IEnumerator blinkerAnimationCoroutine;
     private PlayerAimModule playerAimModule;
 
@@ -33,38 +34,57 @@ public class PlayerBlinkersManager : ParticleSystemHandler
         {
             StopCoroutine(blinkerAnimationCoroutine);
         }
-        playerAimModule.arrowChargingState = 0;        
+        playerAimModule.arrowChargingState = 0;
     }
 
-    public IEnumerator SpawnBlinkers(int amount) {
-        Debug.Log(amount);
-        for (int i = 0; i < amount; i++) {
+    public void SpawnBlinkers(int amount)
+    {
+        playerArrowParticleSystemManager.activeSystems.Add(this);
+        for (int i = 0; i < amount; i++)
+        {
             blinkers[i].PlayParticleAnimation();
             activedBlinkers.Add(blinkers[i]);
-            yield return new WaitForSeconds(0.45f);
+
         }
         playerAimModule.arrowChargingState = amount;
-        // if blinker amount < 4, play the rest of the blinker animation.
+        if (amount < blinkers.Length)
+        {
+            blinkerAnimationCoroutine = BlinkerAnimation(amount);
+            StartCoroutine(blinkerAnimationCoroutine);
+        }
     }
 
-    private IEnumerator BlinkerAnimation() {
+    private IEnumerator BlinkerAnimation(int skipToStage = 0)
+    {
+        switch (skipToStage)
+        {
+            case 1:
+                goto skipToStage;
+            case 2:
+                goto skipToStage1;
+            case 3:
+                goto skipToStage2;
+        }
 
-        yield return new WaitForSeconds(0.5f/(1+ blinkerCooldownReduction));
+        yield return new WaitForSeconds(0.5f / (1 + blinkerCooldownReduction));
         blinkers[0].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[0]);
         playerAimModule.arrowChargingState = 1;
 
-        yield return new WaitForSeconds(0.6f/(1 + blinkerCooldownReduction));
+        skipToStage:
+        yield return new WaitForSeconds(0.6f / (1 + blinkerCooldownReduction));
         blinkers[1].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[1]);
         playerAimModule.arrowChargingState = 2;
 
-        yield return new WaitForSeconds(0.4f/(1 + blinkerCooldownReduction));
+        skipToStage1:
+        yield return new WaitForSeconds(0.4f / (1 + blinkerCooldownReduction));
         blinkers[2].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[2]);
         playerAimModule.arrowChargingState = 3;
 
-        yield return new WaitForSeconds(0.3f/(1 + blinkerCooldownReduction));
+        skipToStage2:
+        yield return new WaitForSeconds(0.3f / (1 + blinkerCooldownReduction));
         blinkers[3].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[3]);
         playerAimModule.arrowChargingState = 4;

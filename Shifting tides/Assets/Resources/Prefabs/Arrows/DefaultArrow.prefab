@@ -69,8 +69,7 @@ GameObject:
   - component: {fileID: 4225760400290412}
   - component: {fileID: 65317149097114688}
   - component: {fileID: 54194890793928894}
-  - component: {fileID: 114240012270298280}
-  - component: {fileID: 114060401059697896}
+  - component: {fileID: 114386424653865162}
   m_Layer: 12
   m_Name: DefaultArrow
   m_TagString: Arrow
@@ -396,7 +395,7 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &114060401059697896
+--- !u!114 &114386424653865162
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -404,29 +403,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1534344314762968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387a276b7a3f6ab4d998056c9d5bb6ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  managedSystems:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  activeSystems:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &114240012270298280
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1534344314762968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb2e197ca0002047961ffd152f384e1, type: 3}
+  m_Script: {fileID: 11500000, guid: bd8aa39ac68ebff40916fd29f326a5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isTimeStopped: 0
@@ -440,6 +417,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ad4487a1d80d3d1428447b32e4f9ce8a, type: 3}
   - {fileID: 8300000, guid: a8fcb412c16448a4d865cf2e7201d426, type: 3}
   baseDamage: 0
+  arrowSpeed: 0
   penetrationStrength: 0.4
 --- !u!198 &198439218312682206
 ParticleSystem:

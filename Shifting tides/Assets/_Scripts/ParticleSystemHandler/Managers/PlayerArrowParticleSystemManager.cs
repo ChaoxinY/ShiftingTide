@@ -38,7 +38,7 @@ public class PlayerArrowParticleSystemManager : MonoBehaviour
 
     public void PlayChargedUpAnimation() {
         managedSystems[4].PlayParticleAnimation();
-        AddToList(activeSystems, managedSystems[4]);        
+        AddToList(activeSystems, managedSystems[4]);
     }
 
     public IEnumerator PlayerFireAnimation()
