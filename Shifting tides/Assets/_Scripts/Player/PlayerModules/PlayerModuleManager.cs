@@ -12,10 +12,12 @@ public class PlayerModuleManager : MonoBehaviour
         ActiveModules.Add(AvailableModules[0]);
         ActiveModules.Add(AvailableModules[1]);
         ActiveModules.Add(AvailableModules[3]);
+     
     }
 
     private void Update()
     {
+    
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             foreach (PlayerModule module in ActiveModules)

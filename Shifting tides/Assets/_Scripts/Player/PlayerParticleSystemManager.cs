@@ -54,7 +54,6 @@ public class PlayerParticleSystemManager : MonoBehaviour
 
     public void SetCurrentArrowParticleSystem()
     {
-
         switch (playerAimModule.currentArrowhead.name)
         {
 

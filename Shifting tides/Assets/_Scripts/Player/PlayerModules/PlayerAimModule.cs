@@ -63,7 +63,7 @@ public class PlayerAimModule : PlayerModule
         bow.transform.LookAt(shootTarget.transform);
         cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
 
-        if (Input.GetMouseButton(1) && PlayerResourcesManager.IsThereEnoughResource(4, 0))
+        if (Input.GetMouseButton(1) && CheckIfCurrentArrowIsAvailable(currentArrowhead.name))
         {
             ChargeUpArrow();
         }
@@ -102,8 +102,7 @@ public class PlayerAimModule : PlayerModule
   
 
     private void ChargeUpArrow()
-    {
-       
+    {      
         AimRotate();
 
         if (playerParticleSystemManager.isPlayingChargingAnimation == false)
@@ -122,13 +121,49 @@ public class PlayerAimModule : PlayerModule
 
     private void ShootArrow()
     {
-        PlayerResourcesManager.Arrows -= 1;
+        ConsumeCurrentArrowResource();
         GameObject Arrow = Instantiate(currentArrowhead, bow.transform.position, bow.transform.rotation);
         Arrow.GetComponent<ArrowBehaviour>().ApplyArrowStageValues(arrowChargingState);
         Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * Arrow.GetComponent<ArrowBehaviour>().arrowSpeed, ForceMode.Impulse);
         if (isAiming) isAiming = !isAiming;
         playerParticleSystemManager.PlayerFireAnimation();
         bowSoundSources[0].Play();
+    }
+
+    private void ConsumeCurrentArrowResource()
+    {
+        switch (currentArrowhead.name)
+        {
+            case "DefaultArrow":
+                PlayerResourcesManager.Arrows -= 1;
+                break;
+            case "TimeZoneArrow":
+                PlayerResourcesManager.SourceReserve -= 10;
+                break;
+            case "CloudArrow":
+                PlayerResourcesManager.SourceFusedArrows -= 1;
+                break;
+        }
+    
+    }
+
+    public bool CheckIfCurrentArrowIsAvailable(string currentArrowheadName) {
+
+        bool arrowAvailable = false;
+
+        switch (currentArrowheadName) {
+            case "DefaultArrow":
+                arrowAvailable = PlayerResourcesManager.IsThereEnoughResource(4, 0);
+                break;
+            case "TimeZoneArrow":
+                arrowAvailable = PlayerResourcesManager.IsThereEnoughResource(1, 0);
+                break;
+            case "CloudArrow":
+                arrowAvailable = PlayerResourcesManager.IsThereEnoughResource(5, 0);
+                break;
+        }
+
+        return arrowAvailable;
     }
 
     private void AimRotate()
@@ -204,10 +239,8 @@ public class PlayerAimModule : PlayerModule
 
                 if (dSqrToTarget < closestDistanceSqr)
                 {
-
                     closestDistanceSqr = dSqrToTarget;
                     nearestTarget = rh.collider.gameObject.transform;
-
                 }
             }
         }

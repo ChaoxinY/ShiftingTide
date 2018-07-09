@@ -55,7 +55,7 @@ public class PlayerResourcesManager : MonoBehaviour
 
     /// <summary>
     /// Check if there is enough resource left to carry out this action. 
-    ///  0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes 4 : arrows
+    ///  0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes 4 : arrows 5： SourceFused Arrows
     /// </summary>
     public static bool IsThereEnoughResource(int resourceNumber, int resourceMin)
     {
