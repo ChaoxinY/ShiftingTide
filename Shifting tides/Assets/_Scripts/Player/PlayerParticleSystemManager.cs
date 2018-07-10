@@ -63,6 +63,9 @@ public class PlayerParticleSystemManager : MonoBehaviour
             case "TimeZoneArrow":
                 currentPlayerArrowParticle = managedPlayerArrowParticle[1];
                 break;
+            case "CloudArrow":
+                currentPlayerArrowParticle = managedPlayerArrowParticle[2];
+                break;
         }
 
     }

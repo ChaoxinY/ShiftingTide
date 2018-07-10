@@ -49,7 +49,7 @@ public class HostileResourceManager : MonoBehaviour
             return;
         }
         CurrentHealth -= baseDamage;
-        StartCoroutine(OnHitDrops(1,2));
+        StartCoroutine(OnHitDrops(10,20));
        // StartCoroutine(OnHitPhysicsFeedBack());
     }
 
@@ -100,7 +100,7 @@ public class HostileResourceManager : MonoBehaviour
             Vector3 randomPoistion = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
             scrap.GetComponent<SourcePoint>().OnSpawnInit(4, GameObject.Find("Player").transform.position + randomPoistion,20, 4);
             scrap.GetComponent<SourcePoint>().objectToChase = GameObject.Find("Player");
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
         yield break;
     }
