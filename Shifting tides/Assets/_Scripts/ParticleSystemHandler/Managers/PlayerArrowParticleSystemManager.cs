@@ -19,6 +19,7 @@ public class PlayerArrowParticleSystemManager : MonoBehaviour
     public void StopAllShootingParticleSystems() {
 
         if (activeSystems.Count == 0 ) {
+            Debug.Log("Stoped");
             return;
         }
 
@@ -30,10 +31,14 @@ public class PlayerArrowParticleSystemManager : MonoBehaviour
 
     public void PlayChargingAnimation()
     {
+        //AddToList(activeSystems, managedSystems[0], managedSystems[1], managedSystems[3]);
+        activeSystems.Add(managedSystems[0]);
+        activeSystems.Add(managedSystems[1]);
+        activeSystems.Add(managedSystems[3]);
+        Debug.Log("PARTICLEs");
         managedSystems[0].PlayParticleAnimation();
         managedSystems[1].PlayParticleAnimation();
-        managedSystems[3].PlayParticleAnimation();
-        AddToList(activeSystems, managedSystems[0], managedSystems[1], managedSystems[3]);     
+        managedSystems[3].PlayParticleAnimation();        
     }
 
     public void PlayChargedUpAnimation() {
@@ -42,7 +47,7 @@ public class PlayerArrowParticleSystemManager : MonoBehaviour
     }
 
     public IEnumerator PlayerFireAnimation()
-    {
+    {   
         managedSystems[0].StopParticleAnimation();
         managedSystems[1].StopParticleAnimation();
         managedSystems[3].StopParticleAnimation();
@@ -50,12 +55,9 @@ public class PlayerArrowParticleSystemManager : MonoBehaviour
         {
             managedSystems[4].StopParticleAnimation();
             playerParticleSystemManager.isPlayingChargedUpAnimation = false;
-        }
+        }    
         managedSystems[2].PlayParticleAnimation();
         AddToList(activeSystems, managedSystems[2]);
-        yield return new WaitForSeconds(0.1f);
-        managedSystems[2].StopParticleAnimation();
-        
         activeSystems.Clear();
         yield break;
     }

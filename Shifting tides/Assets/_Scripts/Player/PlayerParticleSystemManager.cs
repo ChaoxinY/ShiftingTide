@@ -14,15 +14,15 @@ public class PlayerParticleSystemManager : MonoBehaviour
     public bool isPlayingChargingAnimation, isPlayingChargedUpAnimation;
 
     public void StopAllShootingParticleSystems()
-    {
+    {   
         isPlayingChargingAnimation = false;
         isPlayingChargedUpAnimation = false;
+     
         currentPlayerArrowParticle.StopAllShootingParticleSystems();
     }
 
     public void InherentBlinkerCount(int amount)
     {
-        Debug.Log("Called");
         isPlayingChargedUpAnimation = true;
         foreach (ParticleSystemHandler particleSystemHandler in currentPlayerArrowParticle.managedSystems)
         {

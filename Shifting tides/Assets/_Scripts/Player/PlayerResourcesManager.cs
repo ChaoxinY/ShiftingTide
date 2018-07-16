@@ -38,7 +38,7 @@ public class PlayerResourcesManager : MonoBehaviour
             if (rechargeTimer <= 0)
             {
                 StartCoroutine(ChargeUpDash(0));
-                rechargeTimer = 5;
+                rechargeTimer = 6;
             }
         }
     }

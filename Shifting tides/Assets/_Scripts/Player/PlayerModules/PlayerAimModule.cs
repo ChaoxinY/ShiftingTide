@@ -50,7 +50,7 @@ public class PlayerAimModule : PlayerModule
     public override void ModuleRemove()
     {
         isAiming = false;
-        playerParticleSystemManager.StopAllShootingParticleSystems();
+        //playerParticleSystemManager.StopAllShootingParticleSystems();
         cursor.gameObject.SetActive(false);
         plyCamera.pivotOffset = new Vector3(0, 0.5f, 0);
         plyCamera.camOffset = new Vector3(0, 0.5f, -3);

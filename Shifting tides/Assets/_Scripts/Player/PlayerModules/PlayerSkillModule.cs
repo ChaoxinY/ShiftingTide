@@ -10,6 +10,7 @@ public class PlayerSkillModule : PlayerModule
     private PlayerTideComboManager playerTideComboManager;
     private PlayerPhysicsModule playerPhysicsModule;
     private PlayerAimModule playerAimModule;
+    private Ui ui;
     private bool dashWarmUp;
 
     public GameObject[] dashesImages, arrowheadPrefabs;
@@ -22,6 +23,7 @@ public class PlayerSkillModule : PlayerModule
         playerTideComboManager = GetComponentInParent<PlayerTideComboManager>();
         playerPhysicsModule = GameObject.Find("Player").GetComponentInChildren<PlayerPhysicsModule>();
         playerAimModule = GameObject.Find("Player").GetComponentInChildren<PlayerAimModule>();
+        ui = GameObject.Find("UI").GetComponentInChildren<Ui>();
         InitializeArrowheads();
         defaultArrowHead = availableArrowheads.Peek();
         playerAimModule.currentArrowhead = defaultArrowHead;
@@ -47,7 +49,7 @@ public class PlayerSkillModule : PlayerModule
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SwitchArrowHead();
+          SwitchArrowHead();
         }
     }
 
@@ -74,6 +76,7 @@ public class PlayerSkillModule : PlayerModule
         }
         yield break;
     }
+
     private void InitializeArrowheads()
     {
         foreach (GameObject arrowhead in arrowheadPrefabs)
@@ -85,19 +88,22 @@ public class PlayerSkillModule : PlayerModule
     {
         int bowChargeState = playerAimModule.arrowChargingState;
         GameObject startingArrowHead = availableArrowheads.Peek();
-
         do
-        {
+        {   
             availableArrowheads.Enqueue(availableArrowheads.Dequeue());
             playerAimModule.currentArrowhead = availableArrowheads.Peek();
         }
         while (!playerAimModule.CheckIfCurrentArrowIsAvailable(availableArrowheads.Peek().name));
 
         if (playerAimModule.currentArrowhead == startingArrowHead) {
+           
             return;
         }
+
         playerParticleSystemManager.StopAllShootingParticleSystems();
+
         playerParticleSystemManager.SetCurrentArrowParticleSystem();
+        ui.DisplayCurrentArrowHead(playerAimModule.currentArrowhead);
         if (bowChargeState > 0)
         {
             playerParticleSystemManager.PlayChargingAnimation();

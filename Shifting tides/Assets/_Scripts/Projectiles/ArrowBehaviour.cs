@@ -86,7 +86,7 @@ public class ArrowBehaviour : Projectile
         onHitSoundSource.Play();
 
         other.gameObject.GetComponentInParent<HostileResourceManager>().GotHit(baseDamage);
-        playerTideComboManager.ResetCombo();
+       // playerTideComboManager.ResetCombo();
     }
 
     protected void SpawnOnHitEffect(Transform transformHit, ContactPoint contact, GameObject prefabToSpawn, Vector3 hitSpeed)
@@ -114,7 +114,7 @@ public class ArrowBehaviour : Projectile
     {
         onHitSoundSource.clip = onHitSounds[0];
         onHitSoundSource.Play();
-        playerTideComboManager.ResetCombo();
+       // playerTideComboManager.ResetCombo();
     }
 
 }

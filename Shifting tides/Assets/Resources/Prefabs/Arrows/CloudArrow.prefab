@@ -87,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1534344314762968}
   m_LocalRotation: {x: -0.00088090525, y: 0.99828345, z: -0.015577861, w: -0.05645148}
-  m_LocalPosition: {x: -19.498, y: 1.2, z: -1165.312}
+  m_LocalPosition: {x: -19.874, y: 1.2, z: -1165.269}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4576543582306134}
@@ -102,13 +102,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1501489393388762}
-  m_LocalRotation: {x: -0.022858627, y: -0.7120048, z: 0.022519488, w: 0.7014411}
-  m_LocalPosition: {x: 0.043, y: -0.007, z: -0.241}
+  m_LocalRotation: {x: 0.008431153, y: -0.71232176, z: -0.008306065, w: 0.7017533}
+  m_LocalPosition: {x: 0.042, y: -0.009, z: -0.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4225760400290412}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -90.856, z: 3.6780002}
+  m_LocalEulerAnglesHint: {x: 0, y: -90.856, z: -1.3560001}
 --- !u!4 &4493590718068012
 Transform:
   m_ObjectHideFlags: 1
@@ -286,8 +286,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTimeStopped: 0
-  bleedEffect: []
-  onHitSounds: []
+  bleedEffect:
+  - {fileID: 0}
+  - {fileID: 1401143639888062, guid: 3ea079730b6de784bb9e70f8091c81f1, type: 2}
+  - {fileID: 1070533824818104, guid: ecf38ef5d9a733749a82f51b3e989a57, type: 2}
+  - {fileID: 1258155573022268, guid: 9649b3fb7fb35cd48ab5a02a4aecebac, type: 2}
+  onHitSounds:
+  - {fileID: 8300000, guid: cc4dd72fa683be847b68cbf3c59e8391, type: 3}
+  - {fileID: 8300000, guid: ad4487a1d80d3d1428447b32e4f9ce8a, type: 3}
+  - {fileID: 8300000, guid: a8fcb412c16448a4d865cf2e7201d426, type: 3}
   baseDamage: 0
   arrowSpeed: 0
   penetrationStrength: 0
@@ -303,7 +310,7 @@ ParticleSystem:
   stopAction: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -4881,7 +4888,7 @@ ParticleSystem:
   stopAction: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -4948,7 +4955,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5521,9 +5528,9 @@ ParticleSystem:
     m_TextureBilinearFiltering: 0
     randomDirectionAmount: 0
     sphericalDirectionAmount: 0
-    randomPositionAmount: 0.02
+    randomPositionAmount: 0.3
     radius:
-      value: 0.54
+      value: 0.43
       mode: 0
       spread: 0
       speed:
@@ -5642,7 +5649,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 20
       minScalar: 10
       maxCurve:
         serializedVersion: 2

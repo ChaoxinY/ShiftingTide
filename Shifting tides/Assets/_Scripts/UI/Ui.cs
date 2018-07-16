@@ -10,9 +10,33 @@ public class Ui : MonoBehaviour
     public Slider[] sliders;
     public Text[] texts;
     public Image[] dashCharges;
+    public GameObject[] arrowHeadIcons;
 
     void Start()
     {
         basicMovement = GameObject.Find("Player").GetComponent<BasicMovement>();
     }
+
+    public void DisplayCurrentArrowHead(GameObject currentArrowHead)
+    {
+        Debug.Log("Called");
+        foreach (GameObject arrowheadIcon in arrowHeadIcons) {
+            arrowheadIcon.SetActive(false);
+        }
+        switch (currentArrowHead.name)
+        {
+            case "DefaultArrow":
+                arrowHeadIcons[0].SetActive(true);
+                break;
+            case "TimeZoneArrow":
+                arrowHeadIcons[1].SetActive(true);
+                break;
+            case "CloudArrow":
+                arrowHeadIcons[2].SetActive(true);
+                break;
+        }
+
+    }
+
+
 }
