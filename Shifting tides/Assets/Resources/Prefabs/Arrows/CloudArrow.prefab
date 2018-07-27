@@ -287,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTimeStopped: 0
   bleedEffect:
-  - {fileID: 0}
+  - {fileID: 1401143639888062, guid: 4bed7f08b0e8ef54c8163229b20fa7c1, type: 2}
   - {fileID: 1401143639888062, guid: 3ea079730b6de784bb9e70f8091c81f1, type: 2}
   - {fileID: 1070533824818104, guid: ecf38ef5d9a733749a82f51b3e989a57, type: 2}
   - {fileID: 1258155573022268, guid: 9649b3fb7fb35cd48ab5a02a4aecebac, type: 2}
