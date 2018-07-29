@@ -3,10 +3,11 @@ using System.Collections;
 
 public class PlayerMovementModule : PlayerModule
 {
-    private Vector3 currentMotion, colExtents ,lastDirection;
-    private Animator aniPlayer;
+    private PlayerAnimatorManager playerAnimatorManager;
     private PlayerPhysicsModule playerPhysicsModule;
+    private PlayerAimModule playerAimModule;
     private Camera cameraMain;
+    private Vector3 currentMotion, colExtents, lastDirection;
     private float gravity;
 
     public GameObject gameManagerObject;
@@ -15,9 +16,10 @@ public class PlayerMovementModule : PlayerModule
     protected override void Initialize()
     {  
         cameraMain = Camera.main;
-        colExtents = GetComponentInParent<Collider>().bounds.extents;
-        aniPlayer = GetComponentInParent<Animator>();
         playerPhysicsModule = GameObject.Find("Player").GetComponentInChildren<PlayerPhysicsModule>();
+        playerAnimatorManager = GameObject.Find("Player").GetComponent<PlayerAnimatorManager>();
+        playerAimModule = GameObject.Find("Player").GetComponentInChildren<PlayerAimModule>();
+        colExtents = GetComponentInParent<Collider>().bounds.extents;
         InitializeModuleID();
     }
 
@@ -36,7 +38,8 @@ public class PlayerMovementModule : PlayerModule
 
         float inputSpeed = Vector2.ClampMagnitude(new Vector2(playerPhysicsModule.horizontalInput,
             playerPhysicsModule.verticalInput), playerPhysicsModule.maxInput).magnitude;
-        aniPlayer.SetFloat("Speed", inputSpeed);
+
+        playerAnimatorManager.InputSpeed = inputSpeed;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -51,7 +54,10 @@ public class PlayerMovementModule : PlayerModule
         {
             Jumping();
         }
-        Rotate(playerPhysicsModule.horizontalInput, playerPhysicsModule.verticalInput);
+        if (!playerAimModule.isAiming)
+        {
+            Rotate(playerPhysicsModule.horizontalInput, playerPhysicsModule.verticalInput);
+        }
     }
     private void Rotate(float horizontal, float vertical)
     {
@@ -71,7 +77,6 @@ public class PlayerMovementModule : PlayerModule
             LastDirection = desiredDirection;
         }
         if (!IsMoving()) Repositioning();
-
     }
     public override void ModuleFixedUpdate()
     {
@@ -93,7 +98,7 @@ public class PlayerMovementModule : PlayerModule
     }
     private void Jumping()
     {
-     
+       playerAnimatorManager.PlayJumpAnimation();
        playerPhysicsModule.rigidbodyPlayer.AddForce((Vector3.up * jumpVel), ForceMode.Impulse);      
     }
 

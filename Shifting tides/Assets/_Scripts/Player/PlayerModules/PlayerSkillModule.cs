@@ -8,10 +8,10 @@ public class PlayerSkillModule : PlayerModule
     private GameObject defaultArrowHead;
     private PlayerParticleSystemManager playerParticleSystemManager;
     private PlayerTideComboManager playerTideComboManager;
+    private PlayerAnimatorManager playerAnimatorManager;
     private PlayerPhysicsModule playerPhysicsModule;
     private PlayerAimModule playerAimModule;
     private Ui ui;
-    private bool dashWarmUp;
 
     public GameObject[] dashesImages, arrowheadPrefabs;
     public float dashForce, dashLimit;
@@ -21,6 +21,7 @@ public class PlayerSkillModule : PlayerModule
     {
         playerParticleSystemManager = GetComponentInParent<PlayerParticleSystemManager>();
         playerTideComboManager = GetComponentInParent<PlayerTideComboManager>();
+        playerAnimatorManager = GameObject.Find("Player").GetComponent<PlayerAnimatorManager>();
         playerPhysicsModule = GameObject.Find("Player").GetComponentInChildren<PlayerPhysicsModule>();
         playerAimModule = GameObject.Find("Player").GetComponentInChildren<PlayerAimModule>();
         ui = GameObject.Find("UI").GetComponentInChildren<Ui>();
@@ -38,13 +39,13 @@ public class PlayerSkillModule : PlayerModule
     {
         GatherSource();
 
-        if (Input.GetKeyDown(KeyCode.F) && PlayerResourcesManager.IsThereEnoughResource(3, 0) && !dashWarmUp)
+        if (Input.GetKeyDown(KeyCode.F) && PlayerResourcesManager.IsThereEnoughResource(3, 0) && IsMoving())
         {
             StartCoroutine(Dash());
         }
         if (Input.GetKeyDown(KeyCode.Space) && !playerPhysicsModule.onGround)
         {
-            Jumping();
+            CreatePlatform();
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -55,9 +56,7 @@ public class PlayerSkillModule : PlayerModule
 
     private IEnumerator Dash()
     {
-        dashWarmUp = true;
-        yield return new WaitUntil(() => IsMoving());
-        dashWarmUp = false;
+        playerAnimatorManager.PlayDashAnimation();
         playerTideComboManager.StartCombo();
         PlayerResourcesManager.Dashes -= 1;
         dashesImages[(int)PlayerResourcesManager.Dashes].SetActive(false);
@@ -124,7 +123,7 @@ public class PlayerSkillModule : PlayerModule
             sP.movementSpeed = 20f;
         }
     }
-    private void Jumping()
+    private void CreatePlatform()
     {
         if (PlayerResourcesManager.IsThereEnoughResource(2, 0) && isTimeStopped)
         {

@@ -6,10 +6,11 @@ using System.Collections.Generic;
 
 public class PlayerAimModule : PlayerModule
 {
-    private Camera cameraMain;
     private PlayerParticleSystemManager playerParticleSystemManager;
+    private PlayerAnimatorManager playerAnimatorManager;
     private PlayerCamera plyCamera;
-    private Transform nearestTarget;
+    private Camera cameraMain;
+    private Transform nearestTarget, playerTransForm;
     private Vector3 lastDirection;
     private bool lockedOn;
 
@@ -17,6 +18,7 @@ public class PlayerAimModule : PlayerModule
     public Sprite lockOnCursor, lockOffCursor;
     public GameObject bow, bowMesh, shootTarget, currentArrowhead;
     public AudioSource[] bowSoundSources;
+    public Transform PlayerChestBone;
     public Vector3 targetOffset;
     public bool isAiming;
     [HideInInspector]
@@ -24,9 +26,11 @@ public class PlayerAimModule : PlayerModule
 
     protected override void Initialize()
     {
-        cameraMain = Camera.main;
         playerParticleSystemManager = GameObject.Find("Player").GetComponentInChildren<PlayerParticleSystemManager>();
-        plyCamera = GameObject.Find("Main Camera").GetComponent<PlayerCamera>();       
+        playerAnimatorManager = GameObject.Find("Player").GetComponent<PlayerAnimatorManager>();
+        plyCamera = GameObject.Find("Main Camera").GetComponent<PlayerCamera>();
+        cameraMain = Camera.main;
+        playerTransForm = GameObject.Find("Player").transform;
         lockedOn = false;
         cursor.sprite = lockOffCursor;
         InitializeModuleID();
@@ -61,8 +65,6 @@ public class PlayerAimModule : PlayerModule
     public override void ModuleUpdate()
     {
         bow.transform.LookAt(shootTarget.transform);
-        cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
-
         if (Input.GetMouseButton(1) && CheckIfCurrentArrowIsAvailable(currentArrowhead.name))
         {
             ChargeUpArrow();
@@ -93,17 +95,27 @@ public class PlayerAimModule : PlayerModule
 
         else
         {
-            shootTarget.transform.position = 
-            cameraMain.transform.position + cameraMain.transform.forward * 30f 
+            shootTarget.transform.position =
+            cameraMain.transform.position + cameraMain.transform.forward * 30f
             + cameraMain.transform.right * targetOffset.x
             + cameraMain.transform.up * targetOffset.y;
         }
-     }
-  
+    }
+
+    public void LateUpdate()
+    {       
+        cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
+        if (isAiming) {
+            AimRotate();
+        }
+    }
 
     private void ChargeUpArrow()
-    {      
-        AimRotate();
+    {
+
+        if (!isAiming) isAiming = !isAiming;
+
+        playerAnimatorManager.Aiming = isAiming;
 
         if (playerParticleSystemManager.isPlayingChargingAnimation == false)
         {
@@ -116,16 +128,16 @@ public class PlayerAimModule : PlayerModule
             playerParticleSystemManager.PlayChargedUpAnimation();
         }
 
-        if (!isAiming) isAiming = !isAiming;
     }
 
     private void ShootArrow()
     {
+        if (isAiming) isAiming = !isAiming;
+        playerAnimatorManager.Aiming = isAiming;
         ConsumeCurrentArrowResource();
         GameObject Arrow = Instantiate(currentArrowhead, bow.transform.position, bow.transform.rotation);
         Arrow.GetComponent<ArrowBehaviour>().ApplyArrowStageValues(arrowChargingState);
         Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * Arrow.GetComponent<ArrowBehaviour>().arrowSpeed, ForceMode.Impulse);
-        if (isAiming) isAiming = !isAiming;
         playerParticleSystemManager.PlayerFireAnimation();
         bowSoundSources[0].Play();
     }
@@ -144,14 +156,16 @@ public class PlayerAimModule : PlayerModule
                 PlayerResourcesManager.SourceFusedArrows -= 1;
                 break;
         }
-    
+
     }
 
-    public bool CheckIfCurrentArrowIsAvailable(string currentArrowheadName) {
+    public bool CheckIfCurrentArrowIsAvailable(string currentArrowheadName)
+    {
 
         bool arrowAvailable = false;
 
-        switch (currentArrowheadName) {
+        switch (currentArrowheadName)
+        {
             case "DefaultArrow":
                 arrowAvailable = PlayerResourcesManager.IsThereEnoughResource(4, 0);
                 break;
@@ -166,7 +180,7 @@ public class PlayerAimModule : PlayerModule
         return arrowAvailable;
     }
 
-    private void AimRotate()
+    public void AimRotate()
     {
         Vector3 forward = cameraMain.transform.TransformDirection(Vector3.forward);
         // Player is moving on ground, Y component of camera facing is not relevant.
@@ -175,12 +189,15 @@ public class PlayerAimModule : PlayerModule
 
         // Always rotates the player according to the camera horizontal rotation in aim mode.
         Quaternion targetRotation = Quaternion.Euler(0, plyCamera.angleH, 0);
+        Quaternion ChestRotation = PlayerChestBone.rotation;
+        ChestRotation *= Quaternion.Euler(0, -plyCamera.angleV, -plyCamera.angleV/3);
 
-        float minSpeed = Quaternion.Angle(transform.rotation, targetRotation) * 0.02f;
+        float minSpeed = Quaternion.Angle(playerTransForm.rotation, targetRotation) * 0.5f;
 
         // Rotate entire player to face camera.
         lastDirection = forward;
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, minSpeed * Time.deltaTime);
+        playerTransForm.rotation = Quaternion.Lerp(playerTransForm.rotation, targetRotation, minSpeed * Time.deltaTime);
+        PlayerChestBone.rotation = Quaternion.Lerp(PlayerChestBone.rotation, ChestRotation, 1);
     }
 
     private RaycastHit[] LookForTarget()

@@ -8,6 +8,7 @@ public class PlayerModuleManager : MonoBehaviour
     public List<PlayerModule> ActiveModules = new List<PlayerModule>();
 
     private bool isAiming = false;
+  
 
     private void Start()
     {
@@ -15,7 +16,6 @@ public class PlayerModuleManager : MonoBehaviour
         ActiveModules.Add(AvailableModules[1]);
         ActiveModules.Add(AvailableModules[2]);
         ActiveModules.Add(AvailableModules[3]);
-     
     }
 
     private void Update()
@@ -23,7 +23,6 @@ public class PlayerModuleManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            Debug.Log("Called");
             //foreach (PlayerModule module in ActiveModules)
             //{
             //    if (module.ModuleID == AvailableModules[2].ModuleID)
@@ -34,8 +33,7 @@ public class PlayerModuleManager : MonoBehaviour
             //    }
             //}
             if (isAiming == false)
-            {
-                Debug.Log("Called");
+            {            
                 ActiveModules[2].ModuleStartUp();
                 isAiming = true;
                 return;
@@ -51,8 +49,6 @@ public class PlayerModuleManager : MonoBehaviour
                     }
                 }               
             }
-            //ActiveModules.Add(AvailableModules[2]);
-          
         }
         foreach (PlayerModule module in ActiveModules)
         {

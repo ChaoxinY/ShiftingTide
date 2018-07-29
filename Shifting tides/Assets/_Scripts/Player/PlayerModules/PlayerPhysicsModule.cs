@@ -9,8 +9,12 @@ public class PlayerPhysicsModule : PlayerModule
     public float horizontalInput, verticalInput;
     public float defaultMoveForce, moveForce, speedLimit, runLimit, maxInput;
 
+    private PlayerAnimatorManager playerAnimatorManager;
+
+
     protected override void Initialize()
     {
+        playerAnimatorManager = GameObject.Find("Player").GetComponent<PlayerAnimatorManager>();
         InitializeModuleID();
     }
 
@@ -22,7 +26,7 @@ public class PlayerPhysicsModule : PlayerModule
     public override void ModuleUpdate()
     {
         onGround = IsGrounded();
-
+        playerAnimatorManager.OnGround = onGround;
         if (!onGround)
         {
             GetComponentInParent<CapsuleCollider>().material.dynamicFriction = 0f;

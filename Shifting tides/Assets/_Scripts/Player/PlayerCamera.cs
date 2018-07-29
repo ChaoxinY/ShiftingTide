@@ -14,7 +14,7 @@ public class PlayerCamera : MonoBehaviour
     private float targetDistance;
     private Vector3 smoothPivotOffset, smoothCamOffset, targetPivotOffset, targetCamOffset, relCameraPos;
     private RaycastHit hits;
-    private float angleV, relCameraPosMag;
+    private float relCameraPosMag;
     private PlayerAimModule playerAimModule;
     private PlayerPhysicsModule playerPhysicsModule;
 
@@ -25,7 +25,7 @@ public class PlayerCamera : MonoBehaviour
     public Vector3 pivotOffset, camOffset,refVelocity = Vector3.zero;
 
     [HideInInspector]
-    public float mouseX, mouseY, cameraMouseY, angleH, targetFOV;
+    public float mouseX, mouseY, cameraMouseY, angleH, angleV, targetFOV;
     public float smoothSpeed, mouseSensitivity;
 
     private void Start()
