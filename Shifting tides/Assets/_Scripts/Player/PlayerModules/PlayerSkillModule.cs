@@ -53,7 +53,34 @@ public class PlayerSkillModule : PlayerModule
           SwitchArrowHead();
         }
     }
+    public void SwitchArrowHead()
+    {
+        int bowChargeState = playerAimModule.arrowChargingState;
+        GameObject startingArrowHead = availableArrowheads.Peek();
+        do
+        {
+            availableArrowheads.Enqueue(availableArrowheads.Dequeue());
+            playerAimModule.currentArrowhead = availableArrowheads.Peek();
+        }
+        while (!playerAimModule.CheckIfCurrentArrowIsAvailable(availableArrowheads.Peek().name));
 
+        if (playerAimModule.currentArrowhead == startingArrowHead)
+        {
+
+            return;
+        }
+
+        playerParticleSystemManager.StopAllShootingParticleSystems();
+
+        playerParticleSystemManager.SetCurrentArrowParticleSystem();
+        ui.DisplayCurrentArrowHead(playerAimModule.currentArrowhead);
+        if (bowChargeState > 0)
+        {
+            playerParticleSystemManager.PlayChargingAnimation();
+            playerParticleSystemManager.InherentBlinkerCount(bowChargeState);
+        }
+
+    }
     private IEnumerator Dash()
     {
         playerAnimatorManager.PlayDashAnimation();
@@ -83,33 +110,7 @@ public class PlayerSkillModule : PlayerModule
             availableArrowheads.Enqueue(arrowhead);
         }
     }
-    private void SwitchArrowHead()
-    {
-        int bowChargeState = playerAimModule.arrowChargingState;
-        GameObject startingArrowHead = availableArrowheads.Peek();
-        do
-        {   
-            availableArrowheads.Enqueue(availableArrowheads.Dequeue());
-            playerAimModule.currentArrowhead = availableArrowheads.Peek();
-        }
-        while (!playerAimModule.CheckIfCurrentArrowIsAvailable(availableArrowheads.Peek().name));
-
-        if (playerAimModule.currentArrowhead == startingArrowHead) {
-           
-            return;
-        }
-
-        playerParticleSystemManager.StopAllShootingParticleSystems();
-
-        playerParticleSystemManager.SetCurrentArrowParticleSystem();
-        ui.DisplayCurrentArrowHead(playerAimModule.currentArrowhead);
-        if (bowChargeState > 0)
-        {
-            playerParticleSystemManager.PlayChargingAnimation();
-            playerParticleSystemManager.InherentBlinkerCount(bowChargeState);
-        }
-
-    }
+  
 
     private void GatherSource()
     {

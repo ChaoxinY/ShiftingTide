@@ -26,11 +26,18 @@ public class PlayerPhysicsModule : PlayerModule
     public override void ModuleUpdate()
     {
         onGround = IsGrounded();
-        playerAnimatorManager.OnGround = onGround;
+      
         if (!onGround)
         {
             GetComponentInParent<CapsuleCollider>().material.dynamicFriction = 0f;
             GetComponentInParent<CapsuleCollider>().material.staticFriction = 0f;
+            if (!BumpCheck())
+            {
+                playerAnimatorManager.OnGround = false;
+            }
+            else if (BumpCheck()) {
+                playerAnimatorManager.OnGround = true;
+            }
         }
         else if (onGround && !IsMoving())
         {
@@ -42,13 +49,24 @@ public class PlayerPhysicsModule : PlayerModule
         {
             GetComponentInParent<CapsuleCollider>().material.dynamicFriction = 0.34f;
             GetComponentInParent<CapsuleCollider>().material.staticFriction = 0.6f;
+            playerAnimatorManager.OnGround = true;
         }
+    }
+
+    private bool BumpCheck() {
+
+        bool hitABump = true;
+        RaycastHit hit;
+        Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity);
+        if (hit.distance > 1.5f) { hitABump = false; }
+        Debug.Log(hit.distance);
+        return hitABump;
     }
 
     private bool IsGrounded()
     {
         //Ray ray = new Ray(this.transform.position + Vector3.up * 2 * colExtents.x, Vector3.down);     
-        Debug.DrawRay(transform.position - transform.forward, Vector3.down, Color.red);
+        //Debug.DrawRay(transform.position - transform.forward, Vector3.down, Color.red);
         //colExtents.x + 1.4f
         return Physics.Raycast(transform.position, Vector3.down, 1.2f);
     }

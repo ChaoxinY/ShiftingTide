@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Animations;
 using System.Collections;
 
 public class PlayerAnimatorManager : MonoBehaviour
@@ -12,6 +13,11 @@ public class PlayerAnimatorManager : MonoBehaviour
     {
         animatorPlayer = GetComponent<Animator>();
     }
+    public void StopRestAnimation()
+    {
+        animatorPlayer.SetTrigger("Moved");
+    }
+
     public void PlayDashAnimation()
     {
         animatorPlayer.SetTrigger("Dashed");

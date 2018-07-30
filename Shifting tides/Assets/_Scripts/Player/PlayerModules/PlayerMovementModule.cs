@@ -54,6 +54,9 @@ public class PlayerMovementModule : PlayerModule
         {
             Jumping();
         }
+        if (Input.anyKey) {
+            playerAnimatorManager.StopRestAnimation();
+        }
         if (!playerAimModule.isAiming)
         {
             Rotate(playerPhysicsModule.horizontalInput, playerPhysicsModule.verticalInput);

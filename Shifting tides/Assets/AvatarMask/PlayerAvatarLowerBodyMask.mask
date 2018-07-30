@@ -1,0 +1,254 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: PlayerAvatarLowerBodyMask
+  m_Mask: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 1
+  - m_Path: Armature/Back
+    m_Weight: 1
+  - m_Path: Armature/Back/Chest
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Bone_032
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Neck
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Neck/Head
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019/Bone_020
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019/Bone_020/Bone_021
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019/Bone_020/Bone_021/Bone_022
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019/Bone_020/Bone_021/Bone_022/Bone_023
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019/Bone_020/Bone_021/Bone_022/Bone_023/Bone_024
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019/Bone_020/Bone_021/Bone_022/Bone_023/Bone_024/Bone_025
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019/Bone_020/Bone_021/Bone_022/Bone_023/Bone_024/Bone_025/Bone_026
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019/Bone_020/Bone_021/Bone_022/Bone_023/Bone_024/Bone_025/Bone_026/Bone_027
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019/Bone_020/Bone_021/Bone_022/Bone_023/Bone_024/Bone_025/Bone_026/Bone_027/Bone_028
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019/Bone_020/Bone_021/Bone_022/Bone_023/Bone_024/Bone_025/Bone_026/Bone_027/Bone_028/Bone_029
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone/Bone_001/Bone_002/Bone_003/Bone_004/Bone_005/Bone_006/Bone_007/Bone_008/Bone_009/Bone_010/Bone_011/Bone_012/Bone_013/Bone_014/Bone_015/Bone_016/Bone_017/Bone_018/Bone_019/Bone_020/Bone_021/Bone_022/Bone_023/Bone_024/Bone_025/Bone_026/Bone_027/Bone_028/Bone_029/Bone_030
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052/Bone_053
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052/Bone_053/Bone_054
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052/Bone_053/Bone_054/Bone_055
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052/Bone_053/Bone_054/Bone_055/Bone_056
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052/Bone_053/Bone_054/Bone_055/Bone_056/Bone_057
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052/Bone_053/Bone_054/Bone_055/Bone_056/Bone_057/Bone_058
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052/Bone_053/Bone_054/Bone_055/Bone_056/Bone_057/Bone_058/Bone_059
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052/Bone_053/Bone_054/Bone_055/Bone_056/Bone_057/Bone_058/Bone_059/Bone_060
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052/Bone_053/Bone_054/Bone_055/Bone_056/Bone_057/Bone_058/Bone_059/Bone_060/Bone_061
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052/Bone_053/Bone_054/Bone_055/Bone_056/Bone_057/Bone_058/Bone_059/Bone_060/Bone_061/Bone_062
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/Bone_033/Bone_034/Bone_035/Bone_036/Bone_037/Bone_038/Bone_039/Bone_040/Bone_041/Bone_042/Bone_043/Bone_044/Bone_045/Bone_046/Bone_047/Bone_048/Bone_049/Bone_050/Bone_051/Bone_052/Bone_053/Bone_054/Bone_055/Bone_056/Bone_057/Bone_058/Bone_059/Bone_060/Bone_061/Bone_062/Bone_063
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Bone_067/StringBone
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Index1_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Index1_L/Index2_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Index1_L/Index2_L/Index3_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Middle1_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Middle1_L/Middle2_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Middle1_L/Middle2_L/Middle3_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Pink1_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Pink1_L/Pink2_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Pink1_L/Pink2_L/Pink3_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Ring1_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Ring1_L/Ring2_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Ring1_L/Ring2_L/Ring3_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Thumb2_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Thumb2_L/Thumb3_L
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_L/UpperArm_L/LowerArm_L/Wrist_L/Palm_L/Thumb2_L/Thumb3_L/Thumb3_L_001
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Index1_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Index1_R/Index2_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Index1_R/Index2_R/Index3_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Middle1_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Middle1_R/Middle2_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Middle1_R/Middle2_R/Middle3_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Pink1_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Pink1_R/Pink2_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Pink1_R/Pink2_R/Pink3_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Ring1_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Ring1_R/Ring2_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Ring1_R/Ring2_R/Ring3_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Thumb2_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Thumb2_R/Thumb3_R
+    m_Weight: 0
+  - m_Path: Armature/Back/Chest/Shoulder_R/UpperArm_R/LowerArm_R/Hand_R/Palm_R/Thumb2_R/Thumb3_R/Thumb3_R_001
+    m_Weight: 0
+  - m_Path: Armature/Back/UpperLeg_L
+    m_Weight: 0
+  - m_Path: Armature/Back/UpperLeg_L/LowerLeg_L
+    m_Weight: 0
+  - m_Path: Armature/Back/UpperLeg_L/LowerLeg_L/Foot_L
+    m_Weight: 0
+  - m_Path: Armature/Back/UpperLeg_L/LowerLeg_L/Foot_L/Toes_L
+    m_Weight: 0
+  - m_Path: Armature/Back/UpperLeg_R
+    m_Weight: 0
+  - m_Path: Armature/Back/UpperLeg_R/LowerLeg_R
+    m_Weight: 0
+  - m_Path: Armature/Back/UpperLeg_R/LowerLeg_R/Foot_R
+    m_Weight: 0
+  - m_Path: Armature/Back/UpperLeg_R/LowerLeg_R/Foot_R/Toes_R
+    m_Weight: 0
+  - m_Path: Arrow
+    m_Weight: 0
+  - m_Path: Base
+    m_Weight: 0
+  - m_Path: Bow_001
+    m_Weight: 0

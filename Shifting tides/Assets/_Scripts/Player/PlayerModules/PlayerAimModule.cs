@@ -8,7 +8,8 @@ public class PlayerAimModule : PlayerModule
 {
     private PlayerParticleSystemManager playerParticleSystemManager;
     private PlayerAnimatorManager playerAnimatorManager;
-    private PlayerCamera plyCamera;
+    private PlayerSkillModule playerSkillModule;
+    private PlayerCamera playerCamera;
     private Camera cameraMain;
     private Transform nearestTarget, playerTransForm;
     private Vector3 lastDirection;
@@ -18,7 +19,7 @@ public class PlayerAimModule : PlayerModule
     public Sprite lockOnCursor, lockOffCursor;
     public GameObject bow, bowMesh, shootTarget, currentArrowhead;
     public AudioSource[] bowSoundSources;
-    public Transform PlayerChestBone;
+    public Transform playerChestBone;
     public Vector3 targetOffset;
     public bool isAiming;
     [HideInInspector]
@@ -28,7 +29,8 @@ public class PlayerAimModule : PlayerModule
     {
         playerParticleSystemManager = GameObject.Find("Player").GetComponentInChildren<PlayerParticleSystemManager>();
         playerAnimatorManager = GameObject.Find("Player").GetComponent<PlayerAnimatorManager>();
-        plyCamera = GameObject.Find("Main Camera").GetComponent<PlayerCamera>();
+        playerCamera = GameObject.Find("Main Camera").GetComponent<PlayerCamera>();
+        playerSkillModule = GameObject.Find("Player").GetComponentInChildren<PlayerSkillModule>();
         cameraMain = Camera.main;
         playerTransForm = GameObject.Find("Player").transform;
         lockedOn = false;
@@ -45,21 +47,21 @@ public class PlayerAimModule : PlayerModule
     public override void ModuleStartUp()
     {
         cursor.gameObject.SetActive(true);
-        plyCamera.pivotOffset = new Vector3(0, 0.5f, 0);
-        plyCamera.camOffset = new Vector3(0.55f, 0.5f, -0.9f);
-        plyCamera.ResetSmoothOffsets();
-        plyCamera.ResetTargetOffsets();
+        playerCamera.pivotOffset = new Vector3(0, 0.5f, 0);
+        playerCamera.camOffset = new Vector3(1f, 0.5f, -0.9f);
+        playerCamera.ResetSmoothOffsets();
+        playerCamera.ResetTargetOffsets();
     }
 
     public override void ModuleRemove()
     {
         isAiming = false;
-        //playerParticleSystemManager.StopAllShootingParticleSystems();
+        playerParticleSystemManager.StopAllShootingParticleSystems();
         cursor.gameObject.SetActive(false);
-        plyCamera.pivotOffset = new Vector3(0, 0.5f, 0);
-        plyCamera.camOffset = new Vector3(0, 0.5f, -3);
-        plyCamera.ResetSmoothOffsets();
-        plyCamera.ResetTargetOffsets();
+        playerCamera.pivotOffset = new Vector3(0, 0.5f, 0);
+        playerCamera.camOffset = new Vector3(0, 0.5f, -3);
+        playerCamera.ResetSmoothOffsets();
+        playerCamera.ResetTargetOffsets();
     }
 
     public override void ModuleUpdate()
@@ -140,6 +142,9 @@ public class PlayerAimModule : PlayerModule
         Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * Arrow.GetComponent<ArrowBehaviour>().arrowSpeed, ForceMode.Impulse);
         playerParticleSystemManager.PlayerFireAnimation();
         bowSoundSources[0].Play();
+        if (!CheckIfCurrentArrowIsAvailable(currentArrowhead.name)) {
+            playerSkillModule.SwitchArrowHead();
+        }
     }
 
     private void ConsumeCurrentArrowResource()
@@ -188,17 +193,17 @@ public class PlayerAimModule : PlayerModule
         forward = forward.normalized;
 
         // Always rotates the player according to the camera horizontal rotation in aim mode.
-        Quaternion targetRotation = Quaternion.Euler(0, plyCamera.angleH, 0);
-        Quaternion ChestRotation = PlayerChestBone.rotation;
-        ChestRotation *= Quaternion.Euler(0, -plyCamera.angleV, -plyCamera.angleV/3);
+        Quaternion targetRotation = Quaternion.Euler(0, playerCamera.angleH, 0);
+        Quaternion ChestRotation = playerChestBone.rotation;
+        ChestRotation *= Quaternion.Euler(0, -playerCamera.angleV, -playerCamera.angleV/3);
 
         float minSpeed = Quaternion.Angle(playerTransForm.rotation, targetRotation) * 0.5f;
 
         // Rotate entire player to face camera.
         lastDirection = forward;
         playerTransForm.rotation = Quaternion.Lerp(playerTransForm.rotation, targetRotation, minSpeed * Time.deltaTime);
-        PlayerChestBone.rotation = Quaternion.Lerp(PlayerChestBone.rotation, ChestRotation, 1);
-    }
+        playerChestBone.rotation = Quaternion.Lerp(playerChestBone.rotation, ChestRotation, 1);
+     }
 
     private RaycastHit[] LookForTarget()
     {

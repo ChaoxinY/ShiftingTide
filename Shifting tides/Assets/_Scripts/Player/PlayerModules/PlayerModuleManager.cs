@@ -9,7 +9,6 @@ public class PlayerModuleManager : MonoBehaviour
 
     private bool isAiming = false;
   
-
     private void Start()
     {
         ActiveModules.Add(AvailableModules[0]);     
@@ -21,24 +20,13 @@ public class PlayerModuleManager : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            //foreach (PlayerModule module in ActiveModules)
-            //{
-            //    if (module.ModuleID == AvailableModules[2].ModuleID)
-            //    {
-            //        module.ModuleRemove();
-            //        //ActiveModules.Remove(module);
-            //        return;
-            //    }
-            //}
-            if (isAiming == false)
-            {            
+        if ((Input.GetKeyDown(KeyCode.Tab) && isAiming == false )|| (isAiming == false && Input.GetMouseButton(1)))
+        {         
                 ActiveModules[2].ModuleStartUp();
-                isAiming = true;
-                return;
-            }
-            if (isAiming) {
+                isAiming = true;            
+        }
+        else if (isAiming && Input.GetKeyDown(KeyCode.Tab) && !Input.GetMouseButton(1))
+        {   
                 foreach (PlayerModule module in ActiveModules)
                 {
                     if (module.ModuleID == AvailableModules[2].ModuleID)
@@ -47,8 +35,8 @@ public class PlayerModuleManager : MonoBehaviour
                         isAiming = false;
                         return;
                     }
-                }               
-            }
+                }
+            
         }
         foreach (PlayerModule module in ActiveModules)
         {
