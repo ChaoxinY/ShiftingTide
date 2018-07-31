@@ -40,6 +40,7 @@ public class PlayerMovementModule : PlayerModule
             playerPhysicsModule.verticalInput), playerPhysicsModule.maxInput).magnitude;
 
         playerAnimatorManager.InputSpeed = inputSpeed;
+        playerAnimatorManager.Input = Input.anyKey;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -54,9 +55,7 @@ public class PlayerMovementModule : PlayerModule
         {
             Jumping();
         }
-        if (Input.anyKey) {
-            playerAnimatorManager.StopRestAnimation();
-        }
+       
         if (!playerAimModule.isAiming)
         {
             Rotate(playerPhysicsModule.horizontalInput, playerPhysicsModule.verticalInput);

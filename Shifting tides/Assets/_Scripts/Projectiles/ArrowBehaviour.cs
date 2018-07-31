@@ -14,8 +14,8 @@ public class ArrowBehaviour : Projectile
 
     protected PlayerTideComboManager playerTideComboManager;
 
-    private GameObject arrowPlaceholder;
-    private AudioSource onHitSoundSource;
+    protected GameObject arrowPlaceholder;
+    protected AudioSource onHitSoundSource;
   
     protected override void Initialize()
     {
@@ -32,7 +32,9 @@ public class ArrowBehaviour : Projectile
         yield return StartCoroutine(base.LocalUpdate());
         Quaternion rotation = new Quaternion();
         if (rbObject.velocity != Vector3.zero)
+        {
             rotation.SetLookRotation(rbObject.velocity, transform.up);
+        }
         transform.localRotation = rotation;
         // Debug.Log(baseDamage);
         yield break;
@@ -45,13 +47,8 @@ public class ArrowBehaviour : Projectile
 
     protected virtual void OnCollisionEnter(Collision other)
     {
-        Debug.Log(other.collider.name);
         switch (other.gameObject.tag)
-        {
-            case "Player":
-                PlayerResourcesManager.Health -= 10;
-                SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized, other.gameObject);
-                break;
+        {      
             case "Enemy":
                 EnemyHit(other);
                 SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized, other.gameObject);
@@ -89,6 +86,13 @@ public class ArrowBehaviour : Projectile
        // playerTideComboManager.ResetCombo();
     }
 
+    protected virtual void DefaultHit()
+    {
+        onHitSoundSource.clip = onHitSounds[0];
+        onHitSoundSource.Play();
+        // playerTideComboManager.ResetCombo();
+    }
+
     protected void SpawnOnHitEffect(Transform transformHit, ContactPoint contact, GameObject prefabToSpawn, Vector3 hitSpeed)
     {
         GameObject spawnedOnHitEffect = Instantiate(prefabToSpawn, contact.point + (hitSpeed.normalized * 1.3f), Quaternion.LookRotation(hitSpeed.normalized));
@@ -97,7 +101,7 @@ public class ArrowBehaviour : Projectile
 
     // This method calls CopyPositionAndRotationForArrowPlaceholder.
     // Then it instantiates the ArrowPlaceholder with the values from CopyPositionAndRotationForArrowPlaceholder and destroys the current arrow.
-    protected void SetupArrowPlaceholder(Vector3 contactPoint, Vector3 hitSpeed, GameObject movingTargetHit = null)
+    protected virtual void SetupArrowPlaceholder(Vector3 contactPoint, Vector3 hitSpeed, GameObject movingTargetHit = null)
     {
         //Vector3 nomalizedHitspeed = Vector3.Normalize(hitSpeed);
         Vector3 spawnPosition = contactPoint + hitSpeed.normalized * penetrationStrength;
@@ -110,11 +114,6 @@ public class ArrowBehaviour : Projectile
         Destroy(gameObject);
     }
 
-    private void DefaultHit()
-    {
-        onHitSoundSource.clip = onHitSounds[0];
-        onHitSoundSource.Play();
-       // playerTideComboManager.ResetCombo();
-    }
+   
 
 }

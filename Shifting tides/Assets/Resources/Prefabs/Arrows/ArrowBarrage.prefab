@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4592848960283446}
   - component: {fileID: 65503109705498540}
   - component: {fileID: 54735170344399106}
-  - component: {fileID: 114378951120544716}
   - component: {fileID: 96659566919418814}
+  - component: {fileID: 114480676723220904}
   m_Layer: 0
   m_Name: Arrow (2)
   m_TagString: Arrow
@@ -40,8 +40,8 @@ GameObject:
   - component: {fileID: 4610946883280620}
   - component: {fileID: 65415676113523814}
   - component: {fileID: 54206595793152316}
-  - component: {fileID: 114943964801235792}
   - component: {fileID: 96847565393307392}
+  - component: {fileID: 114396819861855522}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Arrow
@@ -125,8 +125,8 @@ GameObject:
   - component: {fileID: 4940353221111674}
   - component: {fileID: 65162056201671986}
   - component: {fileID: 54008326640527714}
-  - component: {fileID: 114778676146065810}
   - component: {fileID: 96491781685927142}
+  - component: {fileID: 114959269171763084}
   m_Layer: 0
   m_Name: Arrow (1)
   m_TagString: Arrow
@@ -208,7 +208,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1793309538036090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.4407673, y: 1.5478481, z: 5.9514236}
+  m_LocalPosition: {x: -0.13055782, y: 1.248422, z: -1092.781}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4610946883280620}
@@ -741,37 +741,7 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &114378951120544716
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1498288897555926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb2e197ca0002047961ffd152f384e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bleedEffect: []
-  onHitSounds: []
-  baseDamage: 0
-  penetrationStrength: 0.001
---- !u!114 &114778676146065810
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1998732729906504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb2e197ca0002047961ffd152f384e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bleedEffect: []
-  onHitSounds: []
-  baseDamage: 0
-  penetrationStrength: 0.001
---- !u!114 &114943964801235792
+--- !u!114 &114396819861855522
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -779,10 +749,52 @@ MonoBehaviour:
   m_GameObject: {fileID: 1773706939433800}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb2e197ca0002047961ffd152f384e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 345130a61696b9542937215ef621674c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTimeStopped: 0
   bleedEffect: []
-  onHitSounds: []
+  onHitSounds:
+  - {fileID: 8300000, guid: cc4dd72fa683be847b68cbf3c59e8391, type: 3}
+  - {fileID: 8300000, guid: ad4487a1d80d3d1428447b32e4f9ce8a, type: 3}
   baseDamage: 0
+  arrowSpeed: 0
+  penetrationStrength: 0.001
+--- !u!114 &114480676723220904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1498288897555926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345130a61696b9542937215ef621674c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTimeStopped: 0
+  bleedEffect: []
+  onHitSounds:
+  - {fileID: 8300000, guid: cc4dd72fa683be847b68cbf3c59e8391, type: 3}
+  - {fileID: 8300000, guid: ad4487a1d80d3d1428447b32e4f9ce8a, type: 3}
+  baseDamage: 0
+  arrowSpeed: 0
+  penetrationStrength: 0.001
+--- !u!114 &114959269171763084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1998732729906504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345130a61696b9542937215ef621674c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTimeStopped: 0
+  bleedEffect: []
+  onHitSounds:
+  - {fileID: 8300000, guid: cc4dd72fa683be847b68cbf3c59e8391, type: 3}
+  - {fileID: 8300000, guid: ad4487a1d80d3d1428447b32e4f9ce8a, type: 3}
+  baseDamage: 0
+  arrowSpeed: 0
   penetrationStrength: 0.001

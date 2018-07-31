@@ -104,6 +104,7 @@ public class PlayerResourcesManager : MonoBehaviour
             if (playerResources[0] < 0)
             {
                 playerResources[0] = 0;
+                Time.timeScale = 0; 
             }
             if (playerResources[0] > playerResourcesCaps[0])
             {

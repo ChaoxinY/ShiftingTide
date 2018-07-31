@@ -156,9 +156,11 @@ public class PlayerAimModule : PlayerModule
                 break;
             case "TimeZoneArrow":
                 PlayerResourcesManager.SourceReserve -= 10;
+                PlayerResourcesManager.Arrows -= 1;
                 break;
             case "CloudArrow":
                 PlayerResourcesManager.SourceFusedArrows -= 1;
+                PlayerResourcesManager.Arrows -= 1;
                 break;
         }
 

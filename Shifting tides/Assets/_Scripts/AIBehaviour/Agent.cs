@@ -108,7 +108,6 @@ public class Agent : TimeBoundGameObject
 
     protected IEnumerator DetermineNextAgentBehaviour()
     {
-
         //Rethinking current choice
         int[] NumbersCorrect = { 0, 0 };
 

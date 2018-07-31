@@ -59,7 +59,6 @@ public class PlayerPhysicsModule : PlayerModule
         RaycastHit hit;
         Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity);
         if (hit.distance > 1.5f) { hitABump = false; }
-        Debug.Log(hit.distance);
         return hitABump;
     }
 

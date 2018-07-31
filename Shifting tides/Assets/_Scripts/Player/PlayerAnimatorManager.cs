@@ -7,15 +7,11 @@ public class PlayerAnimatorManager : MonoBehaviour
 
     private Animator animatorPlayer;
     private float inputSpeed;
-    private bool onGround,aiming;
+    private bool onGround,aiming,input;
 
     private void Start()
     {
         animatorPlayer = GetComponent<Animator>();
-    }
-    public void StopRestAnimation()
-    {
-        animatorPlayer.SetTrigger("Moved");
     }
 
     public void PlayDashAnimation()
@@ -55,6 +51,16 @@ public class PlayerAnimatorManager : MonoBehaviour
         {
             aiming = value;
             animatorPlayer.SetBool("Aiming", aiming);
+        }
+
+    }
+    public bool Input
+    {
+        get { return input; }
+        set
+        {
+            input = value;
+            animatorPlayer.SetBool("Input", input);
         }
 
     }

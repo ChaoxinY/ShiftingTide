@@ -30,9 +30,9 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-       //Cursor.visible = false;
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-         cameraMain = Camera.main;
+        cameraMain = Camera.main;
         relCameraPos = transform.position - player.position;
         relCameraPosMag = relCameraPos.magnitude - 0.5f;
         transform.position = player.position + Quaternion.identity * pivotOffset + Quaternion.identity * camOffset;

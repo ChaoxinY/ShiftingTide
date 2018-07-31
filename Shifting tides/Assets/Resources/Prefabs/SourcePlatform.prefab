@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90b71c77d2225046b32fd2680c2037c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTimeStopped: 0
   boundTrigger: {fileID: 0}
-  destructionDelay: 0.2
+  destructionDelay: 2
   selfDestructAfterSpawn: 1
