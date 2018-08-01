@@ -142,6 +142,16 @@ ModelImporter:
     100272: Cube_095
     100274: Cube_096
     100276: Cube_097
+    100278: Cube_098
+    100280: Cube_099
+    100282: Cube_100
+    100284: Cube_101
+    100286: Cube_102
+    100288: Cube_103
+    100290: Cube_104
+    100292: Cube_105
+    100294: Cube_106
+    100296: Cube_107
     400000: Bag_Ol_goods_0
     400002: Bag_Ol_goods_1
     400004: Bag_Ol_goods_1_001
@@ -281,6 +291,16 @@ ModelImporter:
     400272: Cube_095
     400274: Cube_096
     400276: Cube_097
+    400278: Cube_098
+    400280: Cube_099
+    400282: Cube_100
+    400284: Cube_101
+    400286: Cube_102
+    400288: Cube_103
+    400290: Cube_104
+    400292: Cube_105
+    400294: Cube_106
+    400296: Cube_107
     2100000: unnamed
     2100002: Material_001
     2100004: Material_002
@@ -425,6 +445,16 @@ ModelImporter:
     2300270: Cube_095
     2300272: Cube_096
     2300274: Cube_097
+    2300276: Cube_098
+    2300278: Cube_099
+    2300280: Cube_100
+    2300282: Cube_101
+    2300284: Cube_102
+    2300286: Cube_103
+    2300288: Cube_104
+    2300290: Cube_105
+    2300292: Cube_106
+    2300294: Cube_107
     3300000: Bag_Ol_goods_0
     3300002: Bag_Ol_goods_1
     3300004: Bag_Ol_goods_1_001
@@ -563,6 +593,16 @@ ModelImporter:
     3300270: Cube_095
     3300272: Cube_096
     3300274: Cube_097
+    3300276: Cube_098
+    3300278: Cube_099
+    3300280: Cube_100
+    3300282: Cube_101
+    3300284: Cube_102
+    3300286: Cube_103
+    3300288: Cube_104
+    3300290: Cube_105
+    3300292: Cube_106
+    3300294: Cube_107
     4300000: WindowFrame_2_001
     4300002: Cube_085
     4300004: Cube_084
@@ -701,6 +741,16 @@ ModelImporter:
     4300270: Cube_093
     4300272: Cube_096
     4300274: Cube_097
+    4300276: Cube_107
+    4300278: Cube_106
+    4300280: Cube_105
+    4300282: Cube_104
+    4300284: Cube_103
+    4300286: Cube_102
+    4300288: Cube_101
+    4300290: Cube_100
+    4300292: Cube_099
+    4300294: Cube_098
     7400000: Default Take
     9500000: //RootNode
   externalObjects: {}

@@ -151,8 +151,7 @@ public class HostileResourceManager : MonoBehaviour
                 OnDeathDrops();
                 //death animation
                 //StartCoroutine(OnDeathPhysicsFeedBack());
-                enabled = false;
-                gameObject.GetComponent<Agent>().enabled = false;
+                //Destroy(gameObject,0.3f);
             }
             if (currentHealth > maxHealth) { currentHealth = maxHealth; }
             ShowSliderBars(healthBars);

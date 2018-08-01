@@ -20,6 +20,7 @@ public class Agent : TimeBoundGameObject
     public List<Transform> wayPoints;
     public Transform[] patrolPoints;
     public float[] desire, factorInfluencePoint = { 0, 0, 0, 0, 0, 0 };
+    public float updateSpeed;
     public bool predictable, energetic, perferRandomBehaviours, perferPatternedBehaviours, customized;    
   
     protected override IEnumerator LocalUpdate()
@@ -50,7 +51,7 @@ public class Agent : TimeBoundGameObject
             yield return StartCoroutine(DetermineNextAgentBehaviour());
             StartCoroutine(standardBehaviour);
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(updateSpeed);
 
         yield break;
     }

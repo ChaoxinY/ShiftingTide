@@ -16,33 +16,42 @@ public class Spawner : TriggerBoundMechanism
     protected override IEnumerator LocalUpdate()
     {      
         yield return StartCoroutine(base.LocalUpdate());
-        yield return new WaitForSeconds(spawnInterval);
-        if (repeatTriggerFunction)
-        {         
-            TriggerFunction();
-            if (isReuseable|| breakable)
+        if (Triggered)
+        {
+            if (!repeatTriggerFunction)
             {
-                timesActivated += 1;
+                TriggerFunction();
+                this.enabled = false;
             }
-           
-        }
-        if (timesActivated == durabilitiy) {
+            yield return new WaitForSeconds(spawnInterval);
+            if (repeatTriggerFunction)
+            {
+                TriggerFunction();
+                if (isReuseable || breakable)
+                {
+                    timesActivated += 1;
+                }
 
-            if (breakable)
-            {   
-                //just for fun make the mesh explode aswell
-                Destroy(gameObject);
             }
-            else if(isReuseable)
+            if (timesActivated == durabilitiy)
             {
-                boundTrigger.isBoundMechnismeActive = false;
-                gameObject.SetActive(false);
+
+                if (breakable)
+                {
+                    //just for fun make the mesh explode aswell
+                    Destroy(gameObject);
+                }
+                else if (isReuseable)
+                {
+                    Triggered = false;
+                }
             }
         }
     }
 
     public override void TriggerFunction()
     {
-        GameObject spawnObject = Instantiate(objectToSpawn, positionToSpawn.position, positionToSpawn.rotation);  
+        GameObject spawnObject = Instantiate(objectToSpawn, positionToSpawn.position, positionToSpawn.rotation);
+      
     }
 }

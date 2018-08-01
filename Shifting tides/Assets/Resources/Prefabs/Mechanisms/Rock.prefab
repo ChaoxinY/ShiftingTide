@@ -256,8 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90b71c77d2225046b32fd2680c2037c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFloating: 1
-  boundTrigger: {fileID: 0}
+  isTimeStopped: 0
   destructionDelay: 0.1
   selfDestructAfterSpawn: 0
 --- !u!138 &138898680879097926

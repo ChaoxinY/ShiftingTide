@@ -102,7 +102,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4526877700017206}
   - component: {fileID: 114667591938273484}
-  - component: {fileID: 114073072768181908}
   - component: {fileID: 33568049369325032}
   - component: {fileID: 23532081865365434}
   - component: {fileID: 65630664402149016}
@@ -358,19 +357,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.4393104, y: 1, z: 1}
   m_Center: {x: -0.37893867, y: 0, z: 0}
---- !u!114 &114073072768181908
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1970880900908098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d9cfd68ca635484a9276f2b5d64e3ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerConditionMet: 0
-  isBoundMechnismeActive: 0
 --- !u!114 &114667591938273484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -382,7 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1b426eaca4c3204d8e3baa76a74b1fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundMechanism: {fileID: 1118351915589598}
+  boundMechanism: {fileID: 0}
 --- !u!114 &114825464811568076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -395,7 +381,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTimeStopped: 0
-  boundTrigger: {fileID: 114073072768181908}
   objectToSpawn: {fileID: 1793309538036090, guid: ad769a900adff874d8728c9263abec0b,
     type: 2}
   positionToSpawn: {fileID: 4680934426772934}

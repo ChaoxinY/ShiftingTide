@@ -9,6 +9,7 @@ public class SourceSpawner : Spawner
     public bool isCollideSpawner;
     public int maxPointsOut;
 
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Arrow" && isCollideSpawner && !MaxSpawnedPointsReached())
@@ -31,6 +32,13 @@ public class SourceSpawner : Spawner
         if (!isCollideSpawner && !MaxSpawnedPointsReached())
             SpawnSourcePoint(transform.position, positionToSpawn.position);
     }
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+        Triggered = true;
+    }
+
     public bool MaxSpawnedPointsReached()
     {
         bool maxReached = false;

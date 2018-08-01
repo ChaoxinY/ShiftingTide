@@ -4,28 +4,13 @@ using UnityEngine;
 
 public class Trigger : MonoBehaviour {
 
-    private TriggerJoint triggerJoint;
     // BoundMechanisme TriggerBoundMechinsme boundMechanism
-    public GameObject boundMechanism;
+    public TriggerBoundMechanism boundMechanism;
 
-    void Start () {
-        Initialize();
-    }
-
-    public virtual void Initialize() {
-        triggerJoint = gameObject.GetComponent<TriggerJoint>();
-    }
-
-    public virtual void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Collider>()) {
-            Debug.Log("hit");
-            triggerJoint.triggerConditionMet = true;
-            if (triggerJoint.isBoundMechnismeActive == false)
-            {
-                triggerJoint.isBoundMechnismeActive = true;
-                boundMechanism.SetActive(true);
-            }
+        if (other.gameObject.GetComponent<Rigidbody>()) {
+            boundMechanism.Triggered = true;
         }   
     }
 }

@@ -13,19 +13,7 @@ public class HostileArrow : ArrowBehaviour
             return;
         }
         DefaultHit();
-        SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized);
-    }
-    protected override void SetupArrowPlaceholder(Vector3 contactPoint, Vector3 hitSpeed, GameObject movingTargetHit = null)
-    {
-        Vector3 spawnPosition = contactPoint + hitSpeed.normalized * penetrationStrength;
-        Vector3 arrowPlaceholderRotation = transform.eulerAngles;
-        GameObject arrowDummy = Instantiate(arrowPlaceholder, spawnPosition, arrowPlaceholder.transform.rotation = Quaternion.Euler(arrowPlaceholderRotation));
-        arrowDummy.GetComponent<DestroyGameObjectAfterTime>().enabled = true;
-        if (movingTargetHit != null)
-        {
-            arrowDummy.transform.SetParent(movingTargetHit.transform);
-        }
-        Destroy(gameObject);
+        SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized,other.gameObject);
     }
 
 }

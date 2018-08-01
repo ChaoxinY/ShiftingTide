@@ -7,7 +7,7 @@ public class PlayerMovementModule : PlayerModule
     private PlayerPhysicsModule playerPhysicsModule;
     private PlayerAimModule playerAimModule;
     private Camera cameraMain;
-    private Vector3 currentMotion, colExtents, lastDirection;
+    private Vector3 currentMotion, colExtents;
     private float gravity;
 
     public GameObject gameManagerObject;
@@ -75,10 +75,8 @@ public class PlayerMovementModule : PlayerModule
         {
             Quaternion targetRotation = Quaternion.LookRotation(desiredDirection);
             Quaternion newRotation = Quaternion.Slerp(playerPhysicsModule.rigidbodyPlayer.rotation, targetRotation, 0.05f);
-            playerPhysicsModule.rigidbodyPlayer.MoveRotation(newRotation);
-            LastDirection = desiredDirection;
+            playerPhysicsModule.rigidbodyPlayer.MoveRotation(newRotation);            
         }
-        if (!IsMoving()) Repositioning();
     }
     public override void ModuleFixedUpdate()
     {
@@ -88,16 +86,7 @@ public class PlayerMovementModule : PlayerModule
         horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, playerPhysicsModule.speedLimit);
         playerPhysicsModule.rigidbodyPlayer.velocity = new Vector3(horizontalVelocity.x, playerPhysicsModule.rigidbodyPlayer.velocity.y, horizontalVelocity.y);
     }
-    private void Repositioning()
-    {
-        if (lastDirection != Vector3.zero)
-        {
-            LastDirection = new Vector3(LastDirection.x, 0, LastDirection.z);
-            Quaternion targetRotation = Quaternion.LookRotation(lastDirection);
-            Quaternion newRotation = Quaternion.Slerp(playerPhysicsModule.rigidbodyPlayer.rotation, targetRotation, 0.05f);
-            playerPhysicsModule.rigidbodyPlayer.MoveRotation(newRotation);
-        }
-    }
+
     private void Jumping()
     {
        playerAnimatorManager.PlayJumpAnimation();
@@ -112,11 +101,7 @@ public class PlayerMovementModule : PlayerModule
        playerPhysicsModule.maxInput = Mathf.Lerp(playerPhysicsModule.maxInput, 0.7f, Time.deltaTime * 1.2f);
     }
 
-    public Vector3 LastDirection
-    {
-        get { return lastDirection; }
-        set { lastDirection = value; }
-    }
+
 
     private bool IsMoving()
     {

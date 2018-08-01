@@ -55,7 +55,7 @@ public class ArrowBehaviour : Projectile
                 break;
             default:
                 DefaultHit();
-                SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized);
+                SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized, other.gameObject);
                 break;
         }
     }
@@ -101,16 +101,17 @@ public class ArrowBehaviour : Projectile
 
     // This method calls CopyPositionAndRotationForArrowPlaceholder.
     // Then it instantiates the ArrowPlaceholder with the values from CopyPositionAndRotationForArrowPlaceholder and destroys the current arrow.
-    protected virtual void SetupArrowPlaceholder(Vector3 contactPoint, Vector3 hitSpeed, GameObject movingTargetHit = null)
+    protected virtual void SetupArrowPlaceholder(Vector3 contactPoint, Vector3 hitSpeed, GameObject TargetHit )
     {
         //Vector3 nomalizedHitspeed = Vector3.Normalize(hitSpeed);
         Vector3 spawnPosition = contactPoint + hitSpeed.normalized * penetrationStrength;
         Vector3 arrowPlaceholderRotation = transform.eulerAngles;
         GameObject arrowDummy = Instantiate(arrowPlaceholder, spawnPosition, arrowPlaceholder.transform.rotation = Quaternion.Euler(arrowPlaceholderRotation));
-        if (movingTargetHit != null)
-        {
-            arrowDummy.transform.SetParent(movingTargetHit.transform);
-        }
+
+        GameObject DummyParent = new GameObject();
+        DummyParent.transform.SetParent(TargetHit.transform);
+        arrowDummy.transform.SetParent(DummyParent.transform);
+       
         Destroy(gameObject);
     }
 

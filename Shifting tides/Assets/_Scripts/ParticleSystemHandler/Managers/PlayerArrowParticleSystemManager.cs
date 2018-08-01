@@ -19,7 +19,6 @@ public class PlayerArrowParticleSystemManager : MonoBehaviour
     public void StopAllShootingParticleSystems() {
 
         if (activeSystems.Count == 0 ) {
-            Debug.Log("Stoped");
             return;
         }
 
@@ -35,7 +34,6 @@ public class PlayerArrowParticleSystemManager : MonoBehaviour
         activeSystems.Add(managedSystems[0]);
         activeSystems.Add(managedSystems[1]);
         activeSystems.Add(managedSystems[3]);
-        Debug.Log("PARTICLEs");
         managedSystems[0].PlayParticleAnimation();
         managedSystems[1].PlayParticleAnimation();
         managedSystems[3].PlayParticleAnimation();        

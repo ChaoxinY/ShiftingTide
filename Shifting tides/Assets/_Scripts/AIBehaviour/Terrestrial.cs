@@ -67,7 +67,6 @@ public class Terrestrial : Agent
     protected void MoveTowardsTarget(Vector3 currentTarget)
     {
         destination = currentTarget + new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
-        Debug.Log(destination);
         agent.SetDestination(destination);
     }
 

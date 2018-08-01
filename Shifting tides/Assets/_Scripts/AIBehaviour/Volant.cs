@@ -25,9 +25,8 @@ public class Volant : Agent
         restingBehaviours.Add("AirRest");
     }
 
-    private void Update()
-    {
-   
+    protected override IEnumerator LocalUpdate() {
+        yield return StartCoroutine(base.LocalUpdate());
         if (isPathing)
         {
             transform.position = Vector3.MoveTowards(transform.position, currentTarget, Time.deltaTime * movementSpeed);
@@ -37,11 +36,12 @@ public class Volant : Agent
             
         }
     }
-
-    private void DebugPath() {
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = transform.position;
-        transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+    protected override IEnumerator PauseOnTimeStop()
+    {
+        if (isTimeStopped)
+        {        
+            yield return new WaitUntil(() => !isTimeStopped);
+        }
     }
 
     protected IEnumerator Pathing()
@@ -86,7 +86,6 @@ public class Volant : Agent
         CirclePoints = CreateBezierCurvedPath(StartOfTheCircle, EndOfTheCircle, Vector3.right, Vector3.forward, 96, pathDistance, shiftValue);
         foreach (Vector3 point in CirclePoints)
         {
-
             path.Enqueue(point);
         }
         mirroredCirclePoints = CreateBezierCurvedPath(EndOfTheCircle, StartOfTheCircle, -Vector3.right, -Vector3.forward, 96, pathDistance, shiftValue);
@@ -123,6 +122,12 @@ public class Volant : Agent
 
         }
         return path;
+    }
+    private void DebugPath()
+    {
+        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        cube.transform.position = transform.position;
+        transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
     }
 
     private float DetermineCircleDiameter()

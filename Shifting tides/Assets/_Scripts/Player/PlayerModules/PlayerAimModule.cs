@@ -152,7 +152,6 @@ public class PlayerAimModule : PlayerModule
         switch (currentArrowhead.name)
         {
             case "DefaultArrow":
-                PlayerResourcesManager.Arrows -= 1;
                 break;
             case "TimeZoneArrow":
                 PlayerResourcesManager.SourceReserve -= 10;

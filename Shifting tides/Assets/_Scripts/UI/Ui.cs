@@ -19,7 +19,6 @@ public class Ui : MonoBehaviour
 
     public void DisplayCurrentArrowHead(GameObject currentArrowHead)
     {
-        Debug.Log("Called");
         foreach (GameObject arrowheadIcon in arrowHeadIcons) {
             arrowheadIcon.SetActive(false);
         }

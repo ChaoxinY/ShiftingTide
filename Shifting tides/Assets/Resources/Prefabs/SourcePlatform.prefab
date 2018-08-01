@@ -36,8 +36,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4168741102996368}
-  - component: {fileID: 114678220556826316}
   - component: {fileID: 65494884862998864}
+  - component: {fileID: 114504218071241682}
   m_Layer: 0
   m_Name: SourcePlatform
   m_TagString: Ground
@@ -126,7 +126,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114678220556826316
+--- !u!114 &114504218071241682
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,10 +134,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1895274356902906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f90b71c77d2225046b32fd2680c2037c, type: 3}
+  m_Script: {fileID: 11500000, guid: bf24fbc8db97c284f8e2cf14e6fc9232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTimeStopped: 0
-  boundTrigger: {fileID: 0}
-  destructionDelay: 2
-  selfDestructAfterSpawn: 1
+  destroyObjectAfterSeconds: 2
