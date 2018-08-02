@@ -51,7 +51,7 @@ public class Agent : TimeBoundGameObject
             yield return StartCoroutine(DetermineNextAgentBehaviour());
             StartCoroutine(standardBehaviour);
         }
-        yield return new WaitForSeconds(updateSpeed);
+      //  yield return new WaitForSeconds(updateSpeed);
 
         yield break;
     }
@@ -69,6 +69,10 @@ public class Agent : TimeBoundGameObject
 
     protected void InitializeWaypoints()
     {
+        if (wayPoints.Count == 0 && patrolPoints.Length == 0) {
+            LookForWayPointAssigner();
+        }
+
         for (int i = 0; i < 2; i++)
         {
             patrolRoute.Enqueue(patrolPoints[i].position);
@@ -79,6 +83,7 @@ public class Agent : TimeBoundGameObject
         }
 
     }
+
 
     protected virtual void AddBehaviours() {
         spontaneousBehaviours.Add("Roaming");
@@ -203,6 +208,41 @@ public class Agent : TimeBoundGameObject
     {
         meshRenderer.material = originMaterial;
     }
+  
+    private void DetermineRestingBehaviour()
+    {
+        int NumbersCorrect = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            int agentGuessedNumber = Random.Range(0, 99);
+            if (agentGuessedNumber < desire[2]) NumbersCorrect++;
+        }
+        if (NumbersCorrect >= 2)
+        {
+            EnterRestingState();
+        }
+    }
+    private void LookForWayPointAssigner()
+    {
+        GameObject aiWayPointHolders = GameObject.Find("AIWayPointHolders");
+        Debug.Log("Called");
+        Component[] assigners = aiWayPointHolders.GetComponentsInChildren(typeof(WayPointHolder));
+        if (assigners.Length != 0)
+        {
+            float distanceToHolder = Mathf.Infinity;
+            WayPointHolder closestWayPointHolder = new WayPointHolder();
+            foreach (WayPointHolder wayPointHolder in assigners)
+            {
+                if (Vector3.Distance(transform.position, wayPointHolder.transform.position) < distanceToHolder)
+                {
+                    distanceToHolder = Vector3.Distance(transform.position, wayPointHolder.transform.position);
+                    closestWayPointHolder = wayPointHolder;
+                }
+            }
+            wayPoints = closestWayPointHolder.wayPoints;
+            patrolPoints = closestWayPointHolder.patrolPoints;
+        }
+    }
     private void SetUpAgentFactorInfluencePoint()
     {
         if (customized)
@@ -231,20 +271,6 @@ public class Agent : TimeBoundGameObject
             }
         }
 
-    }
-
-    private void DetermineRestingBehaviour()
-    {
-        int NumbersCorrect = 0;
-        for (int i = 0; i < 5; i++)
-        {
-            int agentGuessedNumber = Random.Range(0, 99);
-            if (agentGuessedNumber < desire[2]) NumbersCorrect++;
-        }
-        if (NumbersCorrect >= 2)
-        {
-            EnterRestingState();
-        }
     }
 
 }

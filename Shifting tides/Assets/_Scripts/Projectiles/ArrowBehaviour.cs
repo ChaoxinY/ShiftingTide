@@ -30,13 +30,9 @@ public class ArrowBehaviour : Projectile
     protected override IEnumerator LocalUpdate()
     {
         yield return StartCoroutine(base.LocalUpdate());
-        Quaternion rotation = new Quaternion();
-        if (rbObject.velocity != Vector3.zero)
-        {
-            rotation.SetLookRotation(rbObject.velocity, transform.up);
-        }
-        transform.localRotation = rotation;
-        // Debug.Log(baseDamage);
+        //Quaternion rotation = new Quaternion();
+        //rotation.SetLookRotation(rbObject.velocity);
+        transform.rotation = Quaternion.LookRotation(rbObject.velocity);
         yield break;
     }
 

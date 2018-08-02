@@ -5,14 +5,17 @@ using System.Collections;
 public class ProjectileSpawner : Spawner
 {
     public float velocityProjectile;
+
     public override void TriggerFunction()
     {
-        GameObject spawnObject = Instantiate(objectToSpawn, positionToSpawn.position, Quaternion.identity);
+        GameObject spawnObject = Instantiate(objectToSpawn, positionToSpawn.position, positionToSpawn.transform.rotation);
         Component[] childRigidBodies = spawnObject.GetComponentsInChildren(typeof(Rigidbody));
         if (childRigidBodies.Length != 0)
         {
             foreach (Rigidbody rb in childRigidBodies)
-                rb.AddForce(positionToSpawn.transform.forward * velocityProjectile, ForceMode.Impulse);               
+            {
+                rb.AddForce(positionToSpawn.transform.forward * velocityProjectile, ForceMode.Impulse);
+            }
         }
     }
 }

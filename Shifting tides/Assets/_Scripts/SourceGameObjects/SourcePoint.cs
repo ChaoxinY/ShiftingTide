@@ -79,11 +79,11 @@ public class SourcePoint : StandardInteractiveGameObject
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (PlayerResourcesManager.IsThisResourceAtMax(colorIndex) && PlayerResourcesManager.IsThisResourceAtMax(5))
-            {
-                Debug.Log("Max");
-                return;
-            }
+            //if (PlayerResourcesManager.IsThisResourceAtMax(colorIndex) && PlayerResourcesManager.IsThisResourceAtMax(5))
+            //{
+            //    Debug.Log("Max");
+            //    return;
+            //}
             meshRenderer.enabled = false;
             PickedUp();
         }

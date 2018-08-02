@@ -49,7 +49,7 @@ public class HostileResourceManager : MonoBehaviour
             return;
         }
         CurrentHealth -= baseDamage;
-        StartCoroutine(OnHitDrops(10,20));
+        StartCoroutine(OnHitDrops(1,2));
        // StartCoroutine(OnHitPhysicsFeedBack());
     }
 
@@ -106,11 +106,10 @@ public class HostileResourceManager : MonoBehaviour
     }
 
 
-    public virtual IEnumerator OnDeathDrops()
+    public virtual void OnDeathDrops()
     {
         OnHitDrops(3, 5);
         SpawnSourcePoint();
-        yield break;
     }
 
     private void ShowSliderBars(Slider[] sliderBars)
