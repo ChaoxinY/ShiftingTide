@@ -83,12 +83,12 @@ public class Volant : Agent
         List<Vector3> CirclePoints = new List<Vector3>();
         List<Vector3> mirroredCirclePoints = new List<Vector3>();
         path.Enqueue(StartOfTheCircle);
-        CirclePoints = CreateBezierCurvedPath(StartOfTheCircle, EndOfTheCircle, Vector3.right, Vector3.forward, 96, pathDistance, shiftValue);
+        CirclePoints = CreateBezierCurvedPath(StartOfTheCircle, EndOfTheCircle, Vector3.right, Vector3.forward, 12, pathDistance, shiftValue);
         foreach (Vector3 point in CirclePoints)
         {
             path.Enqueue(point);
         }
-        mirroredCirclePoints = CreateBezierCurvedPath(EndOfTheCircle, StartOfTheCircle, -Vector3.right, -Vector3.forward, 96, pathDistance, shiftValue);
+        mirroredCirclePoints = CreateBezierCurvedPath(EndOfTheCircle, StartOfTheCircle, -Vector3.right, -Vector3.forward, 12, pathDistance, shiftValue);
         foreach (Vector3 point in mirroredCirclePoints)
         {
             path.Enqueue(point);

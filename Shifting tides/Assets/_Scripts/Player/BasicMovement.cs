@@ -1,316 +1,316 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿//using System;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//using UnityEngine.UI;
 
-public class BasicMovement : MonoBehaviour
-{
-    private Rigidbody rbPlayer;
-    private Vector3 currentMotion, lastDirection, colExtents;
-    private GameObject arrow;
-    private Camera cameraMain;
-    private GameManager gameMng;
-    private PlayerTideComboManager playerTideComboManager;
-    //0: bow , 1: The Source
-    private bool[] skillObtained = new bool[10];
-    private bool dashWarmUp;
-    private float h, v, inputSpeed, slopeAngle;
+//public class BasicMovement : MonoBehaviour
+//{
+//    private Rigidbody rbPlayer;
+//    private Vector3 currentMotion, lastDirection, colExtents;
+//    private GameObject arrow;
+//    private Camera cameraMain;
+//    private GameManager gameMng;
+//    private PlayerTideComboManager playerTideComboManager;
+//    //0: bow , 1: The Source
+//    private bool[] skillObtained = new bool[10];
+//    private bool dashWarmUp;
+//    private float h, v, inputSpeed, slopeAngle;
 
-    [HideInInspector]
-    public float arrowSpeed;
-    public PlayerParticleSystemManager playerParticleSystemManager;
-    public Animator aniPlayer;
-    public GameObject bow, bowMesh, UI, gameManagerObject;
-    public GameObject[] dashesImages;
-    public Ui ui;
-    public PlayerCamera plyCamera;
-    public AudioSource[] bowSoundSources;
-    public bool onGround, isAiming;
-    public float defaultMoveForce, moveForce, speedLimit, runLimit, moveLimit, dashForce, DashLimit,
-        jumpVel, gravity, maxInput, startArrowSpeed, maxArrowSpeed,arrowBaseDamage;
+//    [HideInInspector]
+//    public float arrowSpeed;
+//    public PlayerParticleSystemManager playerParticleSystemManager;
+//    public Animator aniPlayer;
+//    public GameObject bow, bowMesh, UI, gameManagerObject;
+//    public GameObject[] dashesImages;
+//    public Ui ui;
+//    public PlayerCamera plyCamera;
+//    public AudioSource[] bowSoundSources;
+//    public bool onGround, isAiming;
+//    public float defaultMoveForce, moveForce, speedLimit, runLimit, moveLimit, dashForce, DashLimit,
+//        jumpVel, gravity, maxInput, startArrowSpeed, maxArrowSpeed,arrowBaseDamage;
 
-    void Start()
-    {
-        gameMng = GameObject.Find("GameManager").GetComponent<GameManager>();
-        cameraMain = Camera.main;
-        arrow = Resources.Load("Prefabs/Arrow") as GameObject;
-        ResetArrowSpeed();
-        rbPlayer = GetComponent<Rigidbody>();
-        colExtents = GetComponent<Collider>().bounds.extents;
-        playerTideComboManager = GetComponent<PlayerTideComboManager>();
-    }
+//    void Start()
+//    {
+//        gameMng = GameObject.Find("GameManager").GetComponent<GameManager>();
+//        cameraMain = Camera.main;
+//        arrow = Resources.Load("Prefabs/Arrow") as GameObject;
+//        ResetArrowSpeed();
+//        rbPlayer = GetComponent<Rigidbody>();
+//        colExtents = GetComponent<Collider>().bounds.extents;
+//        playerTideComboManager = GetComponent<PlayerTideComboManager>();
+//    }
 
-    void Update()
-    {
+//    void Update()
+//    {
 
-        currentMotion = Input.GetAxisRaw("Vertical") * moveForce * gameManagerObject.transform.forward + Input.GetAxisRaw("Horizontal") * moveForce * gameManagerObject.transform.right;
-        h = Input.GetAxis("Horizontal");
-        v = Input.GetAxis("Vertical");
-        inputSpeed = Vector2.ClampMagnitude(new Vector2(h, v), maxInput).magnitude;
-        aniPlayer.SetFloat("Speed", inputSpeed);
-        onGround = IsGrounded();
-        if (!onGround)
-        {
-            gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 0f;
-            gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 0f;
-        }
-        else if (onGround && !IsMoving())
-        {
-            gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 3.34f;
-            gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 3.6f;
+//        currentMotion = Input.GetAxisRaw("Vertical") * moveForce * gameManagerObject.transform.forward + Input.GetAxisRaw("Horizontal") * moveForce * gameManagerObject.transform.right;
+//        h = Input.GetAxis("Horizontal");
+//        v = Input.GetAxis("Vertical");
+//        inputSpeed = Vector2.ClampMagnitude(new Vector2(h, v), maxInput).magnitude;
+//        aniPlayer.SetFloat("Speed", inputSpeed);
+//        onGround = IsGrounded();
+//        if (!onGround)
+//        {
+//            gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 0f;
+//            gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 0f;
+//        }
+//        else if (onGround && !IsMoving())
+//        {
+//            gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 3.34f;
+//            gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 3.6f;
 
-        }
-        else if (onGround)
-        {
-            gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 0.34f;
-            gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 0.6f;
-        }
-        if (!PlayerResourcesManager.IsThisResourceAtMax(5))
-        {
-            GatherSource();
-        }
+//        }
+//        else if (onGround)
+//        {
+//            gameObject.GetComponent<CapsuleCollider>().material.dynamicFriction = 0.34f;
+//            gameObject.GetComponent<CapsuleCollider>().material.staticFriction = 0.6f;
+//        }
+//        if (!PlayerResourcesManager.IsThisResourceAtMax(5))
+//        {
+//            GatherSource();
+//        }
 
-        if (!isAiming)
-        {
-            Rotate(h, v);
-        }
+//        if (!isAiming)
+//        {
+//            Rotate(h, v);
+//        }
 
-        ManageInput();
-    }
+//        ManageInput();
+//    }
 
-    void FixedUpdate()
-    {
-        gravity = rbPlayer.velocity.y >= -1 ? 0 : gravity -= 0.7f;
-        rbPlayer.AddForce(currentMotion + Vector3.up * (gravity + slopeAngle), ForceMode.Acceleration);
-        Vector2 horizontalVelocity = new Vector2(rbPlayer.velocity.x, rbPlayer.velocity.z);
-        horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, speedLimit);
-        rbPlayer.velocity = new Vector3(horizontalVelocity.x, rbPlayer.velocity.y, horizontalVelocity.y);
-    }
+//    void FixedUpdate()
+//    {
+//        gravity = rbPlayer.velocity.y >= -1 ? 0 : gravity -= 0.7f;
+//        rbPlayer.AddForce(currentMotion + Vector3.up * (gravity + slopeAngle), ForceMode.Acceleration);
+//        Vector2 horizontalVelocity = new Vector2(rbPlayer.velocity.x, rbPlayer.velocity.z);
+//        horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, speedLimit);
+//        rbPlayer.velocity = new Vector3(horizontalVelocity.x, rbPlayer.velocity.y, horizontalVelocity.y);
+//    }
 
-    private void ResetArrowSpeed()
-    {
-        arrowSpeed = startArrowSpeed;
-    }
+//    private void ResetArrowSpeed()
+//    {
+//        arrowSpeed = startArrowSpeed;
+//    }
 
-    private void ManageInput()
-    {
+//    private void ManageInput()
+//    {
 
-        if (Input.GetKeyDown(KeyCode.F) && PlayerResourcesManager.IsThereEnoughResource(3, 0) && skillObtained[1] && !dashWarmUp)
-        {
-            StartCoroutine(Dash());
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            gameMng.EnableTimeStop();
-        }
+//        if (Input.GetKeyDown(KeyCode.F) && PlayerResourcesManager.IsThereEnoughResource(3, 0) && skillObtained[1] && !dashWarmUp)
+//        {
+//            StartCoroutine(Dash());
+//        }
+//        //if (Input.GetKeyDown(KeyCode.R))
+//        //{
+//        //    gameMng.EnableTimeStop();
+//        //}
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jumping();
-        }
+//        if (Input.GetKeyDown(KeyCode.Space))
+//        {
+//            Jumping();
+//        }
 
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            ChangeMoveSpeedLimit(true, moveLimit);
-        }
+//        if (Input.GetKey(KeyCode.LeftShift))
+//        {
+//            ChangeMoveSpeedLimit(true, moveLimit);
+//        }
 
-        if (!Input.GetKey(KeyCode.LeftShift))
-        {
-            ChangeMoveSpeedLimit(false, runLimit);
-        }
+//        if (!Input.GetKey(KeyCode.LeftShift))
+//        {
+//            ChangeMoveSpeedLimit(false, runLimit);
+//        }
 
-        if (Input.GetMouseButton(1) && PlayerResourcesManager.IsThereEnoughResource(4, 0) && skillObtained[0])
-        {
-            ChargeUpArrow();
-        }
-        if (Input.GetMouseButtonUp(1) && isAiming)
-        {
-            ShootArrow();
-        }
+//        if (Input.GetMouseButton(1) && PlayerResourcesManager.IsThereEnoughResource(4, 0) && skillObtained[0])
+//        {
+//            ChargeUpArrow();
+//        }
+//        if (Input.GetMouseButtonUp(1) && isAiming)
+//        {
+//            ShootArrow();
+//        }
 
-    }
+//    }
 
-    private void AimRotate()
-    {
-        Vector3 forward = cameraMain.transform.TransformDirection(Vector3.forward);
-        // Player is moving on ground, Y component of camera facing is not relevant.
-        forward.y = 0.0f;
-        forward = forward.normalized;
+//    private void AimRotate()
+//    {
+//        Vector3 forward = cameraMain.transform.TransformDirection(Vector3.forward);
+//        // Player is moving on ground, Y component of camera facing is not relevant.
+//        forward.y = 0.0f;
+//        forward = forward.normalized;
 
-        // Always rotates the player according to the camera horizontal rotation in aim mode.
-        Quaternion targetRotation = Quaternion.Euler(0, plyCamera.angleH, 0);
+//        // Always rotates the player according to the camera horizontal rotation in aim mode.
+//        Quaternion targetRotation = Quaternion.Euler(0, plyCamera.angleH, 0);
 
-        float minSpeed = Quaternion.Angle(transform.rotation, targetRotation) * 0.02f;
+//        float minSpeed = Quaternion.Angle(transform.rotation, targetRotation) * 0.02f;
 
-        // Rotate entire player to face camera.
-        lastDirection = forward;
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, minSpeed * Time.deltaTime);
-    }
+//        // Rotate entire player to face camera.
+//        lastDirection = forward;
+//        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, minSpeed * Time.deltaTime);
+//    }
 
-    private void Rotate(float horizontal, float vertical)
-    {
-        Vector3 desiredDirection;
-        Vector3 cameraForward = cameraMain.transform.TransformDirection(Vector3.forward);
+//    private void Rotate(float horizontal, float vertical)
+//    {
+//        Vector3 desiredDirection;
+//        Vector3 cameraForward = cameraMain.transform.TransformDirection(Vector3.forward);
 
-        cameraForward.y = 0f;
-        cameraForward = cameraForward.normalized;
+//        cameraForward.y = 0f;
+//        cameraForward = cameraForward.normalized;
 
-        Vector3 right = new Vector3(cameraForward.z, 0, -cameraForward.x);
-        desiredDirection = cameraForward * vertical + right * horizontal;
-        if (IsMoving() && desiredDirection != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(desiredDirection);
-            Quaternion newRotation = Quaternion.Slerp(rbPlayer.rotation, targetRotation, 0.05f);
-            rbPlayer.MoveRotation(newRotation);
-            LastDirection = desiredDirection;
-        }
-        if (!IsMoving()) Repositioning();
+//        Vector3 right = new Vector3(cameraForward.z, 0, -cameraForward.x);
+//        desiredDirection = cameraForward * vertical + right * horizontal;
+//        if (IsMoving() && desiredDirection != Vector3.zero)
+//        {
+//            Quaternion targetRotation = Quaternion.LookRotation(desiredDirection);
+//            Quaternion newRotation = Quaternion.Slerp(rbPlayer.rotation, targetRotation, 0.05f);
+//            rbPlayer.MoveRotation(newRotation);
+//            LastDirection = desiredDirection;
+//        }
+//        if (!IsMoving()) Repositioning();
 
-    }
+//    }
 
-    private void Repositioning()
-    {
-        if (lastDirection != Vector3.zero)
-        {
-            LastDirection = new Vector3(LastDirection.x, 0, LastDirection.z);
-            Quaternion targetRotation = Quaternion.LookRotation(lastDirection);
-            Quaternion newRotation = Quaternion.Slerp(rbPlayer.rotation, targetRotation, 0.05f);
-            rbPlayer.MoveRotation(newRotation);
-        }
-    }
+//    private void Repositioning()
+//    {
+//        if (lastDirection != Vector3.zero)
+//        {
+//            LastDirection = new Vector3(LastDirection.x, 0, LastDirection.z);
+//            Quaternion targetRotation = Quaternion.LookRotation(lastDirection);
+//            Quaternion newRotation = Quaternion.Slerp(rbPlayer.rotation, targetRotation, 0.05f);
+//            rbPlayer.MoveRotation(newRotation);
+//        }
+//    }
 
-    private bool IsMoving()
-    {
-        return (h != 0) || (v != 0);
-    }
+//    private bool IsMoving()
+//    {
+//        return (h != 0) || (v != 0);
+//    }
 
-    private void Jumping()
-    {
-        if (onGround)
-        {
-            rbPlayer.AddForce((Vector3.up * jumpVel), ForceMode.Impulse);
-        }
-        else if (PlayerResourcesManager.IsThereEnoughResource(2, 0) && !onGround && gameMng.isTimeStoped)
-        {
-            Vector3 spawnPosition = gameObject.transform.position - new Vector3(0, 1.2f, 0) + transform.forward * speedLimit / 2.4f;
-            if (!IsMoving())
-            {
-                spawnPosition = gameObject.transform.position - new Vector3(0, 1f, 0);
-            }
-            PlayerResourcesManager.JumpsLeft -= 1;
-            Instantiate(Resources.Load("Prefabs/SourcePlatform") as GameObject, spawnPosition, Quaternion.identity);
-        }
-    }
+//    private void Jumping()
+//    {
+//        if (onGround)
+//        {
+//            rbPlayer.AddForce((Vector3.up * jumpVel), ForceMode.Impulse);
+//        }
+//        else if (PlayerResourcesManager.IsThereEnoughResource(2, 0) && !onGround && gameMng.isTimeStoped)
+//        {
+//            Vector3 spawnPosition = gameObject.transform.position - new Vector3(0, 1.2f, 0) + transform.forward * speedLimit / 2.4f;
+//            if (!IsMoving())
+//            {
+//                spawnPosition = gameObject.transform.position - new Vector3(0, 1f, 0);
+//            }
+//            PlayerResourcesManager.JumpsLeft -= 1;
+//            Instantiate(Resources.Load("Prefabs/SourcePlatform") as GameObject, spawnPosition, Quaternion.identity);
+//        }
+//    }
 
-    private void ChangeMoveSpeedLimit(bool isWalking, float targetLimit)
-    {
-        speedLimit = Mathf.Lerp(speedLimit, targetLimit, Time.deltaTime);
-        maxInput = isWalking ? maxInput = Mathf.Lerp(maxInput, 0.2f, Time.deltaTime * 5f) :
-            maxInput = Mathf.Lerp(maxInput, 0.7f, Time.deltaTime * 1.2f);
-    }
+//    private void ChangeMoveSpeedLimit(bool isWalking, float targetLimit)
+//    {
+//        speedLimit = Mathf.Lerp(speedLimit, targetLimit, Time.deltaTime);
+//        maxInput = isWalking ? maxInput = Mathf.Lerp(maxInput, 0.2f, Time.deltaTime * 5f) :
+//            maxInput = Mathf.Lerp(maxInput, 0.7f, Time.deltaTime * 1.2f);
+//    }
 
-    private IEnumerator Dash()
-    {
-        dashWarmUp = true;
-        yield return new WaitUntil(() => IsMoving());
-        dashWarmUp = false;
-        playerTideComboManager.StartCombo();
-        PlayerResourcesManager.Dashes -= 1;
-        dashesImages[(int)PlayerResourcesManager.Dashes].SetActive(false);
-        moveForce = dashForce;
-        speedLimit = DashLimit;
-        maxInput = 1f;
-        yield return new WaitForSeconds(0.15f);
-        moveForce = defaultMoveForce;
-        while (speedLimit > runLimit + 0.2f)
-        {
-            speedLimit = Mathf.Lerp(speedLimit, runLimit, Time.deltaTime * 5f);
-            maxInput = Mathf.Lerp(maxInput, 0.5f, Time.deltaTime * 5f);
-            yield return new WaitForSeconds(0.03f);
-        }      
-        yield break;
-    }
+//    private IEnumerator Dash()
+//    {
+//        dashWarmUp = true;
+//        yield return new WaitUntil(() => IsMoving());
+//        dashWarmUp = false;
+//        playerTideComboManager.StartCombo();
+//        PlayerResourcesManager.Dashes -= 1;
+//        dashesImages[(int)PlayerResourcesManager.Dashes].SetActive(false);
+//        moveForce = dashForce;
+//        speedLimit = DashLimit;
+//        maxInput = 1f;
+//        yield return new WaitForSeconds(0.15f);
+//        moveForce = defaultMoveForce;
+//        while (speedLimit > runLimit + 0.2f)
+//        {
+//            speedLimit = Mathf.Lerp(speedLimit, runLimit, Time.deltaTime * 5f);
+//            maxInput = Mathf.Lerp(maxInput, 0.5f, Time.deltaTime * 5f);
+//            yield return new WaitForSeconds(0.03f);
+//        }      
+//        yield break;
+//    }
 
-    private void ChargeUpArrow()
-    {
+//    private void ChargeUpArrow()
+//    {
        
-        AimRotate();       
-        if (playerParticleSystemManager.isPlayingChargingAnimation == false)
-        {
+//        AimRotate();       
+//        if (playerParticleSystemManager.isPlayingChargingAnimation == false)
+//        {
 
-            bowSoundSources[1].Play();
-            playerParticleSystemManager.PlayChargingAnimation();
-        }
-        if (playerParticleSystemManager.isPlayingChargedUpAnimation == false) {
-            arrowSpeed = 1f;
-            playerParticleSystemManager.PlayChargedUpAnimation();
-        }
+//            bowSoundSources[1].Play();
+//            playerParticleSystemManager.PlayChargingAnimation();
+//        }
+//        if (playerParticleSystemManager.isPlayingChargedUpAnimation == false) {
+//            arrowSpeed = 1f;
+//            playerParticleSystemManager.PlayChargedUpAnimation();
+//        }
 
-        if (!isAiming) isAiming = !isAiming;
-    }
+//        if (!isAiming) isAiming = !isAiming;
+//    }
 
-    private void GatherSource()
-    {
-        RaycastHit[] hits;
-        int layerMask = 1 << 10;
-        hits = Physics.SphereCastAll(gameObject.transform.position, 3f, transform.forward, 1f, layerMask);
-        foreach (RaycastHit rh in hits)
-        {
-            SourcePoint sP = rh.collider.gameObject.GetComponent<SourcePoint>();
-            sP.objectToChase = gameObject;
-            sP.movementSpeed = 20f;
-        }
-    }
+//    private void GatherSource()
+//    {
+//        RaycastHit[] hits;
+//        int layerMask = 1 << 10;
+//        hits = Physics.SphereCastAll(gameObject.transform.position, 3f, transform.forward, 1f, layerMask);
+//        foreach (RaycastHit rh in hits)
+//        {
+//            SourcePoint sP = rh.collider.gameObject.GetComponent<SourcePoint>();
+//            sP.objectToChase = gameObject;
+//            sP.movementSpeed = 20f;
+//        }
+//    }
 
-    private bool IsGrounded()
-    {
-        //Ray ray = new Ray(this.transform.position + Vector3.up * 2 * colExtents.x, Vector3.down);     
-        Debug.DrawRay(transform.position - transform.forward, Vector3.down, Color.red);
-        //colExtents.x + 1.4f
-        return Physics.Raycast(transform.position, Vector3.down, 1.2f);
-    }
-    private void ShootArrow()
-    {       
-        PlayerResourcesManager.Arrows -= 1;
-        GameObject Arrow = Instantiate(arrow, bow.transform.position, bow.transform.rotation);
-        Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * arrowSpeed, ForceMode.Impulse);
-        Arrow.GetComponent<ArrowBehaviour>().baseDamage = arrowBaseDamage;    
-        if (isAiming) isAiming = !isAiming;
-       // StartCoroutine(playerParticleSystemManager.PlayerFireAnimation());      
-        bowSoundSources[0].Play();
-    }
+//    private bool IsGrounded()
+//    {
+//        //Ray ray = new Ray(this.transform.position + Vector3.up * 2 * colExtents.x, Vector3.down);     
+//        Debug.DrawRay(transform.position - transform.forward, Vector3.down, Color.red);
+//        //colExtents.x + 1.4f
+//        return Physics.Raycast(transform.position, Vector3.down, 1.2f);
+//    }
+//    private void ShootArrow()
+//    {       
+//        PlayerResourcesManager.Arrows -= 1;
+//        GameObject Arrow = Instantiate(arrow, bow.transform.position, bow.transform.rotation);
+//        Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * arrowSpeed, ForceMode.Impulse);
+//        Arrow.GetComponent<ArrowBehaviour>().baseDamage = arrowBaseDamage;    
+//        if (isAiming) isAiming = !isAiming;
+//       // StartCoroutine(playerParticleSystemManager.PlayerFireAnimation());      
+//        bowSoundSources[0].Play();
+//    }
 
-    void OnCollisionEnter(Collision other)
-    {
+//    void OnCollisionEnter(Collision other)
+//    {
 
-        switch (other.gameObject.tag)
-        {
-            case "Bow":
-                GameObject.Destroy(other.gameObject);
-                skillObtained[0] = true;
-                bow.SetActive(true);
-                bowMesh.SetActive(true);
-                break;
-            case "TheSource":
-                GameObject.Destroy(other.gameObject);
-                skillObtained[1] = true;
-                UI.SetActive(true); 
+//        switch (other.gameObject.tag)
+//        {
+//            case "Bow":
+//                GameObject.Destroy(other.gameObject);
+//                skillObtained[0] = true;
+//                bow.SetActive(true);
+//                bowMesh.SetActive(true);
+//                break;
+//            case "TheSource":
+//                GameObject.Destroy(other.gameObject);
+//                skillObtained[1] = true;
+//                UI.SetActive(true); 
               
-                PlayerResourcesManager.playerResourcesCaps[3] = 3;
-                for (int i = 0; i < 3; i++)
-                {                 
-                    StartCoroutine(PlayerResourcesManager.ChargeUpDash(0));
-                }
-                PlayerResourcesManager.playerResourcesCaps[2] = 4;
-                break;
-        }
-    }
+//                PlayerResourcesManager.playerResourcesCaps[3] = 3;
+//                for (int i = 0; i < 3; i++)
+//                {                 
+//                    StartCoroutine(PlayerResourcesManager.ChargeUpDash(0));
+//                }
+//                PlayerResourcesManager.playerResourcesCaps[2] = 4;
+//                break;
+//        }
+//    }
 
-    public Vector3 LastDirection
-    {
-        get { return lastDirection; }
-        set { lastDirection = value; }
-    }
+//    public Vector3 LastDirection
+//    {
+//        get { return lastDirection; }
+//        set { lastDirection = value; }
+//    }
 
-}
+//}

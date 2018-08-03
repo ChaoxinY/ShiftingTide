@@ -5,13 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - Wall
   - SourcePoint
   - Arrow
   - Enemy
-  - Bow
-  - TheSource
-  - Slope
   - EnemyCritSpot
   layers:
   - Default
@@ -28,7 +24,7 @@ TagManager:
   - Ground
   - Arrow
   - Enemy
-  - 
+  - Contraptions
   - 
   - 
   - 

@@ -7,7 +7,7 @@ public class Trigger : MonoBehaviour {
     // BoundMechanisme TriggerBoundMechinsme boundMechanism
     public TriggerBoundMechanism boundMechanism;
 
-    public void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Rigidbody>()) {
             boundMechanism.Triggered = true;

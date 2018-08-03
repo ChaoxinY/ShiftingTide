@@ -25,7 +25,7 @@ public class DefaultArrowBehaviour : ArrowBehaviour
                 break;
             case 4:
                 arrowSpeed = 80f;
-                baseDamage += 50;
+                baseDamage += 35;
                 break;
 
         }

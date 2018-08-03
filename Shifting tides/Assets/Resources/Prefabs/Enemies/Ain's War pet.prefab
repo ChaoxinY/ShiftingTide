@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 23626457189512088}
   - component: {fileID: 65674424361042152}
   m_Layer: 13
-  m_Name: Cube
+  m_Name: Mesh
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -347,7 +347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4771350531794718}
   - component: {fileID: 114341915471118638}
-  - component: {fileID: 114200493786639590}
+  - component: {fileID: 114864885403285568}
   m_Layer: 13
   m_Name: Ain's War pet
   m_TagString: Enemy
@@ -615,25 +615,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114200493786639590
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1558448594515958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7653874fdb5e9564eb2862125d5be43f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBars:
-  - {fileID: 114476419352532564}
-  - {fileID: 114359170346043144}
-  armorBars:
-  - {fileID: 114778810500867028}
-  - {fileID: 114492413139845700}
-  maxHealth: 30
-  maxArmor: 0
 --- !u!114 &114327302481607450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -700,12 +681,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTimeStopped: 0
-  wayPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  wayPoints: []
+  patrolPoints: []
   desire:
   - 0
   - 0
@@ -723,7 +700,7 @@ MonoBehaviour:
   perferRandomBehaviours: 0
   perferPatternedBehaviours: 1
   customized: 0
-  movementSpeed: 8
+  movementSpeed: 20
 --- !u!114 &114359170346043144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1088,6 +1065,30 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114864885403285568
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1558448594515958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 741e3ea84dbd5d5499d9c6b7f82a0be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBars:
+  - {fileID: 114476419352532564}
+  - {fileID: 114359170346043144}
+  armorBars:
+  - {fileID: 114778810500867028}
+  - {fileID: 114492413139845700}
+  maxHealth: 10
+  maxArmor: 0
+  minOnHitDrop: 0
+  maxOnHitDrop: 0
+  minOnDeathDrop: 1
+  maxOnDeathDrop: 4
+  ItemToDrop: {fileID: 1491985661680948, guid: 38828bbec5b47944f83bca9c8484a265, type: 2}
 --- !u!114 &114921824560448728
 MonoBehaviour:
   m_ObjectHideFlags: 1

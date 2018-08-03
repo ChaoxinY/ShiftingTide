@@ -22,11 +22,11 @@ public class CloudArrowBehaviour : ArrowBehaviour
                 break;
             case 3:
                 arrowSpeed = 100f;
-                baseDamage += 25;
+                baseDamage += 35;
                 break;
             case 4:
                 arrowSpeed = 125f;
-                baseDamage += 50;
+                baseDamage += 60;
                 break;
 
         }

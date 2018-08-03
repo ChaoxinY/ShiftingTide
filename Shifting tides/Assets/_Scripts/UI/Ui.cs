@@ -5,17 +5,11 @@ using UnityEngine.UI;
 
 public class Ui : MonoBehaviour
 {
-    private BasicMovement basicMovement;
     public Enemy currentTarget;
     public Slider[] sliders;
     public Text[] texts;
     public Image[] dashCharges;
     public GameObject[] arrowHeadIcons;
-
-    void Start()
-    {
-        basicMovement = GameObject.Find("Player").GetComponent<BasicMovement>();
-    }
 
     public void DisplayCurrentArrowHead(GameObject currentArrowHead)
     {

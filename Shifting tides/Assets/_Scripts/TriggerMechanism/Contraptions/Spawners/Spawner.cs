@@ -14,7 +14,7 @@ public class Spawner : TriggerBoundMechanism
     public bool isReuseable, repeatTriggerFunction, breakable;
 
     protected override IEnumerator LocalUpdate()
-    {      
+    {
         yield return StartCoroutine(base.LocalUpdate());
         if (Triggered)
         {
@@ -24,16 +24,11 @@ public class Spawner : TriggerBoundMechanism
                 this.enabled = false;
             }
             yield return new WaitForSeconds(spawnInterval);
-            if (repeatTriggerFunction)
-            {
-                TriggerFunction();
-                if (isReuseable || breakable)
-                {
-                    timesActivated += 1;
-                }
 
-            }
-            if (timesActivated == durabilitiy)
+            TriggerFunction();           
+            timesActivated += 1;
+
+            if (timesActivated >= durabilitiy)
             {
 
                 if (breakable)
@@ -44,6 +39,7 @@ public class Spawner : TriggerBoundMechanism
                 else if (isReuseable)
                 {
                     Triggered = false;
+                    timesActivated = 0;
                 }
             }
         }
@@ -52,6 +48,6 @@ public class Spawner : TriggerBoundMechanism
     public override void TriggerFunction()
     {
         GameObject spawnObject = Instantiate(objectToSpawn, positionToSpawn.position, positionToSpawn.rotation);
-      
+
     }
 }

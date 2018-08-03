@@ -24,7 +24,7 @@ public class SourcePoint : StandardInteractiveGameObject
     protected override void Initialize()
     {
         base.Initialize();
-        rotationValue = new Vector3(Random.Range(-1, 2), Random.Range(-1, 2), Random.Range(-1, 2));
+        rotationValue = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         rotationSpeed = Random.Range(1.1f, 3);
         transform.localScale = new Vector3(Random.Range(0.1f, 0.4f), Random.Range(0.1f, 0.4f), Random.Range(0.1f, 0.4f));
         meshRenderer = GetComponent<MeshRenderer>();

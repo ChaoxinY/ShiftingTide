@@ -4,7 +4,6 @@ using System.Collections;
 public class PlayerBlinkerParticleSystemHandler : ParticleSystemHandler
 {
     private ParticleSystem.MainModule mainModule;
-    private ParticleSystem.Particle[] particles;
     private IEnumerator prolongParticleLifeTimeCoroutine;
     private float lifeTime;
 
@@ -14,7 +13,6 @@ public class PlayerBlinkerParticleSystemHandler : ParticleSystemHandler
         mainModule = particleSystemToManage.main;
         lifeTime = mainModule.startLifetime.constant;
         currentProfielValues[0] = mainModule.simulationSpeed;
-        particles = new ParticleSystem.Particle[particleSystemToManage.main.maxParticles];
     }
     public override void PlayParticleAnimation()
     {
