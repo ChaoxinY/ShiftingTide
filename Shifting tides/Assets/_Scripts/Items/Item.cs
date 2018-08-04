@@ -8,7 +8,8 @@ public class Item : MonoBehaviour
     public ItemInformation itemInformation;
 
     private Rigidbody itemRigidBody;
-    private Vector3 rotationValue, displayPosition;
+    private Transform mesh;
+    private Vector3 rotationValue, displayPosition,displaySize;
     private ItemDataBase itemDataBase;
     private float rotationSpeed;
     private bool isOnGround;
@@ -16,6 +17,7 @@ public class Item : MonoBehaviour
     public void Start()
     {
         itemRigidBody = GetComponent<Rigidbody>();
+        mesh = gameObject.transform.GetChild(0);
         itemDataBase = GameObject.Find("GameManager").GetComponent<ItemDataBase>();
         itemInformation = itemDataBase.availableItems[itemInformationID];
         rotationValue = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
@@ -29,6 +31,9 @@ public class Item : MonoBehaviour
             transform.Rotate(rotationValue * rotationSpeed);
             if (transform.position != displayPosition)
                 transform.position = Vector3.Lerp(transform.position, displayPosition, Time.deltaTime);
+            if (mesh.localScale != displaySize) {
+                mesh.localScale = Vector3.Lerp(mesh.localScale, displaySize, Time.deltaTime * 8f);
+            }
         }
     }
 
@@ -48,7 +53,9 @@ public class Item : MonoBehaviour
     private void PlayOnGroundAnimation()
     {
         itemRigidBody.isKinematic = true;
+        isOnGround = true;
         displayPosition = transform.position + Vector3.up * 2f;
+        displaySize = mesh.localScale * 2f;
     }
 }
 [System.Serializable]

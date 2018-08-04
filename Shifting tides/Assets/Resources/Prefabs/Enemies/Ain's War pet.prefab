@@ -700,7 +700,7 @@ MonoBehaviour:
   perferRandomBehaviours: 0
   perferPatternedBehaviours: 1
   customized: 0
-  movementSpeed: 20
+  movementSpeed: 10
 --- !u!114 &114359170346043144
 MonoBehaviour:
   m_ObjectHideFlags: 1

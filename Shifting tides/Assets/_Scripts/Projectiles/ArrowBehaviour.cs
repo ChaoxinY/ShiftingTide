@@ -105,6 +105,7 @@ public class ArrowBehaviour : Projectile
         GameObject arrowDummy = Instantiate(arrowPlaceholder, spawnPosition, arrowPlaceholder.transform.rotation = Quaternion.Euler(arrowPlaceholderRotation));
 
         GameObject DummyParent = new GameObject();
+        DummyParent.name = "ArrowDummy";
         DummyParent.transform.SetParent(TargetHit.transform);
         arrowDummy.transform.SetParent(DummyParent.transform);
        

@@ -129,17 +129,4 @@ public class Volant : Agent
         cube.transform.position = transform.position;
         transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
     }
-
-    private float DetermineCircleDiameter()
-    {
-        float diameter = 40f;
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 40f))
-        {
-            diameter = UnityEngine.Random.Range(0, hit.distance);
-        }
-
-        return diameter;
-    }
-
 }

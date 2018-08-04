@@ -225,24 +225,26 @@ public class Agent : TimeBoundGameObject
     private void LookForWayPointAssigner()
     {
         GameObject aiWayPointHolders = GameObject.Find("AIWayPointHolders");
-        Debug.Log("Called");
         Component[] assigners = aiWayPointHolders.GetComponentsInChildren(typeof(WayPointHolder));
         if (assigners.Length != 0)
         {
             float distanceToHolder = Mathf.Infinity;
-            WayPointHolder closestWayPointHolder = new WayPointHolder();
+            WayPointHolder closestWayPointHolder = null;
+
             foreach (WayPointHolder wayPointHolder in assigners)
             {
                 if (Vector3.Distance(transform.position, wayPointHolder.transform.position) < distanceToHolder)
                 {
                     distanceToHolder = Vector3.Distance(transform.position, wayPointHolder.transform.position);
                     closestWayPointHolder = wayPointHolder;
+
                 }
             }
-            wayPoints = closestWayPointHolder.wayPoints;
+            wayPoints = closestWayPointHolder.GetComponent<WayPointHolder>().wayPoints;
             patrolPoints = closestWayPointHolder.patrolPoints;
         }
     }
+
     private void SetUpAgentFactorInfluencePoint()
     {
         if (customized)
