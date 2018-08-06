@@ -93,6 +93,29 @@ ModelImporter:
     100174: Cube_001
     100176: Cube_002
     100178: Cube
+    100180: Bag_Ol_goods_1_005
+    100182: Bag_Ol_goods_1_006
+    100184: Bag_Ol_goods_2_002
+    100186: Bag_Ol_goods_3_001
+    100188: Bag_Ol_goods_3_002
+    100190: Bag_Ol_goods_3_004
+    100192: Cube_096
+    100194: Cube_130
+    100196: Cube_131
+    100198: Cube_132
+    100200: Cube_134
+    100202: Cube_135
+    100204: Cube_136
+    100206: Cube_137
+    100208: Cube_138
+    100210: Cube_139
+    100212: Cube_140
+    100214: Cube_141
+    100216: Cube_142
+    100218: Food_Storage_002
+    100220: Food_Storage_003
+    100222: Food_Storage_004
+    100224: Cylinder
     400000: Bag_Ol_goods_1_001
     400002: Bag_Ol_goods_1_002
     400004: Bag_Ol_goods_1_003
@@ -183,6 +206,29 @@ ModelImporter:
     400174: Cube_001
     400176: Cube_002
     400178: Cube
+    400180: Bag_Ol_goods_1_005
+    400182: Bag_Ol_goods_1_006
+    400184: Bag_Ol_goods_2_002
+    400186: Bag_Ol_goods_3_001
+    400188: Bag_Ol_goods_3_002
+    400190: Bag_Ol_goods_3_004
+    400192: Cube_096
+    400194: Cube_130
+    400196: Cube_131
+    400198: Cube_132
+    400200: Cube_134
+    400202: Cube_135
+    400204: Cube_136
+    400206: Cube_137
+    400208: Cube_138
+    400210: Cube_139
+    400212: Cube_140
+    400214: Cube_141
+    400216: Cube_142
+    400218: Food_Storage_002
+    400220: Food_Storage_003
+    400222: Food_Storage_004
+    400224: Cylinder
     2100000: unnamed
     2100002: Material_001
     2100004: Arrow
@@ -276,6 +322,29 @@ ModelImporter:
     2300172: Cube_001
     2300174: Cube_002
     2300176: Cube
+    2300178: Bag_Ol_goods_1_005
+    2300180: Bag_Ol_goods_1_006
+    2300182: Bag_Ol_goods_2_002
+    2300184: Bag_Ol_goods_3_001
+    2300186: Bag_Ol_goods_3_002
+    2300188: Bag_Ol_goods_3_004
+    2300190: Cube_096
+    2300192: Cube_130
+    2300194: Cube_131
+    2300196: Cube_132
+    2300198: Cube_134
+    2300200: Cube_135
+    2300202: Cube_136
+    2300204: Cube_137
+    2300206: Cube_138
+    2300208: Cube_139
+    2300210: Cube_140
+    2300212: Cube_141
+    2300214: Cube_142
+    2300216: Food_Storage_002
+    2300218: Food_Storage_003
+    2300220: Food_Storage_004
+    2300222: Cylinder
     3300000: Bag_Ol_goods_1_001
     3300002: Bag_Ol_goods_1_002
     3300004: Bag_Ol_goods_1_003
@@ -365,6 +434,29 @@ ModelImporter:
     3300172: Cube_001
     3300174: Cube_002
     3300176: Cube
+    3300178: Bag_Ol_goods_1_005
+    3300180: Bag_Ol_goods_1_006
+    3300182: Bag_Ol_goods_2_002
+    3300184: Bag_Ol_goods_3_001
+    3300186: Bag_Ol_goods_3_002
+    3300188: Bag_Ol_goods_3_004
+    3300190: Cube_096
+    3300192: Cube_130
+    3300194: Cube_131
+    3300196: Cube_132
+    3300198: Cube_134
+    3300200: Cube_135
+    3300202: Cube_136
+    3300204: Cube_137
+    3300206: Cube_138
+    3300208: Cube_139
+    3300210: Cube_140
+    3300212: Cube_141
+    3300214: Cube_142
+    3300216: Food_Storage_002
+    3300218: Food_Storage_003
+    3300220: Food_Storage_004
+    3300222: Cylinder
     4300000: Bag_Ol_goods_1_001
     4300002: Bag_Ol_goods_1_002
     4300004: Bag_Ol_goods_1_003
@@ -454,6 +546,29 @@ ModelImporter:
     4300172: Cube_001
     4300174: Cube_000
     4300176: Cube
+    4300178: Bag_Ol_goods_1_005
+    4300180: Bag_Ol_goods_1_006
+    4300182: Bag_Ol_goods_2_002
+    4300184: Bag_Ol_goods_3_001
+    4300186: Bag_Ol_goods_3_002
+    4300188: Bag_Ol_goods_3_004
+    4300190: Cube_096
+    4300192: Cube_130
+    4300194: Cube_131
+    4300196: Cube_132
+    4300198: Cube_134
+    4300200: Cube_135
+    4300202: Cube_136
+    4300204: Cube_137
+    4300206: Cube_138
+    4300208: Cube_139
+    4300210: Cube_140
+    4300212: Cube_141
+    4300214: Cube_142
+    4300216: Food_Storage_004
+    4300218: Food_Storage_003
+    4300220: Food_Storage_002
+    4300222: Cylinder
     6400000: Bag_Ol_goods_1_001
     6400002: Bag_Ol_goods_1_002
     6400004: Bag_Ol_goods_1_003
@@ -543,8 +658,32 @@ ModelImporter:
     6400172: Cube_001
     6400174: Cube_002
     6400176: Cube
+    6400178: Bag_Ol_goods_1_005
+    6400180: Bag_Ol_goods_1_006
+    6400182: Bag_Ol_goods_2_002
+    6400184: Bag_Ol_goods_3_001
+    6400186: Bag_Ol_goods_3_002
+    6400188: Bag_Ol_goods_3_004
+    6400190: Cube_096
+    6400192: Cube_130
+    6400194: Cube_131
+    6400196: Cube_132
+    6400198: Cube_134
+    6400200: Cube_135
+    6400202: Cube_136
+    6400204: Cube_137
+    6400206: Cube_138
+    6400208: Cube_139
+    6400210: Cube_140
+    6400212: Cube_141
+    6400214: Cube_142
+    6400216: Food_Storage_002
+    6400218: Food_Storage_003
+    6400220: Food_Storage_004
+    6400222: Cylinder
     7400000: Default Take
     9500000: //RootNode
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -584,7 +723,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0

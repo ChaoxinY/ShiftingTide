@@ -175,6 +175,25 @@ ModelImporter:
     100338: Empty
     100340: WindowFrame_1_002
     100342: WindowFrame_1_003
+    100344: Cube_000
+    100346: Cube_130
+    100348: Cube_131
+    100350: Cube_132
+    100352: Bag_Ol_goods_1_005
+    100354: Bag_Ol_goods_1_006
+    100356: Bag_Ol_goods_2_002
+    100358: Bag_Ol_goods_3_001
+    100360: Bag_Ol_goods_3_002
+    100362: Bag_Ol_goods_3_004
+    100364: Cube_134
+    100366: Cube_135
+    100368: Cube_136
+    100370: Cube_137
+    100372: Cube_138
+    100374: Cube_139
+    100376: Cube_140
+    100378: Cube_141
+    100380: Cube_142
     400000: Bag_Ol_goods_0
     400002: Bag_Ol_goods_1
     400004: Bag_Ol_goods_1_001
@@ -347,6 +366,25 @@ ModelImporter:
     400338: Empty
     400340: WindowFrame_1_002
     400342: WindowFrame_1_003
+    400344: Cube_000
+    400346: Cube_130
+    400348: Cube_131
+    400350: Cube_132
+    400352: Bag_Ol_goods_1_005
+    400354: Bag_Ol_goods_1_006
+    400356: Bag_Ol_goods_2_002
+    400358: Bag_Ol_goods_3_001
+    400360: Bag_Ol_goods_3_002
+    400362: Bag_Ol_goods_3_004
+    400364: Cube_134
+    400366: Cube_135
+    400368: Cube_136
+    400370: Cube_137
+    400372: Cube_138
+    400374: Cube_139
+    400376: Cube_140
+    400378: Cube_141
+    400380: Cube_142
     2100000: unnamed
     2100002: Material_001
     2100004: Material_002
@@ -523,6 +561,25 @@ ModelImporter:
     2300334: Door_0_004
     2300336: WindowFrame_1_002
     2300338: WindowFrame_1_003
+    2300340: Cube_000
+    2300342: Cube_130
+    2300344: Cube_131
+    2300346: Cube_132
+    2300348: Bag_Ol_goods_1_005
+    2300350: Bag_Ol_goods_1_006
+    2300352: Bag_Ol_goods_2_002
+    2300354: Bag_Ol_goods_3_001
+    2300356: Bag_Ol_goods_3_002
+    2300358: Bag_Ol_goods_3_004
+    2300360: Cube_134
+    2300362: Cube_135
+    2300364: Cube_136
+    2300366: Cube_137
+    2300368: Cube_138
+    2300370: Cube_139
+    2300372: Cube_140
+    2300374: Cube_141
+    2300376: Cube_142
     3300000: Bag_Ol_goods_0
     3300002: Bag_Ol_goods_1
     3300004: Bag_Ol_goods_1_001
@@ -693,6 +750,25 @@ ModelImporter:
     3300334: Door_0_004
     3300336: WindowFrame_1_002
     3300338: WindowFrame_1_003
+    3300340: Cube_000
+    3300342: Cube_130
+    3300344: Cube_131
+    3300346: Cube_132
+    3300348: Bag_Ol_goods_1_005
+    3300350: Bag_Ol_goods_1_006
+    3300352: Bag_Ol_goods_2_002
+    3300354: Bag_Ol_goods_3_001
+    3300356: Bag_Ol_goods_3_002
+    3300358: Bag_Ol_goods_3_004
+    3300360: Cube_134
+    3300362: Cube_135
+    3300364: Cube_136
+    3300366: Cube_137
+    3300368: Cube_138
+    3300370: Cube_139
+    3300372: Cube_140
+    3300374: Cube_141
+    3300376: Cube_142
     4300000: WindowFrame_2_001
     4300002: Cube_085
     4300004: Cube_084
@@ -863,6 +939,25 @@ ModelImporter:
     4300334: Cube_108
     4300336: WindowFrame_1_002
     4300338: Cube_128
+    4300340: Cube_132
+    4300342: Cube_000
+    4300344: Cube_131
+    4300346: Cube_130
+    4300348: Bag_Ol_goods_1_006
+    4300350: Bag_Ol_goods_1_005
+    4300352: Bag_Ol_goods_2_002
+    4300354: Bag_Ol_goods_3_004
+    4300356: Bag_Ol_goods_3_002
+    4300358: Cube_140
+    4300360: Cube_139
+    4300362: Cube_138
+    4300364: Cube_137
+    4300366: Cube_136
+    4300368: Cube_135
+    4300370: Cube_134
+    4300372: Bag_Ol_goods_3_001
+    4300374: Cube_142
+    4300376: Cube_141
     7400000: Default Take
     9500000: //RootNode
   externalObjects: {}
