@@ -116,6 +116,21 @@ ModelImporter:
     100220: Food_Storage_003
     100222: Food_Storage_004
     100224: Cylinder
+    100226: ChengDuo_000
+    100228: ChengDuo_001
+    100230: Cylinder_001
+    100232: Cylinder_002
+    100234: Cylinder_003
+    100236: Cylinder_004
+    100238: Cube_003
+    100240: Cube_004
+    100242: Cube_006
+    100244: Cylinder_013
+    100246: Cube_005
+    100248: Cube_007
+    100250: Cube_010
+    100252: Cube_011
+    100254: HuLan
     400000: Bag_Ol_goods_1_001
     400002: Bag_Ol_goods_1_002
     400004: Bag_Ol_goods_1_003
@@ -229,6 +244,21 @@ ModelImporter:
     400220: Food_Storage_003
     400222: Food_Storage_004
     400224: Cylinder
+    400226: ChengDuo_000
+    400228: ChengDuo_001
+    400230: Cylinder_001
+    400232: Cylinder_002
+    400234: Cylinder_003
+    400236: Cylinder_004
+    400238: Cube_003
+    400240: Cube_004
+    400242: Cube_006
+    400244: Cylinder_013
+    400246: Cube_005
+    400248: Cube_007
+    400250: Cube_010
+    400252: Cube_011
+    400254: HuLan
     2100000: unnamed
     2100002: Material_001
     2100004: Arrow
@@ -345,6 +375,21 @@ ModelImporter:
     2300218: Food_Storage_003
     2300220: Food_Storage_004
     2300222: Cylinder
+    2300224: ChengDuo_000
+    2300226: ChengDuo_001
+    2300228: Cylinder_001
+    2300230: Cylinder_002
+    2300232: Cylinder_003
+    2300234: Cylinder_004
+    2300236: Cube_003
+    2300238: Cube_004
+    2300240: Cube_006
+    2300242: Cylinder_013
+    2300244: Cube_005
+    2300246: Cube_007
+    2300248: Cube_010
+    2300250: Cube_011
+    2300252: HuLan
     3300000: Bag_Ol_goods_1_001
     3300002: Bag_Ol_goods_1_002
     3300004: Bag_Ol_goods_1_003
@@ -457,6 +502,21 @@ ModelImporter:
     3300218: Food_Storage_003
     3300220: Food_Storage_004
     3300222: Cylinder
+    3300224: ChengDuo_000
+    3300226: ChengDuo_001
+    3300228: Cylinder_001
+    3300230: Cylinder_002
+    3300232: Cylinder_003
+    3300234: Cylinder_004
+    3300236: Cube_003
+    3300238: Cube_004
+    3300240: Cube_006
+    3300242: Cylinder_013
+    3300244: Cube_005
+    3300246: Cube_007
+    3300248: Cube_010
+    3300250: Cube_011
+    3300252: HuLan
     4300000: Bag_Ol_goods_1_001
     4300002: Bag_Ol_goods_1_002
     4300004: Bag_Ol_goods_1_003
@@ -569,6 +629,21 @@ ModelImporter:
     4300218: Food_Storage_003
     4300220: Food_Storage_002
     4300222: Cylinder
+    4300224: Cylinder_004
+    4300226: Cylinder_003
+    4300228: Cylinder_002
+    4300230: Cylinder_001
+    4300232: ChengDuo_000
+    4300234: ChengDuo_001
+    4300236: Cube_006
+    4300238: Cylinder_013
+    4300240: Cube_004
+    4300242: Cube_003
+    4300244: Cube_005
+    4300246: Cube_011
+    4300248: Cube_010
+    4300250: Cube_007
+    4300252: HuLan
     6400000: Bag_Ol_goods_1_001
     6400002: Bag_Ol_goods_1_002
     6400004: Bag_Ol_goods_1_003
@@ -681,6 +756,21 @@ ModelImporter:
     6400218: Food_Storage_003
     6400220: Food_Storage_004
     6400222: Cylinder
+    6400224: ChengDuo_000
+    6400226: ChengDuo_001
+    6400228: Cylinder_001
+    6400230: Cylinder_002
+    6400232: Cylinder_003
+    6400234: Cylinder_004
+    6400236: Cube_003
+    6400238: Cube_004
+    6400240: Cube_006
+    6400242: Cylinder_013
+    6400244: Cube_005
+    6400246: Cube_007
+    6400248: Cube_010
+    6400250: Cube_011
+    6400252: HuLan
     7400000: Default Take
     9500000: //RootNode
     2186277476908879412: ImportLogs
