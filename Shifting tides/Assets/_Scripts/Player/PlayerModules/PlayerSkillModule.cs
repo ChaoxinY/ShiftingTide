@@ -84,6 +84,7 @@ public class PlayerSkillModule : PlayerModule
     private IEnumerator Dash()
     {
         playerAnimatorManager.PlayDashAnimation();
+        playerParticleSystemManager.PlayDashAnimation();
         playerTideComboManager.StartCombo();
         PlayerResourcesManager.Dashes -= 1;
         dashesImages[(int)PlayerResourcesManager.Dashes].SetActive(false);

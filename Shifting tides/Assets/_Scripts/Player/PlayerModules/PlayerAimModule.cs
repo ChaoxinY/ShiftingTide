@@ -59,7 +59,7 @@ public class PlayerAimModule : PlayerModule
         playerParticleSystemManager.StopAllShootingParticleSystems();
         cursor.gameObject.SetActive(false);
         playerCamera.pivotOffset = new Vector3(0, 0.5f, 0);
-        playerCamera.camOffset = new Vector3(0, 0.5f, -3);
+        playerCamera.camOffset = new Vector3(0, 0.5f, -3.5f);
         playerCamera.ResetSmoothOffsets();
         playerCamera.ResetTargetOffsets();
     }

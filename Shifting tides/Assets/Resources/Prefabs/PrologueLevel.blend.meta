@@ -131,6 +131,12 @@ ModelImporter:
     100250: Cube_010
     100252: Cube_011
     100254: HuLan
+    100256: Cube_014
+    100258: Cube_016
+    100260: Cube_017
+    100262: Cube_018
+    100264: Cube_019
+    100266: Cube_020
     400000: Bag_Ol_goods_1_001
     400002: Bag_Ol_goods_1_002
     400004: Bag_Ol_goods_1_003
@@ -259,6 +265,12 @@ ModelImporter:
     400250: Cube_010
     400252: Cube_011
     400254: HuLan
+    400256: Cube_014
+    400258: Cube_016
+    400260: Cube_017
+    400262: Cube_018
+    400264: Cube_019
+    400266: Cube_020
     2100000: unnamed
     2100002: Material_001
     2100004: Arrow
@@ -390,6 +402,12 @@ ModelImporter:
     2300248: Cube_010
     2300250: Cube_011
     2300252: HuLan
+    2300254: Cube_014
+    2300256: Cube_016
+    2300258: Cube_017
+    2300260: Cube_018
+    2300262: Cube_019
+    2300264: Cube_020
     3300000: Bag_Ol_goods_1_001
     3300002: Bag_Ol_goods_1_002
     3300004: Bag_Ol_goods_1_003
@@ -517,6 +535,12 @@ ModelImporter:
     3300248: Cube_010
     3300250: Cube_011
     3300252: HuLan
+    3300254: Cube_014
+    3300256: Cube_016
+    3300258: Cube_017
+    3300260: Cube_018
+    3300262: Cube_019
+    3300264: Cube_020
     4300000: Bag_Ol_goods_1_001
     4300002: Bag_Ol_goods_1_002
     4300004: Bag_Ol_goods_1_003
@@ -644,6 +668,12 @@ ModelImporter:
     4300248: Cube_010
     4300250: Cube_007
     4300252: HuLan
+    4300254: Cube_020
+    4300256: Cube_019
+    4300258: Cube_018
+    4300260: Cube_017
+    4300262: Cube_016
+    4300264: Cube_014
     6400000: Bag_Ol_goods_1_001
     6400002: Bag_Ol_goods_1_002
     6400004: Bag_Ol_goods_1_003
@@ -771,6 +801,12 @@ ModelImporter:
     6400248: Cube_010
     6400250: Cube_011
     6400252: HuLan
+    6400254: Cube_014
+    6400256: Cube_016
+    6400258: Cube_017
+    6400260: Cube_018
+    6400262: Cube_019
+    6400264: Cube_020
     7400000: Default Take
     9500000: //RootNode
     2186277476908879412: ImportLogs
@@ -813,17 +849,17 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
     indexFormat: 0
-    secondaryUVAngleDistortion: 8
-    secondaryUVAreaDistortion: 15.000001
-    secondaryUVHardAngle: 88
-    secondaryUVPackMargin: 4
+    secondaryUVAngleDistortion: 4
+    secondaryUVAreaDistortion: 15
+    secondaryUVHardAngle: 87
+    secondaryUVPackMargin: 10
     useFileScale: 1
     previousCalculatedGlobalScale: 1
     hasPreviousCalculatedGlobalScale: 1

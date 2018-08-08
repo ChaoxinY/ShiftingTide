@@ -28,7 +28,7 @@ public class Item : MonoBehaviour
     {
         if (isOnGround)
         {
-            transform.Rotate(rotationValue * rotationSpeed);
+            mesh.Rotate(rotationValue * rotationSpeed);
             if (transform.position != displayPosition)
                 transform.position = Vector3.Lerp(transform.position, displayPosition, Time.deltaTime);
             if (mesh.localScale != displaySize) {

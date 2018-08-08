@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerParticleSystemManager : MonoBehaviour
-{
+{  
+    public ParticleSystemHandler[] managedSystems;
     //0 :charing vortex ,1 : cone radiator  2: conde shatter 3： cone radiator core 
     //4 : Blinkers 
-    public ParticleSystemHandler[] managedSystems;
     public PlayerArrowParticleSystemManager[] managedPlayerArrowParticle;
     public PlayerArrowParticleSystemManager currentPlayerArrowParticle;
     public PlayerAimModule playerAimModule;
@@ -34,6 +34,7 @@ public class PlayerParticleSystemManager : MonoBehaviour
         }
     }
 
+   
     public void PlayChargingAnimation()
     {
         isPlayingChargingAnimation = true;
@@ -46,7 +47,12 @@ public class PlayerParticleSystemManager : MonoBehaviour
         currentPlayerArrowParticle.PlayChargedUpAnimation();
     }
 
-    public void PlayerFireAnimation()
+    public void PlayDashAnimation() {
+        managedSystems[0].PlayParticleAnimation();
+    }
+
+
+   public void PlayerFireAnimation()
     {
         StartCoroutine(currentPlayerArrowParticle.PlayerFireAnimation());
         isPlayingChargingAnimation = false;

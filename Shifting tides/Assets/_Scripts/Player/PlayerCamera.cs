@@ -93,13 +93,9 @@ public class PlayerCamera : MonoBehaviour
             }
             else if (playerPhysicsModule.maxInput > 0.7f)
             {
-                return targetFOV = 100f;
+                return targetFOV = 120f;
             }
-        }
-        else
-        {
-            targetFOV = 80f;
-        }
+        }       
         return targetFOV;
     }
 
