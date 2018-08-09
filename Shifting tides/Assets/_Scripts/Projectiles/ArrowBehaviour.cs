@@ -16,7 +16,9 @@ public class ArrowBehaviour : Projectile
 
     protected GameObject arrowPlaceholder;
     protected AudioSource onHitSoundSource;
-  
+
+    private PlayerAimModule playerAimModule;
+
     protected override void Initialize()
     {
         base.Initialize();
@@ -25,6 +27,7 @@ public class ArrowBehaviour : Projectile
         rbObject = gameObject.GetComponent<Rigidbody>();
         onHitSoundSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
         playerTideComboManager = GameObject.Find("Player").GetComponent<PlayerTideComboManager>();
+        playerAimModule = GameObject.Find("Player").GetComponentInChildren<PlayerAimModule>();
     }
 
     protected override IEnumerator LocalUpdate()
@@ -47,7 +50,7 @@ public class ArrowBehaviour : Projectile
         {      
             case "Enemy":
                 EnemyHit(other);
-                SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized, other.gameObject);
+                SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized, other.gameObject);               
                 break;
             default:
                 DefaultHit();
@@ -61,7 +64,6 @@ public class ArrowBehaviour : Projectile
     {
         Vector3 hitSpeed = other.relativeVelocity;
         SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[0], hitSpeed);
-
         if (other.collider.name == "CritSpot")
         {
             onHitSoundSource.clip = onHitSounds[2];
@@ -70,8 +72,11 @@ public class ArrowBehaviour : Projectile
             SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[1], hitSpeed);
             SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[3], hitSpeed);
             playerTideComboManager.AddCombo();
+            playerAimModule.critHit = true;
+            playerAimModule.EnemyHit = true;
             return;
         }
+        playerAimModule.EnemyHit = true;
         SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[2], hitSpeed);
 
         //SoundManager

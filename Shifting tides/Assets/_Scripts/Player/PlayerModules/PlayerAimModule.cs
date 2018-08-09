@@ -13,15 +13,15 @@ public class PlayerAimModule : PlayerModule
     private Camera cameraMain;
     private Transform nearestTarget, playerTransForm;
     private Vector3 lastDirection;
-    private bool lockedOn;
+    private bool lockedOn, enemyHit;
 
     public Image cursor;
-    public Sprite lockOnCursor, lockOffCursor;
+    public Sprite lockOnCursor, lockOnCritCursor, lockOffCursor;
     public GameObject bow, bowMesh, shootTarget, currentArrowhead;
     public AudioSource[] bowSoundSources;
     public Transform playerChestBone;
     public Vector3 targetOffset;
-    public bool isAiming;
+    public bool isAiming,critHit;
     [HideInInspector]
     public int arrowChargingState;
 
@@ -48,7 +48,7 @@ public class PlayerAimModule : PlayerModule
     {
         cursor.gameObject.SetActive(true);
         playerCamera.pivotOffset = new Vector3(0, 0.5f, 0);
-        playerCamera.camOffset = new Vector3(1f, 0.5f, -0.9f);
+        playerCamera.camOffset = new Vector3(1f, 0.5f, -1.1f);
         playerCamera.ResetSmoothOffsets();
         playerCamera.ResetTargetOffsets();
     }
@@ -105,64 +105,12 @@ public class PlayerAimModule : PlayerModule
     }
 
     public void LateUpdate()
-    {       
+    {
         cursor.transform.position = Camera.main.WorldToScreenPoint(shootTarget.transform.position);
-        if (isAiming) {
+        if (isAiming)
+        {
             AimRotate();
         }
-    }
-
-    private void ChargeUpArrow()
-    {
-
-        if (!isAiming) isAiming = !isAiming;
-
-        playerAnimatorManager.Aiming = isAiming;
-
-        if (playerParticleSystemManager.isPlayingChargingAnimation == false)
-        {
-            bowSoundSources[1].Play();
-            playerParticleSystemManager.PlayChargingAnimation();
-        }
-
-        if (playerParticleSystemManager.isPlayingChargedUpAnimation == false)
-        {
-            playerParticleSystemManager.PlayChargedUpAnimation();
-        }
-
-    }
-
-    private void ShootArrow()
-    {
-        if (isAiming) isAiming = !isAiming;
-        playerAnimatorManager.Aiming = isAiming;
-        ConsumeCurrentArrowResource();
-        GameObject Arrow = Instantiate(currentArrowhead, bow.transform.position, bow.transform.rotation);
-        Arrow.GetComponent<ArrowBehaviour>().ApplyArrowStageValues(arrowChargingState);
-        Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * Arrow.GetComponent<ArrowBehaviour>().arrowSpeed, ForceMode.Impulse);
-        playerParticleSystemManager.PlayerFireAnimation();
-        bowSoundSources[0].Play();
-        if (!CheckIfCurrentArrowIsAvailable(currentArrowhead.name)) {
-            playerSkillModule.SwitchArrowHead();
-        }
-    }
-
-    private void ConsumeCurrentArrowResource()
-    {
-        switch (currentArrowhead.name)
-        {
-            case "DefaultArrow":
-                break;
-            case "TimeZoneArrow":
-                PlayerResourcesManager.SourceReserve -= 10;
-                PlayerResourcesManager.Arrows -= 1;
-                break;
-            case "CloudArrow":
-                PlayerResourcesManager.SourceFusedArrows -= 1;
-                PlayerResourcesManager.Arrows -= 1;
-                break;
-        }
-
     }
 
     public bool CheckIfCurrentArrowIsAvailable(string currentArrowheadName)
@@ -196,7 +144,7 @@ public class PlayerAimModule : PlayerModule
         // Always rotates the player according to the camera horizontal rotation in aim mode.
         Quaternion targetRotation = Quaternion.Euler(0, playerCamera.angleH, 0);
         Quaternion ChestRotation = playerChestBone.rotation;
-        ChestRotation *= Quaternion.Euler(0, -playerCamera.angleV, -playerCamera.angleV/3);
+        ChestRotation *= Quaternion.Euler(0, -playerCamera.angleV, -playerCamera.angleV / 3);
 
         float minSpeed = Quaternion.Angle(playerTransForm.rotation, targetRotation) * 0.5f;
 
@@ -204,7 +152,75 @@ public class PlayerAimModule : PlayerModule
         lastDirection = forward;
         playerTransForm.rotation = Quaternion.Lerp(playerTransForm.rotation, targetRotation, minSpeed * Time.deltaTime);
         playerChestBone.rotation = Quaternion.Lerp(playerChestBone.rotation, ChestRotation, 1);
-     }
+    }
+    private void ChargeUpArrow()
+    {
+
+        if (!isAiming) isAiming = !isAiming;
+
+        playerAnimatorManager.Aiming = isAiming;
+
+        if (playerParticleSystemManager.isPlayingChargingAnimation == false)
+        {
+            bowSoundSources[1].Play();
+            playerParticleSystemManager.PlayChargingAnimation();
+        }
+
+        if (playerParticleSystemManager.isPlayingChargedUpAnimation == false)
+        {
+            playerParticleSystemManager.PlayChargedUpAnimation();
+        }
+
+    }
+
+    public IEnumerator OnHitCursorChange()
+    {
+        if (critHit)
+        {
+            cursor.sprite = lockOnCritCursor;
+            critHit = false;
+        }
+        else {
+            cursor.sprite = lockOnCursor;
+        }
+        yield return new WaitForSeconds(0.2f);
+        cursor.sprite = lockOffCursor;
+    }
+
+    private void ShootArrow()
+    {
+        if (isAiming) isAiming = !isAiming;
+        playerAnimatorManager.Aiming = isAiming;
+        ConsumeCurrentArrowResource();
+        GameObject Arrow = Instantiate(currentArrowhead, bow.transform.position, bow.transform.rotation);
+        Arrow.GetComponent<ArrowBehaviour>().ApplyArrowStageValues(arrowChargingState);
+        Arrow.GetComponent<Rigidbody>().AddForce(Arrow.transform.forward * Arrow.GetComponent<ArrowBehaviour>().arrowSpeed, ForceMode.Impulse);
+        playerParticleSystemManager.PlayerFireAnimation();
+        bowSoundSources[0].Play();
+        if (!CheckIfCurrentArrowIsAvailable(currentArrowhead.name))
+        {
+            playerSkillModule.SwitchArrowHead();
+        }
+    }
+
+    private void ConsumeCurrentArrowResource()
+    {
+        switch (currentArrowhead.name)
+        {
+            case "DefaultArrow":
+                break;
+            case "TimeZoneArrow":
+                PlayerResourcesManager.SourceReserve -= 10;
+                PlayerResourcesManager.Arrows -= 1;
+                break;
+            case "CloudArrow":
+                PlayerResourcesManager.SourceFusedArrows -= 1;
+                PlayerResourcesManager.Arrows -= 1;
+                break;
+        }
+
+    }
+
 
     private RaycastHit[] LookForTarget()
     {
@@ -277,6 +293,21 @@ public class PlayerAimModule : PlayerModule
         get { return lastDirection; }
         set { lastDirection = value; }
     }
-
+    public bool EnemyHit
+    {
+        get
+        {
+            return enemyHit;
+        }
+        set
+        {
+            enemyHit = value;
+            if (enemyHit)
+            {
+                StartCoroutine(OnHitCursorChange());
+                enemyHit = false;
+            }
+        }
+    }
 
 }

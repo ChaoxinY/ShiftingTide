@@ -16,7 +16,7 @@ public class Spawner : TriggerBoundMechanism
     protected override IEnumerator LocalUpdate()
     {
         yield return StartCoroutine(base.LocalUpdate());
-        if (Triggered)
+        if (Triggered == true)
         {
             if (!repeatTriggerFunction)
             {
@@ -38,8 +38,9 @@ public class Spawner : TriggerBoundMechanism
                 }
                 else if (isReuseable)
                 {
-                    Triggered = false;
+                    Debug.Log("Ended");                
                     timesActivated = 0;
+                    Triggered = false;
                 }
             }
         }
