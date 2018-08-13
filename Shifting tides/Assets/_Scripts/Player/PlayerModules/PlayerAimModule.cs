@@ -189,8 +189,6 @@ public class PlayerAimModule : PlayerModule
 
     private void ShootArrow()
     {
-        if (isAiming) isAiming = !isAiming;
-        playerAnimatorManager.Aiming = isAiming;
         ConsumeCurrentArrowResource();
         GameObject Arrow = Instantiate(currentArrowhead, bow.transform.position, bow.transform.rotation);
         Arrow.GetComponent<ArrowBehaviour>().ApplyArrowStageValues(arrowChargingState);
@@ -201,6 +199,9 @@ public class PlayerAimModule : PlayerModule
         {
             playerSkillModule.SwitchArrowHead();
         }
+        if (isAiming) isAiming = !isAiming;
+        playerAnimatorManager.Aiming = isAiming;
+
     }
 
     private void ConsumeCurrentArrowResource()

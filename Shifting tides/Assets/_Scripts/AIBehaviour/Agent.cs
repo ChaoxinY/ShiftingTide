@@ -11,7 +11,7 @@ public class Agent : TimeBoundGameObject
     protected Queue<Vector3> patrolRoute = new Queue<Vector3>();
 
     protected Material originMaterial;
-    protected Vector3 currentTarget, destination,nearestWaypoint, lastPatrolPointVisted;
+    protected Vector3 currentTarget, destination, nearestWaypoint, lastPatrolPointVisted;
     protected string overwritingBehaviour;
     protected string standardBehaviour;
     protected bool StandardBehaviourFinished = false;
@@ -21,21 +21,25 @@ public class Agent : TimeBoundGameObject
     public Transform[] patrolPoints;
     public float[] desire, factorInfluencePoint = { 0, 0, 0, 0, 0, 0 };
     public float updateSpeed;
-    public bool predictable, energetic, perferRandomBehaviours, perferPatternedBehaviours, customized;    
-  
+    public bool predictable, energetic, perferRandomBehaviours, perferPatternedBehaviours, customized;
+
     protected override IEnumerator LocalUpdate()
     {
         yield return StartCoroutine(base.LocalUpdate());
-        Debug.Log("UpdateRunning");
-        Debug.Log("Is resting = " + isResting);
-        Debug.Log("StandardBehaviourFinished = " + StandardBehaviourFinished);
-        Debug.Log(standardBehaviour);
-
+        //Debug.Log("UpdateRunning");
+        //Debug.Log("Is resting = " + isResting);
+        //Debug.Log("StandardBehaviourFinished = " + StandardBehaviourFinished);
+        //Debug.Log(standardBehaviour);
+        if (updateSpeed != 0)
+        {
+            yield return new WaitForSeconds(updateSpeed);
+        }
         if (isResting)
         {
             desire[2] = Mathf.Lerp(desire[2], 40, ExhaustionInfluencePoint + factorInfluencePoint[4]);
             DetermineRestingBehaviour();
-            if (Vector3.Distance(transform.position, nearestWaypoint) > 5) {
+            if (Vector3.Distance(transform.position, nearestWaypoint) > 5)
+            {
                 isResting = false;
                 nearestWaypoint = Vector3.zero;
                 StandardBehaviourFinished = true;
@@ -46,12 +50,11 @@ public class Agent : TimeBoundGameObject
             yield return StartCoroutine(overwritingBehaviour);
         }
         if (StandardBehaviourFinished)
-        {           
+        {
             StandardBehaviourFinished = false;
             yield return StartCoroutine(DetermineNextAgentBehaviour());
             StartCoroutine(standardBehaviour);
         }
-      //  yield return new WaitForSeconds(updateSpeed);
 
         yield break;
     }
@@ -69,7 +72,8 @@ public class Agent : TimeBoundGameObject
 
     protected void InitializeWaypoints()
     {
-        if (wayPoints.Count == 0 && patrolPoints.Length == 0) {
+        if (wayPoints.Count == 0 && patrolPoints.Length == 0)
+        {
             LookForWayPointAssigner();
         }
 
@@ -85,7 +89,8 @@ public class Agent : TimeBoundGameObject
     }
 
 
-    protected virtual void AddBehaviours() {
+    protected virtual void AddBehaviours()
+    {
         spontaneousBehaviours.Add("Roaming");
         spontaneousBehaviours.Add("ChangePatrolRoute");
         patternedBehaviours.Add("Patroling");
@@ -118,7 +123,7 @@ public class Agent : TimeBoundGameObject
         int[] NumbersCorrect = { 0, 0 };
 
         for (int i = 0; i < 20; i++)
-            for (int j = 0; j < desire.Length-1; j++)
+            for (int j = 0; j < desire.Length - 1; j++)
             {
                 int agentGuessedNumber = Random.Range(0, 99);
                 if (agentGuessedNumber < desire[j]) NumbersCorrect[j]++;
@@ -149,20 +154,19 @@ public class Agent : TimeBoundGameObject
         yield break;
     }
 
-    protected IEnumerator FinishStandandrMovementBehaviour(float baseRestTime,float maxRestTime)
+    protected IEnumerator FinishStandandrMovementBehaviour(float baseRestTime, float maxRestTime)
     {
-        isResting = true;   
+        isResting = true;
         yield return new WaitForSeconds(Random.Range(baseRestTime, maxRestTime * 2));
         isResting = false;
         StandardBehaviourFinished = true;
-        Debug.Log("Finished");
         yield break;
     }
 
     protected void EnterSpontaneousState()
-    {           
+    {
         standardBehaviour = spontaneousBehaviours[Random.Range(0, spontaneousBehaviours.Count)];
-        Debug.Log(standardBehaviour);
+        //Debug.Log(standardBehaviour);
         desire[0] = Mathf.Lerp(desire[0], 0, boredomInfluencePoint + factorInfluencePoint[0]);
         desire[1] = Mathf.Lerp(desire[1], 100, conscientiousnessInfluencePoint + factorInfluencePoint[2]);
     }
@@ -170,7 +174,7 @@ public class Agent : TimeBoundGameObject
     protected void EnterPredictableState()
     {
         standardBehaviour = patternedBehaviours[Random.Range(0, patternedBehaviours.Count)];
-        Debug.Log(standardBehaviour);
+        //Debug.Log(standardBehaviour);
         desire[0] = Mathf.Lerp(desire[0], 100, boredomInfluencePoint + factorInfluencePoint[1]);
         desire[1] = Mathf.Lerp(desire[1], 0, conscientiousnessInfluencePoint + factorInfluencePoint[3]);
     }
@@ -178,7 +182,7 @@ public class Agent : TimeBoundGameObject
     protected void EnterRestingState()
     {
         overwritingBehaviour = restingBehaviours[Random.Range(0, restingBehaviours.Count)];
-        Debug.Log(overwritingBehaviour);
+        //Debug.Log(overwritingBehaviour);
         desire[2] = Mathf.Lerp(desire[2], 0, RestInfluencePoint + factorInfluencePoint[5]);
     }
 
@@ -208,7 +212,7 @@ public class Agent : TimeBoundGameObject
     {
         meshRenderer.material = originMaterial;
     }
-  
+
     private void DetermineRestingBehaviour()
     {
         int NumbersCorrect = 0;

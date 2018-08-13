@@ -6,71 +6,79 @@ public class HostileTerrestrialSeeker : Terrestrial
 {
     private GameObject objectToChase;
     private float distanceToPray;
+    private bool InCombat;
 
     public float visionRange, sightRange, chaseRange, attackRange;
 
-    //protected override void Initialize()
-    //{
-    //    base.Initialize();
- 
-    //}
-
-    IEnumerator Searching()
+    protected override IEnumerator LocalUpdate()
     {
+        yield return base.LocalUpdate();
+        if (!InCombat)
+        {
+            StartCoroutine(Searching());
+        }
+    }
+
+    protected virtual IEnumerator Searching()
+    {  
         RaycastHit hit;
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
 
-        if (Physics.SphereCast(transform.position, visionRange, fwd, out hit, sightRange) || Physics.SphereCast(transform.position, 3.5f, fwd, out hit, 0.1f))
+        if (Physics.SphereCast(transform.position, visionRange, fwd, out hit, sightRange))
         {
             if (hit.collider.gameObject.tag == "Player")
             {
                 UpdatePrayDistance(hit.collider.gameObject);
                 objectToChase = hit.collider.gameObject;
+                SwitchToCombatMode();
                 yield break;
             }
         }
     }
 
-    IEnumerator Hunting(GameObject hunted)
+    protected virtual IEnumerator Hunting()
     {
-        UpdatePrayDistance(hunted);
-        Chase(hunted);
-        MoveTowardsTarget(hunted.transform.position);
+        GameObject player = GameObject.Find("Player");
+        UpdatePrayDistance(player);
+        Chase(player);
+        MoveTowardsTarget(currentTarget);
         if (distanceToPray <= attackRange)
         {
-
-            EngageClassBehavior();
-            //yield return new WaitForSeconds(0.5f);
-            UpdatePrayDistance(hunted);
-            // finishedBehaviour = false;
-            yield break;
+            yield return StartCoroutine(EngageClassBehavior());
         }
-        if (distanceToPray >= chaseRange)
+        if (distanceToPray > chaseRange)
         {
-
-            ResetVelocity();
-            yield break;
+            overwritingBehaviour = null;
+            InCombat = false;
         }
+        yield break;
     }
-    private void UpdatePrayDistance(GameObject hunted)
-    {
-        distanceToPray = Vector3.Distance(gameObject.transform.position, hunted.transform.position);
-    }
+
     protected void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Arrow")
         {
-            //objectToChase = GameObject.Find("Player");
-            GotHit(collision.gameObject);
+            SwitchToCombatMode();
         }
     }
-    protected void GotHit(GameObject arrow)
-    {
-     
-    }
-    protected virtual void EngageClassBehavior()
-    {
 
+    protected virtual void SwitchToCombatMode() {
+        Debug.Log("Alart");
+        overwritingBehaviour = "Hunting";
+        InCombat = true;
     }
 
+    protected virtual IEnumerator EngageClassBehavior()
+    {
+        Debug.Log("I hit you");
+        agent.speed = 0;
+        yield return new WaitForSeconds(0.5f);
+        agent.speed = standardSpeed;
+        yield break;
+    }
+
+    private void UpdatePrayDistance(GameObject hunted)
+    {
+        distanceToPray = Vector3.Distance(gameObject.transform.position, hunted.transform.position);
+    }
 }

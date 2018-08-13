@@ -38,7 +38,6 @@ public class Spawner : TriggerBoundMechanism
                 }
                 else if (isReuseable)
                 {
-                    Debug.Log("Ended");                
                     timesActivated = 0;
                     Triggered = false;
                 }

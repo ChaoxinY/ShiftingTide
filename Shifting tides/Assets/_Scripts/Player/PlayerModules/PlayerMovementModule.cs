@@ -101,12 +101,8 @@ public class PlayerMovementModule : PlayerModule
        playerPhysicsModule.maxInput = Mathf.Lerp(playerPhysicsModule.maxInput, 0.7f, Time.deltaTime * 1.2f);
     }
 
-
-
     private bool IsMoving()
     {
         return (playerPhysicsModule.horizontalInput != 0) || (playerPhysicsModule.verticalInput != 0);
     }
-
- 
 }

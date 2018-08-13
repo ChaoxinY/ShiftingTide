@@ -136,11 +136,14 @@ public class PlayerCamera : MonoBehaviour
         // If a raycast from the check position to the player hits something...
         if (Physics.Raycast(checkPos, player.position + (Vector3.up * deltaPlayerHeight) - checkPos, out hit, relCameraPosMag))
         {
-            // ... if it is not the player...
-            if (hit.transform != player && !hit.transform.GetComponent<Collider>().isTrigger)
+            if (hit.transform.gameObject.GetComponent<Collider>())
             {
-                // This position isn't appropriate.
-                return false;
+                // ... if it is not the player...
+                if (hit.transform != player && !hit.transform.GetComponent<Collider>().isTrigger)
+                {
+                    // This position isn't appropriate.
+                    return false;
+                }
             }
         }
         // If we haven't hit anything or we've hit the player, this is an appropriate position.
