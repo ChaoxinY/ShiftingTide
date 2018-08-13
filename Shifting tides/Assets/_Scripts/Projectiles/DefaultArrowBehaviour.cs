@@ -12,11 +12,11 @@ public class DefaultArrowBehaviour : ArrowBehaviour
                 baseDamage = 0;
                 break;
             case 1:
-               arrowSpeed = 25f;
+               arrowSpeed = 35f;
                baseDamage += 10;
                 break;
             case 2:
-                arrowSpeed = 35f;
+                arrowSpeed = 45f;
                 baseDamage += 15;
                 break;
             case 3:

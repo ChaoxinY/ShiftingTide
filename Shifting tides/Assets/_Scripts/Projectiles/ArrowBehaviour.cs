@@ -63,7 +63,6 @@ public class ArrowBehaviour : Projectile
     protected virtual void EnemyHit(Collision other)
     {
         Vector3 hitSpeed = other.relativeVelocity;
-        SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[0], hitSpeed);
         if (other.collider.name == "CritSpot")
         {
             onHitSoundSource.clip = onHitSounds[2];
@@ -77,6 +76,7 @@ public class ArrowBehaviour : Projectile
             return;
         }
         playerAimModule.EnemyHit = true;
+        SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[0], hitSpeed);
         SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[2], hitSpeed);
 
         //SoundManager
