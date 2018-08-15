@@ -58,9 +58,17 @@ public class HostileTerrestrialSeeker : Terrestrial
     {
         if (collision.gameObject.tag == "Arrow")
         {
-            SwitchToCombatMode();
+            SwitchToCombatMode();          
         }
     }
+
+    protected virtual IEnumerator OnHitFeedback() {
+        agent.speed = agent.speed / 5;
+        yield return new WaitForSeconds(0.8f);
+        agent.speed = standardSpeed;
+        yield break;
+    }
+
 
     protected virtual void SwitchToCombatMode() {
         Debug.Log("Alart");
@@ -71,9 +79,15 @@ public class HostileTerrestrialSeeker : Terrestrial
     protected virtual IEnumerator EngageClassBehavior()
     {
         Debug.Log("I hit you");
-        agent.speed = 0;
-        yield return new WaitForSeconds(0.5f);
-        agent.speed = standardSpeed;
+        agent.updateRotation = false;
+        agent.updatePosition = false;
+        agentAnimatorManager.PlayAttackAnimation();
+        yield return new WaitUntil(()=>!agentAnimatorManager.GetAnimatorStateInfo(0).IsName("Attacking"));
+        agent.nextPosition = transform.position;
+        //agent.enabled = true;
+        agent.updateRotation = true;
+        agent.updatePosition = true;
+
         yield break;
     }
 

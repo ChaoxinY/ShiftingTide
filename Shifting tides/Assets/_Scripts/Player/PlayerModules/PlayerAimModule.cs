@@ -21,7 +21,7 @@ public class PlayerAimModule : PlayerModule
     public AudioSource[] bowSoundSources;
     public Transform playerChestBone;
     public Vector3 targetOffset;
-    public bool isAiming,critHit;
+    public bool isAiming, critHit;
     [HideInInspector]
     public int arrowChargingState;
 
@@ -67,14 +67,19 @@ public class PlayerAimModule : PlayerModule
     public override void ModuleUpdate()
     {
         bow.transform.LookAt(shootTarget.transform);
+
         if (Input.GetMouseButton(1) && CheckIfCurrentArrowIsAvailable(currentArrowhead.name))
         {
             ChargeUpArrow();
-        }
 
-        if (Input.GetMouseButtonUp(1) && isAiming)
+        }
+        if (Input.GetMouseButtonUp(1) && isAiming && arrowChargingState != 0)
         {
             ShootArrow();
+        }
+
+        if (Input.GetMouseButtonUp(1) && arrowChargingState == 0) {
+            CancelArrow();
         }
 
         if (Input.GetMouseButtonDown(2))
@@ -103,6 +108,7 @@ public class PlayerAimModule : PlayerModule
             + cameraMain.transform.up * targetOffset.y;
         }
     }
+
 
     public void LateUpdate()
     {
@@ -180,11 +186,19 @@ public class PlayerAimModule : PlayerModule
             cursor.sprite = lockOnCritCursor;
             critHit = false;
         }
-        else {
+        else
+        {
             cursor.sprite = lockOnCursor;
         }
         yield return new WaitForSeconds(0.2f);
         cursor.sprite = lockOffCursor;
+    }
+
+    private void CancelArrow() {
+        if (isAiming) isAiming = !isAiming;
+        playerAnimatorManager.Aiming = isAiming;
+        playerParticleSystemManager.StopAllShootingParticleSystems();
+
     }
 
     private void ShootArrow()

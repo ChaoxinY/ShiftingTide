@@ -66,7 +66,7 @@ public class PlayerBlinkersManager : ParticleSystemHandler
                 goto skipToStage2;
         }
 
-        yield return new WaitForSeconds(0.5f / (1 + blinkerCooldownReduction));
+        yield return new WaitForSeconds(0.7f / (1 + blinkerCooldownReduction));
         blinkers[0].PlayParticleAnimation();
         activedBlinkers.Add(blinkers[0]);
         playerAimModule.arrowChargingState = 1;

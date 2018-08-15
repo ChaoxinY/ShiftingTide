@@ -7,13 +7,15 @@ using UnityEngine.UI;
 public class Terrestrial : Agent 
 {
     public NavMeshAgent agent;
-
     public float standardSpeed, currentSpeed;
+
+    public AgentAnimatorManager agentAnimatorManager;
 
     protected override void Initialize()
     {
         base.Initialize();
         agent = gameObject.GetComponent<NavMeshAgent>();
+        //agentAnimatorManager = GetComponent<AgentAnimatorManager>();
         agent.speed = standardSpeed;
     }
 
@@ -37,29 +39,35 @@ public class Terrestrial : Agent
 
     protected override IEnumerator Patroling()
     {
+        agentAnimatorManager.Moving = true;
         lastPatrolPointVisted = patrolRoute.Peek();
         MoveTowardsTarget(patrolRoute.Dequeue());
         patrolRoute.Enqueue(lastPatrolPointVisted);
         nearestWaypoint = lastPatrolPointVisted;
-        yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 2f));
+        yield return new WaitUntil(() => agent.remainingDistance == 0);
         Debug.Log("Arrived patrol");
+        agentAnimatorManager.Moving = false;
         yield return StartCoroutine(FinishStandandrMovementBehaviour(10,20));
     }
     
     protected override IEnumerator Roaming()
     {
+        agentAnimatorManager.Moving = true;
         Vector3 currentTarget = wayPoints[Random.Range(0, wayPoints.Count)].position;
         nearestWaypoint = currentTarget;
         MoveTowardsTarget(currentTarget);
-        yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 2f));
+        yield return new WaitUntil(() => agent.remainingDistance == 0);
+        agentAnimatorManager.Moving = false;
         Debug.Log("Arrived");
         yield return StartCoroutine(FinishStandandrMovementBehaviour(10,20));
     }
     private IEnumerator Circling()
     {
         Debug.Log("Circling");
+        agentAnimatorManager.Moving = true;
         MoveTowardsTarget(transform.position);      
-        yield return new WaitUntil(() => Arrived(gameObject.transform.position, destination, 0.5f));
+        yield return new WaitUntil(() => agent.remainingDistance == 0);
+        agentAnimatorManager.Moving = false;
         overwritingBehaviour = null;
         yield break;
     }

@@ -418,7 +418,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a8fcb412c16448a4d865cf2e7201d426, type: 3}
   baseDamage: 0
   arrowSpeed: 0
-  penetrationStrength: 0.4
+  penetrationStrength: 0.01
 --- !u!198 &198439218312682206
 ParticleSystem:
   m_ObjectHideFlags: 1
