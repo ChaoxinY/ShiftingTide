@@ -14,6 +14,7 @@ public class PlayerAimModule : PlayerModule
     private Transform nearestTarget, playerTransForm;
     private Vector3 lastDirection;
     private bool lockedOn, enemyHit;
+    private float standardMouseSensitivity;
 
     public Image cursor;
     public Sprite lockOnCursor, lockOnCritCursor, lockOffCursor;
@@ -22,6 +23,7 @@ public class PlayerAimModule : PlayerModule
     public Transform playerChestBone;
     public Vector3 targetOffset;
     public bool isAiming, critHit;
+    public float aimSensitivity;
     [HideInInspector]
     public int arrowChargingState;
 
@@ -49,6 +51,8 @@ public class PlayerAimModule : PlayerModule
         cursor.gameObject.SetActive(true);
         playerCamera.pivotOffset = new Vector3(0, 0.5f, 0);
         playerCamera.camOffset = new Vector3(1f, 0.5f, -1.1f);
+        standardMouseSensitivity = playerCamera.mouseSensitivity;
+        playerCamera.mouseSensitivity = aimSensitivity;
         playerCamera.ResetSmoothOffsets();
         playerCamera.ResetTargetOffsets();
     }
@@ -56,6 +60,7 @@ public class PlayerAimModule : PlayerModule
     public override void ModuleRemove()
     {
         isAiming = false;
+        playerCamera.mouseSensitivity = standardMouseSensitivity;
         playerParticleSystemManager.StopAllShootingParticleSystems();
         cursor.gameObject.SetActive(false);
         playerCamera.pivotOffset = new Vector3(0, 0.5f, 0);

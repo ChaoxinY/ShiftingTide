@@ -7,6 +7,7 @@ public class AgentAnimatorManager : MonoBehaviour
 
     private Animator agentAnimator;
     private bool moving;
+    private float animatorSpeed;
 
     private void Start()
     {
@@ -32,6 +33,15 @@ public class AgentAnimatorManager : MonoBehaviour
             moving = value;
             agentAnimator.SetBool("Moving", moving);
         }
+    }
 
+    public float AnimatorSpeed
+    {
+        get { return animatorSpeed; }
+        set
+        {
+            animatorSpeed = value;
+            agentAnimator.speed = animatorSpeed;
+        }
     }
 }

@@ -12,10 +12,8 @@ public class Agent : TimeBoundGameObject
 
     protected Material originMaterial;
     protected Vector3 currentTarget, destination, nearestWaypoint, lastPatrolPointVisted;
-    protected string overwritingBehaviour;
-    protected string standardBehaviour;
-    protected bool StandardBehaviourFinished = false;
-    protected bool isResting = false;
+    protected string overwritingBehaviour, standardBehaviour;
+    protected bool StandardBehaviourFinished, isResting, overwrittingBehaviourFinished = true;
 
     public List<Transform> wayPoints;
     public Transform[] patrolPoints;
@@ -30,10 +28,10 @@ public class Agent : TimeBoundGameObject
         //Debug.Log("Is resting = " + isResting);
         //Debug.Log("StandardBehaviourFinished = " + StandardBehaviourFinished);
         //Debug.Log(standardBehaviour);
-        if (updateSpeed != 0)
-        {
-            yield return new WaitForSeconds(updateSpeed);
-        }
+        //if (updateSpeed != 0)
+        //{
+        //    yield return new WaitForSeconds(updateSpeed);
+        //}
         if (isResting)
         {
             desire[2] = Mathf.Lerp(desire[2], 40, ExhaustionInfluencePoint + factorInfluencePoint[4]);
@@ -45,8 +43,9 @@ public class Agent : TimeBoundGameObject
                 StandardBehaviourFinished = true;
             }
         }
-        if (overwritingBehaviour != null)
+        if (overwritingBehaviour != null && overwrittingBehaviourFinished== true)
         {
+            Debug.Log("Overwritte");
             yield return StartCoroutine(overwritingBehaviour);
         }
         if (StandardBehaviourFinished)
@@ -113,7 +112,7 @@ public class Agent : TimeBoundGameObject
         }
         patrolRoute.Enqueue(availablePatrolPoints[Random.Range(0, availablePatrolPoints.Count)]);
         patrolRoute.Enqueue(lastPatrolPointVisted);
-        yield return StartCoroutine(FinishStandandrMovementBehaviour(0, 1));
+        yield return StartCoroutine(FinishStandardMovementBehaviour(0, 1));
         yield break;
     }
 
@@ -154,7 +153,7 @@ public class Agent : TimeBoundGameObject
         yield break;
     }
 
-    protected IEnumerator FinishStandandrMovementBehaviour(float baseRestTime, float maxRestTime)
+    protected IEnumerator FinishStandardMovementBehaviour(float baseRestTime, float maxRestTime)
     {
         isResting = true;
         yield return new WaitForSeconds(Random.Range(baseRestTime, maxRestTime * 2));
@@ -196,7 +195,7 @@ public class Agent : TimeBoundGameObject
         }
         return Arrived;
     }
-    protected void Chase(GameObject hunted)
+    protected void SetCurrentTarget(GameObject hunted)
     {
         //Debug.Log("Chase");
         currentTarget = hunted.transform.position;

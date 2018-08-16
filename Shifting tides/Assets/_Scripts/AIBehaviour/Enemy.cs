@@ -81,7 +81,7 @@ public class Enemy : Agent
         while (distanceToPlayer < chaseRange)
         {
            // updatePlayerDistance(hunted);
-            Chase(hunted);
+            SetCurrentTarget(hunted);
             yield return new WaitForSeconds(0.5f);
 
             if (distanceToPlayer < attackRange)

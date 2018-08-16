@@ -32,8 +32,7 @@ public class Volant : Agent
             transform.position = Vector3.MoveTowards(transform.position, currentTarget, Time.deltaTime * movementSpeed);
             Vector3 targetDir = currentTarget - transform.position;
             Vector3 newVector = Vector3.RotateTowards(transform.forward, targetDir, Time.deltaTime * 5f, 0);
-            transform.rotation = Quaternion.LookRotation(newVector);
-            
+            transform.rotation = Quaternion.LookRotation(newVector);           
         }
     }
     protected override IEnumerator PauseOnTimeStop()
@@ -67,7 +66,7 @@ public class Volant : Agent
     }
     protected IEnumerator Dashing()
     {
-        StartCoroutine(FinishStandandrMovementBehaviour(0, 1));
+        StartCoroutine(FinishStandardMovementBehaviour(0, 1));
         yield break;
     }
     protected override IEnumerator Patroling()
@@ -94,14 +93,14 @@ public class Volant : Agent
             path.Enqueue(point);
         }
         yield return StartCoroutine(Pathing());
-        StartCoroutine(FinishStandandrMovementBehaviour(0, 1));
+        StartCoroutine(FinishStandardMovementBehaviour(0, 1));
         yield break;
     }
     protected override IEnumerator Roaming()
     {
         path.Enqueue(wayPoints[UnityEngine.Random.Range(0, wayPoints.Count)].position);
         yield return StartCoroutine(Pathing());
-        StartCoroutine(FinishStandandrMovementBehaviour(0, 1));
+        StartCoroutine(FinishStandardMovementBehaviour(0, 1));
         yield break;
     }
 

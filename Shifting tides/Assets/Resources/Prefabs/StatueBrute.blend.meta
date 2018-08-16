@@ -149,11 +149,17 @@ ModelImporter:
     7400040: StatueBruteIdle
     7400042: StatueBruteThrust
     7400044: StatueBruteMoving
+    7400046: StatueBruteThrust (1)
     9500000: //RootNode
     13700000: Base
     13700002: Cylinder
     2186277476908879412: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: unnamed
+    second: {fileID: 2100000, guid: df0ea6f3ff0c9134c928640111018eb4, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -182,10 +188,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Default Take
-      takeName: Default Take
-      firstFrame: 0
-      lastFrame: 23
+      name: StatueBruteThrust (1)
+      takeName: StatueBruteThrust
+      firstFrame: -1
+      lastFrame: 108
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -222,9 +228,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -269,7 +275,7 @@ ModelImporter:
       name: StatueBruteThrust
       takeName: StatueBruteThrust
       firstFrame: 0
-      lastFrame: 79
+      lastFrame: 108.96
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -279,10 +285,10 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 0
+      keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0

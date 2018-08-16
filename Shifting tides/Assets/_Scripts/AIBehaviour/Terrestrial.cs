@@ -47,7 +47,7 @@ public class Terrestrial : Agent
         yield return new WaitUntil(() => agent.remainingDistance == 0);
         Debug.Log("Arrived patrol");
         agentAnimatorManager.Moving = false;
-        yield return StartCoroutine(FinishStandandrMovementBehaviour(10,20));
+        yield return StartCoroutine(FinishStandardMovementBehaviour(10,20));
     }
     
     protected override IEnumerator Roaming()
@@ -59,15 +59,17 @@ public class Terrestrial : Agent
         yield return new WaitUntil(() => agent.remainingDistance == 0);
         agentAnimatorManager.Moving = false;
         Debug.Log("Arrived");
-        yield return StartCoroutine(FinishStandandrMovementBehaviour(10,20));
+        yield return StartCoroutine(FinishStandardMovementBehaviour(10,20));
     }
     private IEnumerator Circling()
     {
         Debug.Log("Circling");
         agentAnimatorManager.Moving = true;
+        overwrittingBehaviourFinished = true;
         MoveTowardsTarget(transform.position);      
         yield return new WaitUntil(() => agent.remainingDistance == 0);
         agentAnimatorManager.Moving = false;
+        overwrittingBehaviourFinished = false;
         overwritingBehaviour = null;
         yield break;
     }
@@ -82,11 +84,13 @@ public class Terrestrial : Agent
     {
         currentSpeed = agent.speed;
         agent.speed = 0;
+        agentAnimatorManager.AnimatorSpeed = 0;
     }
 
     protected void ResumeVelocity()
     {
         agent.speed = currentSpeed;
+        agentAnimatorManager.AnimatorSpeed = 1;
     }
 
     protected void ResetVelocity()
@@ -94,4 +98,5 @@ public class Terrestrial : Agent
         agent.speed = standardSpeed;
     }
 
+  
 }
