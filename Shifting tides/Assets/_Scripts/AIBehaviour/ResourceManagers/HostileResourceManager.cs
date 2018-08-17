@@ -61,6 +61,7 @@ public class HostileResourceManager : MonoBehaviour
             CurrentArmor -= baseDamage * 0.75f;
             return;
         }
+        Debug.Log(baseDamage);
         CurrentHealth -= baseDamage * 2;
         StartCoroutine(OnHitDrops(minOnHitDrop*2, maxOnHitDrop*2));
       //  StartCoroutine(OnHitPhysicsFeedBack());

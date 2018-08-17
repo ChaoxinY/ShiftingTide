@@ -13,7 +13,7 @@ public class Agent : TimeBoundGameObject
     protected Material originMaterial;
     protected Vector3 currentTarget, destination, nearestWaypoint, lastPatrolPointVisted;
     protected string overwritingBehaviour, standardBehaviour;
-    protected bool StandardBehaviourFinished, isResting, overwrittingBehaviourFinished = true;
+    protected bool StandardBehaviourFinished, isResting, overwrittingBehaviourFinished = false;
 
     public List<Transform> wayPoints;
     public Transform[] patrolPoints;
@@ -45,7 +45,7 @@ public class Agent : TimeBoundGameObject
         }
         if (overwritingBehaviour != null && overwrittingBehaviourFinished== true)
         {
-            Debug.Log("Overwritte");
+            Debug.Log(overwritingBehaviour);
             yield return StartCoroutine(overwritingBehaviour);
         }
         if (StandardBehaviourFinished)

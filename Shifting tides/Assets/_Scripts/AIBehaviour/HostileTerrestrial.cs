@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,10 +18,25 @@ public class HostileTerrestrial : Terrestrial
         {
             StartCoroutine(Searching());
         }
+        else {
+            yield return new WaitForSeconds(0.3f);
+            StartCoroutine(CheckIfTargetIsStillInRange());
+        }
+    }
+
+    private IEnumerator CheckIfTargetIsStillInRange()
+    {
+        if (distanceToPray > chaseRange)
+        {
+            overwritingBehaviour = null;
+            InCombat = false;
+        }
+        yield break;
     }
 
     protected virtual IEnumerator Searching()
     {
+        Debug.Log("Searching");
         RaycastHit hit;
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
 
@@ -38,22 +54,17 @@ public class HostileTerrestrial : Terrestrial
 
     protected virtual IEnumerator Hunting()
     {
+        Debug.Log("Hunt");
         overwrittingBehaviourFinished = false;
         GameObject player = GameObject.Find("Player");
         UpdateTargetDistance(player);
-        SetCurrentTarget(player);
-        agentAnimatorManager.Moving = true;
+        SetCurrentTarget(player);       
         MoveTowardsTarget(currentTarget);
+        agentAnimatorManager.Moving = true;
         if (distanceToPray <= attackRange)
         {
             yield return StartCoroutine(EngageClassBehavior());
-        }
-        if (distanceToPray > chaseRange)
-        {
-            overwritingBehaviour = null;
-            InCombat = false;
-        }
-        yield return new WaitForSeconds(3f);
+        }     
         overwrittingBehaviourFinished = true;
         yield break;
     }
@@ -79,6 +90,7 @@ public class HostileTerrestrial : Terrestrial
     {
         Debug.Log("Alart");
         overwritingBehaviour = "Hunting";
+        overwrittingBehaviourFinished = true;
         InCombat = true;
     }
 

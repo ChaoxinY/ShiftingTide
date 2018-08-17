@@ -6,20 +6,21 @@ public class StatueBrute : HostileTerrestrial
     private bool charging;
     private void Update()
     {
-        //if (charging)
-        //{
-        //    Vector3 targetDir = GameObject.Find("Player").transform.position - transform.position;
-        //    Vector3 newRotation = Vector3.RotateTowards(transform.forward, targetDir, Time.deltaTime * 5f, 0);
-        //    transform.rotation = Quaternion.LookRotation(newRotation);
-        //}
+        if (charging)
+        {
+            Vector3 targetDir = GameObject.Find("Player").transform.position - transform.position;
+            targetDir.y = 0;
+            Vector3 newRotation = Vector3.RotateTowards(transform.forward, targetDir, Time.deltaTime * 5f, 0);
+            transform.rotation = Quaternion.LookRotation(newRotation);
+        }
     }
     protected override IEnumerator LocalUpdate()
     {
         yield return base.LocalUpdate();
-       
-            //Vector3 direction = (GameObject.Find("Player").transform.position - transform.position).normalized;
-            //Quaternion lookRotation = Quaternion.LookRotation(direction);
-            //transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
+     
+        //Vector3 direction = (GameObject.Find("Player").transform.position - transform.position).normalized;
+        //Quaternion lookRotation = Quaternion.LookRotation(direction);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
     }
 
     protected override IEnumerator EngageClassBehavior()
@@ -27,7 +28,7 @@ public class StatueBrute : HostileTerrestrial
         Debug.Log("I hit you");
         //Dynamic decision making
         //and then...
-        StartCoroutine(SpearCharge());
+        yield return StartCoroutine(SpearCharge());
         yield break;
     }
 
@@ -38,8 +39,9 @@ public class StatueBrute : HostileTerrestrial
         agent.updatePosition = false;
         Rigidbody rigidbody1 = GetComponent<Rigidbody>();
         rigidbody1.isKinematic = false;
+        rigidbody1.velocity = Vector3.zero;
         agentAnimatorManager.PlayAttackAnimation();
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.8f);
         charging = true;
         yield return new WaitUntil(() => !agentAnimatorManager.GetAnimatorStateInfo(0).IsName("Attacking"));
         rigidbody1.isKinematic = true;
