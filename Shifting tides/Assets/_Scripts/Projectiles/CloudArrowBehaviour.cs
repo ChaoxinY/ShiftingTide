@@ -35,7 +35,8 @@ public class CloudArrowBehaviour : ArrowBehaviour
     {
         Vector3 hitSpeed = other.relativeVelocity;
         SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[0], hitSpeed);
-        if (other.gameObject.tag == "Enemy") {
+        if (other.gameObject.tag == "Enemy")
+        {
             EnemyHit(other);
         }
         SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized, other.gameObject);
@@ -43,6 +44,8 @@ public class CloudArrowBehaviour : ArrowBehaviour
 
     protected override void EnemyHit(Collision other)
     {
+        Vector3 impactForce = other.impulse / Time.deltaTime;
+       
         HostileResourceManager hostileResourceManager = other.gameObject.GetComponent<HostileResourceManager>();
         if (other.collider.name == "CritSpot")
         {
@@ -52,7 +55,7 @@ public class CloudArrowBehaviour : ArrowBehaviour
                 hostileResourceManager.CurrentArmor -= hostileResourceManager.maxArmor * 0.33f;
                 return;
             }
-            hostileResourceManager.GotHitOnCritSpot(baseDamage);
+            hostileResourceManager.GotHitOnCritSpot(baseDamage, other.contacts[0].point, impactForce);
             return;
         }
         playerTideComboManager.ResetCombo();
@@ -60,6 +63,6 @@ public class CloudArrowBehaviour : ArrowBehaviour
         {
             hostileResourceManager.CurrentArmor -= hostileResourceManager.maxArmor * 0.2f;
         }
-        hostileResourceManager.GotHit(baseDamage);
+        hostileResourceManager.GotHit(baseDamage, other.contacts[0].point, impactForce);
     }
 }

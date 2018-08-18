@@ -6,11 +6,13 @@ using System.Collections;
 
 public class HostileResourceManager : MonoBehaviour
 {
+    public Component[] componentstoRemoveOnDeath;
     public Slider[] healthBars,armorBars;
     public float maxHealth, maxArmor;
     public int minOnHitDrop, maxOnHitDrop, minOnDeathDrop, maxOnDeathDrop;
 
     private Canvas uiCanvas;
+    private Vector3 lastCollisionPoint, lastCollisionImpactforce;
     private float currentHealth,currentArmor;
    
     private IEnumerator healthBarVisibilityCoroutine, armorhBarVisibilityCoroutine;
@@ -44,17 +46,18 @@ public class HostileResourceManager : MonoBehaviour
         StartCoroutine(healthBarVisibilityCoroutine);
     }
 
-    public virtual void GotHit(float baseDamage) {
+    public virtual void GotHit(float baseDamage, Vector3 impactPoint,Vector3 impactForce) {
         if (CurrentArmor != 0) {
             CurrentArmor -= baseDamage * 0.5f;
             return;
-        }
-        CurrentHealth -= baseDamage;
+        }     
         StartCoroutine(OnHitDrops(minOnHitDrop,maxOnHitDrop));
-       // StartCoroutine(OnHitPhysicsFeedBack());
+        RegisterCollision(impactPoint, impactForce);
+        CurrentHealth -= baseDamage;
+        // StartCoroutine(OnHitPhysicsFeedBack());
     }
 
-    public virtual void GotHitOnCritSpot(float baseDamage)
+    public virtual void GotHitOnCritSpot(float baseDamage, Vector3 impactPoint, Vector3 impactForce)
     {
         if (CurrentArmor != 0)
         {
@@ -62,32 +65,12 @@ public class HostileResourceManager : MonoBehaviour
             return;
         }
         Debug.Log(baseDamage);
-        CurrentHealth -= baseDamage * 2;
+      
+        RegisterCollision(impactPoint, impactForce);
         StartCoroutine(OnHitDrops(minOnHitDrop*2, maxOnHitDrop*2));
-      //  StartCoroutine(OnHitPhysicsFeedBack());
+        CurrentHealth -= baseDamage * 2;
     }
 
-    protected virtual IEnumerator OnHitPhysicsFeedBack() {
-
-        gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        gameObject.GetComponent<Agent>().isTimeStopped = true;
-        gameObject.GetComponent<NavMeshAgent>().updatePosition = false;
-        gameObject.GetComponent<NavMeshAgent>().updateRotation = false;
-        yield return new WaitForSeconds(0.5f);
-        gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        gameObject.GetComponent<NavMeshAgent>().updatePosition = true;
-        gameObject.GetComponent<NavMeshAgent>().updateRotation = true;
-        gameObject.GetComponent<Agent>().isTimeStopped = false;        
-        yield break; 
-    }
-    protected virtual IEnumerator OnDeathFeedBack()
-    {
-        //gameObject.GetComponent<Agent>().isTimeStoped = true;
-        //gameObject.GetComponent<NavMeshAgent>().enabled = false;
-        //gameObject.GetComponent<Rigidbody>().mass = 8;
-        //gameObject.GetComponent<Rigidbody>().isKinematic = false;   
-        yield break;
-    }
     public void SpawnSourcePoint(int SourcePointType) {
         Debug.Log("Spawned");
         GameObject sourcePoint = Instantiate(Resources.Load("Prefabs/Source") as GameObject, transform.position, Quaternion.identity);
@@ -100,16 +83,33 @@ public class HostileResourceManager : MonoBehaviour
         {
             GameObject scrap = Instantiate(Resources.Load("Prefabs/Source") as GameObject, transform.position, Quaternion.identity);
             Vector3 randomPoistion = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
-            scrap.GetComponent<SourcePoint>().OnSpawnInit(4, GameObject.Find("Player").transform.position + randomPoistion,20, 4);
+            scrap.GetComponent<SourcePoint>().OnSpawnInit(4, GameObject.Find("Player").transform.position + randomPoistion,10, 4);
             scrap.GetComponent<SourcePoint>().objectToChase = GameObject.Find("Player");
             yield return new WaitForSeconds(0.1f);
         }
         yield break;
     }
 
-    public virtual void OnDeathDrops()
+    public virtual IEnumerator OnDeathFeedBack()
     {
-        OnHitDrops(minOnDeathDrop, maxOnDeathDrop);
+        yield return StartCoroutine(OnHitDrops(minOnDeathDrop, maxOnDeathDrop));
+        foreach (Component componet in componentstoRemoveOnDeath)
+        {
+            Destroy(componet);
+        }
+        RagdollManager ragdollManager = GetComponent<RagdollManager>();
+        ragdollManager.EnableRagdoll();
+        ragdollManager.ApplyRagdollForce(lastCollisionPoint, lastCollisionImpactforce);
+        Destroy(uiCanvas.gameObject);
+        Destroy(this);
+    }
+
+    private void RegisterCollision(Vector3 impactPoint, Vector3 impactForce) {
+
+        lastCollisionImpactforce = impactForce;
+        lastCollisionPoint = impactPoint;
+        //lastCollisionImpactforce = other.relativeVelocity;
+        //lastCollisionPoint = other.contacts[0].point;
     }
 
     private void ShowSliderBars(Slider[] sliderBars)
@@ -147,10 +147,7 @@ public class HostileResourceManager : MonoBehaviour
             currentHealth = value;
             if (currentHealth <= 0)
             {
-                OnDeathDrops();
-                //death animation
-                //StartCoroutine(OnDeathPhysicsFeedBack());
-                Destroy(gameObject,0.3f);
+                StartCoroutine(OnDeathFeedBack());       
             }
             if (currentHealth > maxHealth) { currentHealth = maxHealth; }
             ShowSliderBars(healthBars);

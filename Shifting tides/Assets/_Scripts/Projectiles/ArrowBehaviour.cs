@@ -63,11 +63,14 @@ public class ArrowBehaviour : Projectile
     protected virtual void EnemyHit(Collision other)
     {
         Vector3 hitSpeed = other.relativeVelocity;
+        Vector3 impactForce = other.relativeVelocity;
+        Debug.Log(impactForce);
         if (other.collider.name == "CritSpot")
         {
             onHitSoundSource.clip = onHitSounds[2];
             onHitSoundSource.Play();
-            other.gameObject.GetComponent<HostileResourceManager>().GotHitOnCritSpot(baseDamage);
+            other.gameObject.GetComponent<HostileResourceManager>().GotHitOnCritSpot(baseDamage,
+                other.contacts[0].point, impactForce);
             SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[1], hitSpeed);
             SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[3], hitSpeed);
             playerTideComboManager.AddCombo();
@@ -83,7 +86,7 @@ public class ArrowBehaviour : Projectile
         onHitSoundSource.clip = onHitSounds[1];
         onHitSoundSource.Play();
 
-        other.gameObject.GetComponentInParent<HostileResourceManager>().GotHit(baseDamage);
+        other.gameObject.GetComponentInParent<HostileResourceManager>().GotHit(baseDamage, other.contacts[0].point, impactForce);
        // playerTideComboManager.ResetCombo();
     }
 
@@ -104,16 +107,30 @@ public class ArrowBehaviour : Projectile
     // Then it instantiates the ArrowPlaceholder with the values from CopyPositionAndRotationForArrowPlaceholder and destroys the current arrow.
     protected virtual void SetupArrowPlaceholder(Vector3 contactPoint, Vector3 hitSpeed, GameObject TargetHit )
     {
+
         //Vector3 nomalizedHitspeed = Vector3.Normalize(hitSpeed);
         Vector3 spawnPosition = contactPoint + hitSpeed.normalized * penetrationStrength;
         Vector3 arrowPlaceholderRotation = transform.eulerAngles;
         GameObject arrowDummy = Instantiate(arrowPlaceholder, spawnPosition, arrowPlaceholder.transform.rotation = Quaternion.Euler(arrowPlaceholderRotation));
 
-        GameObject DummyParent = new GameObject();
-        DummyParent.name = "ArrowDummy";
+        GameObject DummyParent = new GameObject
+        {
+            name = "ArrowDummy"
+        };
+
+        if (TargetHit.GetComponentInParent<RagdollManager>()|| TargetHit.GetComponent<RagdollManager>())
+        {
+           
+            Transform transformParent = TargetHit.GetComponent<RagdollManager>().ClosestRagdollTransform(contactPoint);
+            Debug.Log(transformParent.gameObject.name);
+            DummyParent.transform.SetParent(transformParent);
+            arrowDummy.transform.SetParent(DummyParent.transform);
+            Destroy(gameObject);
+            return; 
+        }
+
         DummyParent.transform.SetParent(TargetHit.transform);
-        arrowDummy.transform.SetParent(DummyParent.transform);
-       
+        arrowDummy.transform.SetParent(DummyParent.transform);      
         Destroy(gameObject);
     }
 
