@@ -26,7 +26,7 @@ public class Agent : TimeBoundGameObject
         yield return StartCoroutine(base.LocalUpdate());
         //Debug.Log("UpdateRunning");
         //Debug.Log("Is resting = " + isResting);
-        //Debug.Log("StandardBehaviourFinished = " + StandardBehaviourFinished);
+
         //Debug.Log(standardBehaviour);
         //if (updateSpeed != 0)
         //{
@@ -45,11 +45,12 @@ public class Agent : TimeBoundGameObject
         }
         if (overwritingBehaviour != null && overwrittingBehaviourFinished== true)
         {
-            Debug.Log(overwritingBehaviour);
+            Debug.Log(overwritingBehaviour + " " + overwrittingBehaviourFinished);
             yield return StartCoroutine(overwritingBehaviour);
         }
         if (StandardBehaviourFinished)
         {
+            Debug.Log("StandardBehaviourFinished = " + standardBehaviour);
             StandardBehaviourFinished = false;
             yield return StartCoroutine(DetermineNextAgentBehaviour());
             StartCoroutine(standardBehaviour);
@@ -64,6 +65,10 @@ public class Agent : TimeBoundGameObject
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         SetUpAgentFactorInfluencePoint();
         InitializeWaypoints();
+        for (int i = 0; i < 2; i++)
+        {
+            patrolRoute.Enqueue(patrolPoints[i].position);
+        }
         AddBehaviours();
         StartCoroutine(DetermineNextAgentBehaviour());
         StartCoroutine(standardBehaviour);
@@ -74,19 +79,14 @@ public class Agent : TimeBoundGameObject
         if (wayPoints.Count == 0 && patrolPoints.Length == 0)
         {
             LookForWayPointAssigner();
+            return;
         }
-
-        for (int i = 0; i < 2; i++)
-        {
-            patrolRoute.Enqueue(patrolPoints[i].position);
-        }
+    
         foreach (Transform point in patrolPoints)
         {
             wayPoints.Add(point);
         }
-
     }
-
 
     protected virtual void AddBehaviours()
     {
@@ -243,7 +243,7 @@ public class Agent : TimeBoundGameObject
 
                 }
             }
-            wayPoints = closestWayPointHolder.GetComponent<WayPointHolder>().wayPoints;
+            wayPoints = closestWayPointHolder.wayPoints;
             patrolPoints = closestWayPointHolder.patrolPoints;
         }
     }

@@ -14,16 +14,16 @@ public class TimeZoneArrowBehaviour : ArrowBehaviour
                 arrowSpeed = 1f;              
                 break;
             case 1:
-                arrowSpeed = 25f;
+                arrowSpeed = 50f;
                 break;
             case 2:
-                arrowSpeed = 35f;
-                break;
-            case 3:
                 arrowSpeed = 60f;
                 break;
-            case 4:
+            case 3:
                 arrowSpeed = 80f;
+                break;
+            case 4:
+                arrowSpeed = 150f;
                 break;
         }
         baseDamage = 0;

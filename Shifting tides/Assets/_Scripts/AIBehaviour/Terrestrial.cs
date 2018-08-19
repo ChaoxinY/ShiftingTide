@@ -37,6 +37,18 @@ public class Terrestrial : Agent
         }
     }
 
+    public void LateUpdate()
+    {
+        if (isTimeStopped)
+        {
+            agentAnimatorManager.AnimatorSpeed = 0;
+        }
+        else if (!isTimeStopped && agentAnimatorManager.AnimatorSpeed == 0) {
+            agentAnimatorManager.AnimatorSpeed = 1;
+        }
+
+    }
+
     protected override IEnumerator Patroling()
     {
         agentAnimatorManager.Moving = true;
@@ -47,7 +59,7 @@ public class Terrestrial : Agent
         yield return new WaitUntil(() => agent.remainingDistance == 0);
         Debug.Log("Arrived patrol");
         agentAnimatorManager.Moving = false;
-        yield return StartCoroutine(FinishStandardMovementBehaviour(10,20));
+        yield return StartCoroutine(FinishStandardMovementBehaviour(5,10));
     }
     
     protected override IEnumerator Roaming()
@@ -59,17 +71,18 @@ public class Terrestrial : Agent
         yield return new WaitUntil(() => agent.remainingDistance == 0);
         agentAnimatorManager.Moving = false;
         Debug.Log("Arrived");
-        yield return StartCoroutine(FinishStandardMovementBehaviour(10,20));
+        yield return StartCoroutine(FinishStandardMovementBehaviour(5,10));
     }
     private IEnumerator Circling()
     {
         Debug.Log("Circling");
         agentAnimatorManager.Moving = true;
-        overwrittingBehaviourFinished = true;
+        //!
+        overwrittingBehaviourFinished = false;
         MoveTowardsTarget(transform.position);      
         yield return new WaitUntil(() => agent.remainingDistance == 0);
         agentAnimatorManager.Moving = false;
-        overwrittingBehaviourFinished = false;
+        overwrittingBehaviourFinished = true;
         overwritingBehaviour = null;
         yield break;
     }
@@ -82,14 +95,16 @@ public class Terrestrial : Agent
 
     protected void RestrictVelocity()
     {
-        currentSpeed = agent.speed;
-        agent.speed = 0;
+        Debug.Log(Time.time);
         agentAnimatorManager.AnimatorSpeed = 0;
+        currentSpeed = 0;
+        agent.speed = 0;
+        
     }
 
     protected void ResumeVelocity()
     {
-        agent.speed = currentSpeed;
+        agent.speed = standardSpeed;
         agentAnimatorManager.AnimatorSpeed = 1;
     }
 

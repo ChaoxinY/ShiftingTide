@@ -5,7 +5,7 @@ public class ItemDroperResourceManager : HostileResourceManager
 {
     public GameObject ItemToDrop;
 
-    public override IEnumerator OnDeathFeedBack()
+    protected override IEnumerator OnDeathFeedBack()
     {
         Instantiate(ItemToDrop, transform.position, Quaternion.identity);
         StartCoroutine(OnHitDrops(1, 2));

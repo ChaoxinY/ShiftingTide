@@ -37,9 +37,7 @@ public class RagdollManager : MonoBehaviour
     public void ApplyRagdollForce(Vector3 impactPoint,Vector3 impactForce) {
 
         Rigidbody closestRigidBody = ClosestRagdollTransform(impactPoint).gameObject.GetComponent<Rigidbody>();
-        Debug.Log(closestRigidBody.gameObject.name);
-        Debug.Log(impactForce);
-        closestRigidBody.AddForce(-impactForce/50, ForceMode.Force);
+        closestRigidBody.AddForce(-impactForce/70, ForceMode.Force);
     }
 
     public Transform ClosestRagdollTransform(Vector3 impactPoint) {

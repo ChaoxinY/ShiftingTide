@@ -16,8 +16,7 @@ public class ArrowBehaviour : Projectile
 
     protected GameObject arrowPlaceholder;
     protected AudioSource onHitSoundSource;
-
-    private PlayerAimModule playerAimModule;
+    protected PlayerAimModule playerAimModule;
 
     protected override void Initialize()
     {
@@ -63,14 +62,12 @@ public class ArrowBehaviour : Projectile
     protected virtual void EnemyHit(Collision other)
     {
         Vector3 hitSpeed = other.relativeVelocity;
-        Vector3 impactForce = other.relativeVelocity;
-        Debug.Log(impactForce);
+        HostileResourceManager hostileResourceManager = other.gameObject.GetComponent<HostileResourceManager>();
         if (other.collider.name == "CritSpot")
         {
             onHitSoundSource.clip = onHitSounds[2];
             onHitSoundSource.Play();
-            other.gameObject.GetComponent<HostileResourceManager>().GotHitOnCritSpot(baseDamage,
-                other.contacts[0].point, impactForce);
+            hostileResourceManager.GotHitOnCritSpot(baseDamage,other.contacts[0].point, hitSpeed);
             SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[1], hitSpeed);
             SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[3], hitSpeed);
             playerTideComboManager.AddCombo();
@@ -86,7 +83,7 @@ public class ArrowBehaviour : Projectile
         onHitSoundSource.clip = onHitSounds[1];
         onHitSoundSource.Play();
 
-        other.gameObject.GetComponentInParent<HostileResourceManager>().GotHit(baseDamage, other.contacts[0].point, impactForce);
+        hostileResourceManager.GotHit(baseDamage, other.contacts[0].point, hitSpeed);
        // playerTideComboManager.ResetCombo();
     }
 

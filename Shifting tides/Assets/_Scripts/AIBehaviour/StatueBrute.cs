@@ -6,7 +6,7 @@ public class StatueBrute : HostileTerrestrial
     private bool charging;
     private void Update()
     {
-        if (charging)
+        if (charging&&agentAnimatorManager.AnimatorSpeed!= 0)
         {
             Vector3 targetDir = GameObject.Find("Player").transform.position - transform.position;
             targetDir.y = 0;
@@ -37,14 +37,14 @@ public class StatueBrute : HostileTerrestrial
         agentAnimatorManager.Moving = false;
         agent.updateRotation = false;
         agent.updatePosition = false;
-        Rigidbody rigidbody1 = GetComponent<Rigidbody>();
-        rigidbody1.isKinematic = false;
-        rigidbody1.velocity = Vector3.zero;
+        Rigidbody rigidbodyAgent = GetComponent<Rigidbody>();
+        rigidbodyAgent.isKinematic = false;
+        rigidbodyAgent.velocity = Vector3.zero;
         agentAnimatorManager.PlayAttackAnimation();
         yield return new WaitForSeconds(0.8f);
         charging = true;
-        yield return new WaitUntil(() => !agentAnimatorManager.GetAnimatorStateInfo(0).IsName("Attacking"));
-        rigidbody1.isKinematic = true;
+        yield return new WaitUntil(() => !StaticToolMethods.GetAnimatorStateInfo(0,agentAnimatorManager.agentAnimator).IsName("Attacking"));
+        rigidbodyAgent.isKinematic = true;
         charging = false;
         agent.nextPosition = transform.position;
         //agent.enabled = true;

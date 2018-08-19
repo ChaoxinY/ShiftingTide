@@ -50,6 +50,7 @@ public class PlayerPhysicsModule : PlayerModule
             GetComponentInParent<CapsuleCollider>().material.dynamicFriction = 0.34f;
             GetComponentInParent<CapsuleCollider>().material.staticFriction = 0.6f;
             playerAnimatorManager.OnGround = true;
+          
         }
     }
 

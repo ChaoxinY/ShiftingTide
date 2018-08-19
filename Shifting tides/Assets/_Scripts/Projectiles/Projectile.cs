@@ -19,6 +19,7 @@ public class Projectile : TimeBoundGameObject
         {
             if (startVelocity != Vector3.zero)
             {
+                Debug.Log("resume");
                 ResumeVelocity();
             }
             rbObject.AddForce(new Vector3(0, gravity, 0));
@@ -28,7 +29,7 @@ public class Projectile : TimeBoundGameObject
     protected void RestrictVelocity()
     {
         startVelocity = this.rbObject.velocity;
-        rbObject.drag = 15f;
+        rbObject.drag = 30f;
     }
 
     protected void ResumeVelocity()

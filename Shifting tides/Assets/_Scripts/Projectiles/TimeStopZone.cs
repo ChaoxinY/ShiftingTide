@@ -14,10 +14,12 @@ public class TimeStopZone : MonoBehaviour
 
     private void AreaDamage()
     {
-        gameObject.GetComponent<SphereCollider>().enabled = true;
+        if (!gameObject.GetComponent<SphereCollider>().enabled) {
+            gameObject.GetComponent<SphereCollider>().enabled = true;
+        }
         foreach (GameObject influencedGameObject in influencedGameObjects)
         {
-            if (influencedGameObject.GetComponentInParent<HostileResourceManager>())
+            if (influencedGameObject.GetComponentInParent<HostileResourceManager>()&& GameObject.Find(influencedGameObject.name))
             {
                 HostileResourceManager hostileResource = influencedGameObject.GetComponentInParent<HostileResourceManager>();
                 hostileResource.CurrentHealth -= 2.5f;
@@ -28,6 +30,7 @@ public class TimeStopZone : MonoBehaviour
     private IEnumerator StopInfluencing()
     {
         yield return new WaitForSeconds(6.7f);
+        gameObject.GetComponent<SphereCollider>().enabled = false;
         yield return StartCoroutine(ReturnGameObjectToNormalState());
         Destroy(transform.parent.gameObject);
         yield break;
@@ -37,7 +40,11 @@ public class TimeStopZone : MonoBehaviour
     {
         foreach (GameObject influencedGameObject in influencedGameObjects)
         {
-            InfluenceGameObject(influencedGameObject, false);
+            Debug.Log(influencedGameObject.name);
+            if (GameObject.Find(influencedGameObject.name))
+            {
+                InfluenceGameObject(influencedGameObject);
+            }
         }
         yield break;
     }
@@ -46,6 +53,7 @@ public class TimeStopZone : MonoBehaviour
     {
         if (IsGameObjectinfluenceable(other.gameObject))
         {
+            Debug.Log(Time.time);
             InfluenceGameObject(other.gameObject, true);
             influencedGameObjects.Add(other.gameObject);
         }
@@ -55,20 +63,19 @@ public class TimeStopZone : MonoBehaviour
 
         bool validGameObject = false;
 
-        if (gameObjectCaught.GetComponent<TimeBoundGameObject>() || gameObjectCaught.gameObject.tag == "Enemy"
-            || gameObjectCaught.gameObject.name == "Player") {
+        if ((gameObjectCaught.GetComponent<TimeBoundGameObject>() || gameObjectCaught.gameObject.tag == "Enemy"
+            || gameObjectCaught.gameObject.name == "Player") && gameObjectCaught.name != "CritSpot")  {
             validGameObject = true;
         }       
             return validGameObject;
     }
 
     private void InfluenceGameObject(GameObject gameObjectCaught,bool turnOn = false)
-    {
+    {   
         if (gameObjectCaught.GetComponent<TimeBoundGameObject>())
         {
             TimeBoundGameObject tbGameObject = gameObjectCaught.GetComponent<TimeBoundGameObject>();
-            tbGameObject.isTimeStopped = turnOn;
-         
+            tbGameObject.isTimeStopped = turnOn;       
         }
         else if (gameObjectCaught.gameObject.tag == "Enemy")
         {

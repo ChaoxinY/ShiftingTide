@@ -4,8 +4,7 @@ using System.Collections;
 
 public class PlayerAnimatorManager : MonoBehaviour
 {
-
-    private Animator animatorPlayer;
+    public Animator animatorPlayer;
     private float inputSpeed;
     private bool onGround,aiming,input;
 
@@ -14,9 +13,15 @@ public class PlayerAnimatorManager : MonoBehaviour
         animatorPlayer = GetComponent<Animator>();
     }
 
+
     public void PlayDashAnimation()
     {
         animatorPlayer.SetTrigger("Dashed");
+    }
+
+    public void ResetJumpAnimation() {
+
+        animatorPlayer.ResetTrigger("Jumped");
     }
 
     public void PlayJumpAnimation() {

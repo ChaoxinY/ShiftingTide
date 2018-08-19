@@ -14,7 +14,7 @@ public class PlayerMovementModule : PlayerModule
     public float moveLimit, jumpVel;
 
     protected override void Initialize()
-    {  
+    {
         cameraMain = Camera.main;
         playerPhysicsModule = GameObject.Find("Player").GetComponentInChildren<PlayerPhysicsModule>();
         playerAnimatorManager = GameObject.Find("Player").GetComponent<PlayerAnimatorManager>();
@@ -55,7 +55,12 @@ public class PlayerMovementModule : PlayerModule
         {
             Jumping();
         }
-       
+
+        if (!Input.GetKeyDown(KeyCode.Space) && playerAnimatorManager.animatorPlayer.GetBool("Jumped"))
+        {
+            playerAnimatorManager.ResetJumpAnimation();
+        }
+
         if (!playerAimModule.isAiming)
         {
             Rotate(playerPhysicsModule.horizontalInput, playerPhysicsModule.verticalInput);
@@ -75,7 +80,7 @@ public class PlayerMovementModule : PlayerModule
         {
             Quaternion targetRotation = Quaternion.LookRotation(desiredDirection);
             Quaternion newRotation = Quaternion.Slerp(playerPhysicsModule.rigidbodyPlayer.rotation, targetRotation, 0.05f);
-            playerPhysicsModule.rigidbodyPlayer.MoveRotation(newRotation);            
+            playerPhysicsModule.rigidbodyPlayer.MoveRotation(newRotation);
         }
     }
     public override void ModuleFixedUpdate()
@@ -89,8 +94,8 @@ public class PlayerMovementModule : PlayerModule
 
     private void Jumping()
     {
-       playerAnimatorManager.PlayJumpAnimation();
-       playerPhysicsModule.rigidbodyPlayer.AddForce((Vector3.up * jumpVel), ForceMode.Impulse);      
+        playerAnimatorManager.PlayJumpAnimation();
+        playerPhysicsModule.rigidbodyPlayer.AddForce((Vector3.up * jumpVel), ForceMode.Impulse);
     }
 
     private void ChangeMoveSpeedLimit(bool isWalking, float targetLimit)

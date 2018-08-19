@@ -90,9 +90,8 @@ public class HostileResourceManager : MonoBehaviour
         yield break;
     }
 
-    public virtual IEnumerator OnDeathFeedBack()
+    protected virtual IEnumerator OnDeathFeedBack()
     {
-        yield return StartCoroutine(OnHitDrops(minOnDeathDrop, maxOnDeathDrop));
         foreach (Component componet in componentstoRemoveOnDeath)
         {
             Destroy(componet);
@@ -100,6 +99,7 @@ public class HostileResourceManager : MonoBehaviour
         RagdollManager ragdollManager = GetComponent<RagdollManager>();
         ragdollManager.EnableRagdoll();
         ragdollManager.ApplyRagdollForce(lastCollisionPoint, lastCollisionImpactforce);
+        yield return StartCoroutine(OnHitDrops(minOnDeathDrop, maxOnDeathDrop));
         Destroy(uiCanvas.gameObject);
         Destroy(this);
     }

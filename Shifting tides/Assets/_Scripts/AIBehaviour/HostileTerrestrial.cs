@@ -20,12 +20,14 @@ public class HostileTerrestrial : Terrestrial
         }
         else {
             yield return new WaitForSeconds(0.3f);
-            StartCoroutine(CheckIfTargetIsStillInRange());
+            InCombat = false;
         }
     }
 
     private IEnumerator CheckIfTargetIsStillInRange()
     {
+        GameObject player = GameObject.Find("Player");
+        UpdateTargetDistance(player);
         if (distanceToPray > chaseRange)
         {
             overwritingBehaviour = null;
@@ -52,9 +54,10 @@ public class HostileTerrestrial : Terrestrial
         }
     }
 
+    //Conflict with circling
     protected virtual IEnumerator Hunting()
     {
-        Debug.Log("Hunt");
+        InCombat = true;
         overwrittingBehaviourFinished = false;
         GameObject player = GameObject.Find("Player");
         UpdateTargetDistance(player);
@@ -64,7 +67,12 @@ public class HostileTerrestrial : Terrestrial
         if (distanceToPray <= attackRange)
         {
             yield return StartCoroutine(EngageClassBehavior());
-        }     
+        }
+        if (distanceToPray >= chaseRange) {
+
+            InCombat = false;
+            overwritingBehaviour = null;
+        }
         overwrittingBehaviourFinished = true;
         yield break;
     }
@@ -89,9 +97,8 @@ public class HostileTerrestrial : Terrestrial
     protected virtual void SwitchToCombatMode()
     {
         Debug.Log("Alart");
-        overwritingBehaviour = "Hunting";
         overwrittingBehaviourFinished = true;
-        InCombat = true;
+        overwritingBehaviour = "Hunting";
     }
 
     protected virtual IEnumerator EngageClassBehavior()

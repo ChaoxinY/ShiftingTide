@@ -5,19 +5,14 @@ using UnityEngine;
 public class AgentAnimatorManager : MonoBehaviour
 {
 
-    private Animator agentAnimator;
+    public Animator agentAnimator;
+
     private bool moving;
     private float animatorSpeed;
 
     private void Start()
     {
         agentAnimator = GetComponent<Animator>();
-    }
-
-    public AnimatorStateInfo GetAnimatorStateInfo(int layerIndex)
-    {
-        AnimatorStateInfo currentAnimatorStateInfo = agentAnimator.GetCurrentAnimatorStateInfo(layerIndex);
-        return currentAnimatorStateInfo;
     }
 
     public void PlayAttackAnimation()
@@ -41,7 +36,7 @@ public class AgentAnimatorManager : MonoBehaviour
         set
         {
             animatorSpeed = value;
-            agentAnimator.speed = animatorSpeed;
+            agentAnimator.SetFloat("AnimatorSpeed", animatorSpeed);
         }
     }
 }
