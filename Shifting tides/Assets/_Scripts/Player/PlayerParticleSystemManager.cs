@@ -10,7 +10,6 @@ public class PlayerParticleSystemManager : MonoBehaviour
     public PlayerArrowParticleSystemManager[] managedPlayerArrowParticle;
     public PlayerArrowParticleSystemManager currentPlayerArrowParticle;
     public PlayerAimModule playerAimModule;
-
     public bool isPlayingChargingAnimation, isPlayingChargedUpAnimation;
 
     public void StopAllShootingParticleSystems()

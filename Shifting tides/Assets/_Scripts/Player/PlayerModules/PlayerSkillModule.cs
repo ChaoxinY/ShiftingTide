@@ -3,7 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerSkillModule : PlayerModule
-{
+{ 
+    public GameObject[] dashesImages, arrowheadPrefabs;
+    public float dashForce, dashLimit;
+    public bool isTimeStopped;
+
     private Queue<GameObject> availableArrowheads = new Queue<GameObject>();
     private GameObject defaultArrowHead;
     private PlayerParticleSystemManager playerParticleSystemManager;
@@ -12,10 +16,6 @@ public class PlayerSkillModule : PlayerModule
     private PlayerPhysicsModule playerPhysicsModule;
     private PlayerAimModule playerAimModule;
     private Ui ui;
-
-    public GameObject[] dashesImages, arrowheadPrefabs;
-    public float dashForce, dashLimit;
-    public bool isTimeStopped;
 
     protected override void Initialize()
     {

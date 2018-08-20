@@ -24,7 +24,10 @@ public class HostileResourceManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        uiCanvas.transform.LookAt(GameObject.Find("Player").transform);
+        if (CurrentHealth > 0)
+        {
+            uiCanvas.transform.LookAt(GameObject.Find("Player").transform);
+        }
     }
 
     protected virtual void Initialize()
@@ -44,6 +47,14 @@ public class HostileResourceManager : MonoBehaviour
         healthBarVisibilityCoroutine = HideSliderBars(healthBars, 0);
         StartCoroutine(armorhBarVisibilityCoroutine);
         StartCoroutine(healthBarVisibilityCoroutine);
+    }
+
+    public void SpawnSourcePoint(int SourcePointType)
+    {
+        Debug.Log("Spawned");
+        GameObject sourcePoint = Instantiate(Resources.Load("Prefabs/Source") as GameObject, transform.position, Quaternion.identity);
+        sourcePoint.GetComponent<SourcePoint>().OnSpawnInit(SourcePointType, GameObject.Find("Player").transform.position, 15);
+        sourcePoint.GetComponent<SourcePoint>().objectToChase = GameObject.Find("Player");
     }
 
     public virtual void GotHit(float baseDamage, Vector3 impactPoint,Vector3 impactForce) {
@@ -71,13 +82,7 @@ public class HostileResourceManager : MonoBehaviour
         CurrentHealth -= baseDamage * 2;
     }
 
-    public void SpawnSourcePoint(int SourcePointType) {
-        Debug.Log("Spawned");
-        GameObject sourcePoint = Instantiate(Resources.Load("Prefabs/Source") as GameObject, transform.position, Quaternion.identity);
-        sourcePoint.GetComponent<SourcePoint>().OnSpawnInit(SourcePointType, GameObject.Find("Player").transform.position, 15);
-        sourcePoint.GetComponent<SourcePoint>().objectToChase = GameObject.Find("Player");
-    }
-
+ 
     public virtual IEnumerator OnHitDrops(int minDrop, int maxDrop) {
         for (int i = 0; i < Random.Range(minDrop, maxDrop); i++)
         {
@@ -97,11 +102,11 @@ public class HostileResourceManager : MonoBehaviour
             Destroy(componet);
         }
         RagdollManager ragdollManager = GetComponent<RagdollManager>();
-        ragdollManager.EnableRagdoll();
+        ragdollManager.EnableRagdoll();    
         ragdollManager.ApplyRagdollForce(lastCollisionPoint, lastCollisionImpactforce);
         yield return StartCoroutine(OnHitDrops(minOnDeathDrop, maxOnDeathDrop));
-        Destroy(uiCanvas.gameObject);
-        Destroy(this);
+        uiCanvas.gameObject.SetActive(false);          
+        this.enabled = false;
     }
 
     private void RegisterCollision(Vector3 impactPoint, Vector3 impactForce) {
@@ -145,16 +150,17 @@ public class HostileResourceManager : MonoBehaviour
         set
         {
             currentHealth = value;
-            if (currentHealth <= 0)
-            {
-                StartCoroutine(OnDeathFeedBack());       
-            }
+           
             if (currentHealth > maxHealth) { currentHealth = maxHealth; }
             ShowSliderBars(healthBars);
             StartCoroutine(LerpSliderBarValue(healthBars,currentHealth,0.3f,0.2f,0.05f));
             StopCoroutine(healthBarVisibilityCoroutine);
             healthBarVisibilityCoroutine = HideSliderBars(healthBars,6);
             StartCoroutine(healthBarVisibilityCoroutine);
+            if (currentHealth <= 0)
+            {
+                StartCoroutine(OnDeathFeedBack());
+            }
         }
     }
     public float CurrentArmor

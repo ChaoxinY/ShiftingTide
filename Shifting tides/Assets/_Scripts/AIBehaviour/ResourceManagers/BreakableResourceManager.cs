@@ -5,8 +5,9 @@ public class BreakableResourceManager : HostileResourceManager
 {
     protected override IEnumerator OnDeathFeedBack()
     {
-        StartCoroutine(OnHitDrops(1, 2));
+        yield return StartCoroutine(OnHitDrops(1, 2));
         SpawnSourcePoint(1);
+        Destroy(gameObject);
         yield break;
     }
 }

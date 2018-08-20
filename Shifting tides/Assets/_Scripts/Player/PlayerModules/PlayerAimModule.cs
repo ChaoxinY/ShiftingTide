@@ -6,16 +6,6 @@ using System.Collections.Generic;
 
 public class PlayerAimModule : PlayerModule
 {
-    private PlayerParticleSystemManager playerParticleSystemManager;
-    private PlayerAnimatorManager playerAnimatorManager;
-    private PlayerSkillModule playerSkillModule;
-    private PlayerCamera playerCamera;
-    private Camera cameraMain;
-    private Transform nearestTarget, playerTransForm;
-    private Vector3 lastDirection;
-    private bool lockedOn, enemyHit;
-    private float standardMouseSensitivity;
-
     public Image cursor;
     public Sprite lockOnCursor, lockOnCritCursor, lockOffCursor;
     public GameObject bow, bowMesh, shootTarget, currentArrowhead;
@@ -26,6 +16,16 @@ public class PlayerAimModule : PlayerModule
     public float aimSensitivity;
     [HideInInspector]
     public int arrowChargingState;
+
+    private PlayerParticleSystemManager playerParticleSystemManager;
+    private PlayerAnimatorManager playerAnimatorManager;
+    private PlayerSkillModule playerSkillModule;
+    private PlayerCamera playerCamera;
+    private Camera cameraMain;
+    private Transform nearestTarget, playerTransForm;
+    private Vector3 lastDirection;
+    private bool lockedOn, enemyHit;
+    private float standardMouseSensitivity;
 
     protected override void Initialize()
     {
@@ -164,6 +164,22 @@ public class PlayerAimModule : PlayerModule
         playerTransForm.rotation = Quaternion.Lerp(playerTransForm.rotation, targetRotation, minSpeed * Time.deltaTime);
         playerChestBone.rotation = Quaternion.Lerp(playerChestBone.rotation, ChestRotation, 1);
     }
+
+    public IEnumerator OnHitCursorChange()
+    {
+        if (critHit)
+        {
+            cursor.sprite = lockOnCritCursor;
+            critHit = false;
+        }
+        else
+        {
+            cursor.sprite = lockOnCursor;
+        }
+        yield return new WaitForSeconds(0.2f);
+        cursor.sprite = lockOffCursor;
+    }
+
     private void ChargeUpArrow()
     {
 
@@ -182,21 +198,6 @@ public class PlayerAimModule : PlayerModule
             playerParticleSystemManager.PlayChargedUpAnimation();
         }
 
-    }
-
-    public IEnumerator OnHitCursorChange()
-    {
-        if (critHit)
-        {
-            cursor.sprite = lockOnCritCursor;
-            critHit = false;
-        }
-        else
-        {
-            cursor.sprite = lockOnCursor;
-        }
-        yield return new WaitForSeconds(0.2f);
-        cursor.sprite = lockOffCursor;
     }
 
     private void CancelArrow() {
@@ -240,7 +241,6 @@ public class PlayerAimModule : PlayerModule
         }
 
     }
-
 
     private RaycastHit[] LookForTarget()
     {

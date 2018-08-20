@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public class Terrestrial : Agent 
 {
-    public NavMeshAgent agent;
-    public float standardSpeed, currentSpeed;
-
+    public NavMeshAgent agent; 
     public AgentAnimatorManager agentAnimatorManager;
+    public float standardSpeed, currentSpeed;
 
     protected override void Initialize()
     {
@@ -18,12 +17,24 @@ public class Terrestrial : Agent
         //agentAnimatorManager = GetComponent<AgentAnimatorManager>();
         agent.speed = standardSpeed;
     }
-
     protected override void AddBehaviours()
     {
         base.AddBehaviours();
         restingBehaviours.Add("Circling");
     }
+
+    public void LateUpdate()
+    {
+        if (isTimeStopped)
+        {
+            agentAnimatorManager.AnimatorSpeed = 0;
+        }
+        else if (!isTimeStopped && agentAnimatorManager.AnimatorSpeed == 0)
+        {
+            agentAnimatorManager.AnimatorSpeed = 1;
+        }
+    }
+
     protected override IEnumerator PauseOnTimeStop()
     {
         if (isTimeStopped)
@@ -35,18 +46,6 @@ public class Terrestrial : Agent
         {
             ResumeVelocity();
         }
-    }
-
-    public void LateUpdate()
-    {
-        if (isTimeStopped)
-        {
-            agentAnimatorManager.AnimatorSpeed = 0;
-        }
-        else if (!isTimeStopped && agentAnimatorManager.AnimatorSpeed == 0) {
-            agentAnimatorManager.AnimatorSpeed = 1;
-        }
-
     }
 
     protected override IEnumerator Patroling()
@@ -73,6 +72,30 @@ public class Terrestrial : Agent
         Debug.Log("Arrived");
         yield return StartCoroutine(FinishStandardMovementBehaviour(5,10));
     }
+
+    protected void MoveTowardsTarget(Vector3 currentTarget)
+    {
+        destination = currentTarget + new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
+        agent.SetDestination(destination);
+    }
+
+    protected void RestrictVelocity()
+    {
+        currentSpeed = 0;
+        agent.speed = 0;
+
+    }
+
+    protected void ResumeVelocity()
+    {
+        agent.speed = standardSpeed;
+    }
+
+    protected void ResetVelocity()
+    {
+        agent.speed = standardSpeed;
+    }
+
     private IEnumerator Circling()
     {
         Debug.Log("Circling");
@@ -87,31 +110,6 @@ public class Terrestrial : Agent
         yield break;
     }
 
-    protected void MoveTowardsTarget(Vector3 currentTarget)
-    {
-        destination = currentTarget + new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
-        agent.SetDestination(destination);
-    }
-
-    protected void RestrictVelocity()
-    {
-        Debug.Log(Time.time);
-        agentAnimatorManager.AnimatorSpeed = 0;
-        currentSpeed = 0;
-        agent.speed = 0;
-        
-    }
-
-    protected void ResumeVelocity()
-    {
-        agent.speed = standardSpeed;
-        agentAnimatorManager.AnimatorSpeed = 1;
-    }
-
-    protected void ResetVelocity()
-    {
-        agent.speed = standardSpeed;
-    }
 
   
 }

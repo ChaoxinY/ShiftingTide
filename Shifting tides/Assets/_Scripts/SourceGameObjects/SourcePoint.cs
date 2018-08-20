@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class SourcePoint : StandardInteractiveGameObject
 {
-    private Vector3 rotationValue;
-    /// <summary>
-    /// addResource 0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes, 4: Scraps
-    /// </summary>
-    private int[] addResource = new int[5];
-    private int[] addResourceValue = { 5, 10, 1, 1,1 };
-    private float immuneTime, rotationSpeed;
-    //private Coroutine pickedUpCorutine;
-
     public Vector3 destination;
     public GameObject objectToChase;
     public Material[] surfaceColors;
@@ -20,6 +11,15 @@ public class SourcePoint : StandardInteractiveGameObject
     public float movementSpeed;
     public int colorIndex;
     public bool preSpawned;
+
+    private Vector3 rotationValue;
+    /// <summary>
+    /// addResource 0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes, 4: Scraps
+    /// </summary>
+    private int[] addResource = new int[5];
+    private int[] addResourceValue = { 5, 10, 1, 1, 1 };
+    private float immuneTime, rotationSpeed;
+    //private Coroutine pickedUpCorutine;
 
     protected override void Initialize()
     {
@@ -42,50 +42,6 @@ public class SourcePoint : StandardInteractiveGameObject
             destination = objectToChase.transform.position;
             transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * movementSpeed);
             transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(0.05f, 0.05f, 0.05f),Time.deltaTime*0.3f);
-        }
-    }
-
-    protected override IEnumerator LocalUpdate()
-    {
-        //IEnumerator way of running base code.
-        yield return StartCoroutine(base.LocalUpdate());
-        transform.Rotate(rotationValue * rotationSpeed);
-
-        if (transform.position != destination)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * movementSpeed);
-        }
-        if (gameObject.layer == 8)
-        {
-            WearOffImmunity();
-        }
-    }
-    private void WearOffImmunity()
-    {
-        immuneTime += Time.deltaTime * 20f;
-        if (immuneTime >= 200f)
-        {
-
-            gameObject.layer = 10;
-        }
-    }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-      
-    //}
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            //if (PlayerResourcesManager.IsThisResourceAtMax(colorIndex) && PlayerResourcesManager.IsThisResourceAtMax(5))
-            //{
-            //    Debug.Log("Max");
-            //    return;
-            //}
-            meshRenderer.enabled = false;
-            PickedUp();
         }
     }
 
@@ -114,6 +70,45 @@ public class SourcePoint : StandardInteractiveGameObject
         }
         addResource[colorIndex] = addResourceValue[colorIndex];
         meshRenderer.GetComponent<MeshRenderer>().material = surfaceColors[colorIndex];
+    }
+    protected override IEnumerator LocalUpdate()
+    {
+        //IEnumerator way of running base code.
+        yield return StartCoroutine(base.LocalUpdate());
+        transform.Rotate(rotationValue * rotationSpeed);
+
+        if (transform.position != destination)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * movementSpeed);
+        }
+        if (gameObject.layer == 8)
+        {
+            WearOffImmunity();
+        }
+    }
+
+    private void WearOffImmunity()
+    {
+        immuneTime += Time.deltaTime * 20f;
+        if (immuneTime >= 200f)
+        {
+
+            gameObject.layer = 10;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            //if (PlayerResourcesManager.IsThisResourceAtMax(colorIndex) && PlayerResourcesManager.IsThisResourceAtMax(5))
+            //{
+            //    Debug.Log("Max");
+            //    return;
+            //}
+            meshRenderer.enabled = false;
+            PickedUp();
+        }
     }
 
     private void PickedUp()

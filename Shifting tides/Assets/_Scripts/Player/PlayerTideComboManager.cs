@@ -3,11 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerTideComboManager : MonoBehaviour
-{
-    private float comboDuration;
-    private float comboTimeLeft;
-    private float bowChargeSpeedReduction;
-
+{  
     public Text comboDisplay;
     public Slider comboSlider;
     public PlayerBlinkersManager playerBlinkersManager;
@@ -15,6 +11,10 @@ public class PlayerTideComboManager : MonoBehaviour
     public float minimunComboTime;
     public int currentCombo;
     public bool comboActive;
+
+    private float comboDuration;
+    private float comboTimeLeft;
+    private float bowChargeSpeedReduction;
 
     private void Update()
     {

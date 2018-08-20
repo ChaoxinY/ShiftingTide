@@ -2,16 +2,16 @@
 using System.Collections;
 
 public class PlayerMovementModule : PlayerModule
-{
+{    
+    public GameObject gameManagerObject;
+    public float moveLimit, jumpVel;
+
     private PlayerAnimatorManager playerAnimatorManager;
     private PlayerPhysicsModule playerPhysicsModule;
     private PlayerAimModule playerAimModule;
     private Camera cameraMain;
     private Vector3 currentMotion, colExtents;
     private float gravity;
-
-    public GameObject gameManagerObject;
-    public float moveLimit, jumpVel;
 
     protected override void Initialize()
     {
@@ -66,6 +66,16 @@ public class PlayerMovementModule : PlayerModule
             Rotate(playerPhysicsModule.horizontalInput, playerPhysicsModule.verticalInput);
         }
     }
+
+    public override void ModuleFixedUpdate()
+    {
+        gravity = playerPhysicsModule.rigidbodyPlayer.velocity.y >= -1 ? 0 : gravity -= 0.7f;
+        playerPhysicsModule.rigidbodyPlayer.AddForce(currentMotion + Vector3.up * gravity, ForceMode.Acceleration);
+        Vector2 horizontalVelocity = new Vector2(playerPhysicsModule.rigidbodyPlayer.velocity.x, playerPhysicsModule.rigidbodyPlayer.velocity.z);
+        horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, playerPhysicsModule.speedLimit);
+        playerPhysicsModule.rigidbodyPlayer.velocity = new Vector3(horizontalVelocity.x, playerPhysicsModule.rigidbodyPlayer.velocity.y, horizontalVelocity.y);
+    }
+
     private void Rotate(float horizontal, float vertical)
     {
         Vector3 desiredDirection;
@@ -82,14 +92,6 @@ public class PlayerMovementModule : PlayerModule
             Quaternion newRotation = Quaternion.Slerp(playerPhysicsModule.rigidbodyPlayer.rotation, targetRotation, 0.05f);
             playerPhysicsModule.rigidbodyPlayer.MoveRotation(newRotation);
         }
-    }
-    public override void ModuleFixedUpdate()
-    {
-        gravity = playerPhysicsModule.rigidbodyPlayer.velocity.y >= -1 ? 0 : gravity -= 0.7f;
-        playerPhysicsModule.rigidbodyPlayer.AddForce(currentMotion + Vector3.up * gravity, ForceMode.Acceleration);
-        Vector2 horizontalVelocity = new Vector2(playerPhysicsModule.rigidbodyPlayer.velocity.x, playerPhysicsModule.rigidbodyPlayer.velocity.z);
-        horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, playerPhysicsModule.speedLimit);
-        playerPhysicsModule.rigidbodyPlayer.velocity = new Vector3(horizontalVelocity.x, playerPhysicsModule.rigidbodyPlayer.velocity.y, horizontalVelocity.y);
     }
 
     private void Jumping()

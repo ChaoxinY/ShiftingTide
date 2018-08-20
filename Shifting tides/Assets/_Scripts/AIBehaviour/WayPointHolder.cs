@@ -5,5 +5,4 @@ public class WayPointHolder : MonoBehaviour
 {
     public List<Transform> wayPoints;
     public Transform[] patrolPoints;
-
 }

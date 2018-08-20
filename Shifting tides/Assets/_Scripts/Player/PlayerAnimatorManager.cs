@@ -5,6 +5,7 @@ using System.Collections;
 public class PlayerAnimatorManager : MonoBehaviour
 {
     public Animator animatorPlayer;
+
     private float inputSpeed;
     private bool onGround,aiming,input;
 

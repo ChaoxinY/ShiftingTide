@@ -12,7 +12,7 @@ public class Agent : TimeBoundGameObject
 
     protected Material originMaterial;
     protected Vector3 currentTarget, destination, nearestWaypoint, lastPatrolPointVisted;
-    protected string overwritingBehaviour, standardBehaviour;
+    public string overwritingBehaviour, standardBehaviour;
     protected bool StandardBehaviourFinished, isResting, overwrittingBehaviourFinished = false;
 
     public List<Transform> wayPoints;
@@ -20,44 +20,6 @@ public class Agent : TimeBoundGameObject
     public float[] desire, factorInfluencePoint = { 0, 0, 0, 0, 0, 0 };
     public float updateSpeed;
     public bool predictable, energetic, perferRandomBehaviours, perferPatternedBehaviours, customized;
-
-    protected override IEnumerator LocalUpdate()
-    {
-        yield return StartCoroutine(base.LocalUpdate());
-        //Debug.Log("UpdateRunning");
-        //Debug.Log("Is resting = " + isResting);
-
-        //Debug.Log(standardBehaviour);
-        //if (updateSpeed != 0)
-        //{
-        //    yield return new WaitForSeconds(updateSpeed);
-        //}
-        if (isResting)
-        {
-            desire[2] = Mathf.Lerp(desire[2], 40, ExhaustionInfluencePoint + factorInfluencePoint[4]);
-            DetermineRestingBehaviour();
-            if (Vector3.Distance(transform.position, nearestWaypoint) > 5)
-            {
-                isResting = false;
-                nearestWaypoint = Vector3.zero;
-                StandardBehaviourFinished = true;
-            }
-        }
-        if (overwritingBehaviour != null && overwrittingBehaviourFinished== true)
-        {
-            Debug.Log(overwritingBehaviour + " " + overwrittingBehaviourFinished);
-            yield return StartCoroutine(overwritingBehaviour);
-        }
-        if (StandardBehaviourFinished)
-        {
-            Debug.Log("StandardBehaviourFinished = " + standardBehaviour);
-            StandardBehaviourFinished = false;
-            yield return StartCoroutine(DetermineNextAgentBehaviour());
-            StartCoroutine(standardBehaviour);
-        }
-
-        yield break;
-    }
 
     protected override void Initialize()
     {
@@ -93,6 +55,40 @@ public class Agent : TimeBoundGameObject
         spontaneousBehaviours.Add("Roaming");
         spontaneousBehaviours.Add("ChangePatrolRoute");
         patternedBehaviours.Add("Patroling");
+    }
+
+    protected virtual IEnumerator RestingBehaviourCheck() {
+        if (isResting)
+        {
+            desire[2] = Mathf.Lerp(desire[2], 40, ExhaustionInfluencePoint + factorInfluencePoint[4]);
+            DetermineRestingBehaviour();
+            if (Vector3.Distance(transform.position, nearestWaypoint) > 5)
+            {
+                isResting = false;
+                nearestWaypoint = Vector3.zero;
+                StandardBehaviourFinished = true;
+            }
+        }
+        yield break;
+    }
+
+    protected virtual IEnumerator OverWrittingBehaviourCheck() {
+        if (overwritingBehaviour != null && overwrittingBehaviourFinished == true)
+        {
+            Debug.Log(overwritingBehaviour + " " + overwrittingBehaviourFinished);
+            yield return StartCoroutine(overwritingBehaviour);
+            yield break;
+        }
+    }
+
+    protected virtual IEnumerator StandardBehaviourCheck() {
+        if (StandardBehaviourFinished)
+        {
+            Debug.Log("StandardBehaviourFinished = " + standardBehaviour);
+            StandardBehaviourFinished = false;
+            yield return StartCoroutine(DetermineNextAgentBehaviour());
+            StartCoroutine(standardBehaviour);
+        }
     }
 
     protected virtual IEnumerator Patroling() { yield break; }
@@ -189,7 +185,7 @@ public class Agent : TimeBoundGameObject
     {
         bool Arrived = false;
         float distance = Vector3.Distance(gameObject, target);
-        if (distance < range)
+        if (distance <= range)
         {
             Arrived = true;
         }

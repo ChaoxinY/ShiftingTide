@@ -8,16 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerCamera : MonoBehaviour
 {
-    private const float MAX_Y = 60;
-    private const float MIN_Y = -60.0f;
-    private const float cameraMouseMIN_Y = -20.0f;
-    private float targetDistance;
-    private Vector3 smoothPivotOffset, smoothCamOffset, targetPivotOffset, targetCamOffset, relCameraPos;
-    private RaycastHit hits;
-    private float relCameraPosMag;
-    private PlayerAimModule playerAimModule;
-    private PlayerPhysicsModule playerPhysicsModule;
-
     [HideInInspector]
     public Camera cameraMain;
     public Transform player;
@@ -27,6 +17,16 @@ public class PlayerCamera : MonoBehaviour
     [HideInInspector]
     public float mouseX, mouseY, cameraMouseY, angleH, angleV, targetFOV;
     public float smoothSpeed, mouseSensitivity;
+
+    private const float MAX_Y = 60;
+    private const float MIN_Y = -60.0f;
+    private const float cameraMouseMIN_Y = -20.0f;
+    private float targetDistance;
+    private Vector3 smoothPivotOffset, smoothCamOffset, targetPivotOffset, targetCamOffset, relCameraPos;
+    private RaycastHit hits;
+    private float relCameraPosMag;
+    private PlayerAimModule playerAimModule;
+    private PlayerPhysicsModule playerPhysicsModule;
 
     private void Start()
     {
@@ -114,22 +114,26 @@ public class PlayerCamera : MonoBehaviour
         }
         yield break;
     }
+
     public void ResetTargetOffsets()
     {
         targetPivotOffset = pivotOffset;
         targetCamOffset = camOffset;
     }
+
     public void ResetSmoothOffsets()
     {
         smoothPivotOffset = pivotOffset;
         smoothCamOffset = camOffset;
     }
-    bool DoubleViewingPosCheck(Vector3 checkPos, float offset)
+
+    private bool DoubleViewingPosCheck(Vector3 checkPos, float offset)
     {
         float playerFocusHeight = player.GetComponentInChildren<CapsuleCollider>().center.y;
         return ViewingPosCheck(checkPos, playerFocusHeight) && ReverseViewingPosCheck(checkPos, playerFocusHeight, offset);
     }
-    bool ViewingPosCheck(Vector3 checkPos, float deltaPlayerHeight)
+
+    private bool ViewingPosCheck(Vector3 checkPos, float deltaPlayerHeight)
     {
         RaycastHit hit;
 
@@ -151,7 +155,7 @@ public class PlayerCamera : MonoBehaviour
     }
 
     // Check for collision from player to camera.
-    bool ReverseViewingPosCheck(Vector3 checkPos, float deltaPlayerHeight, float maxDistance)
+    private bool ReverseViewingPosCheck(Vector3 checkPos, float deltaPlayerHeight, float maxDistance)
     {
         RaycastHit hit;
 

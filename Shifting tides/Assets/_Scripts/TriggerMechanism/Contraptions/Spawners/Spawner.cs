@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : TriggerBoundMechanism
-{
-    //public GameObject mesh;
-    private int timesActivated;
-
+{   
     public GameObject objectToSpawn;
     public Transform positionToSpawn;
     public float spawnInterval;
     public int durabilitiy;
     public bool isReuseable, repeatTriggerFunction, breakable;
+
+    //public GameObject mesh;
+    private int timesActivated;
 
     protected override IEnumerator LocalUpdate()
     {

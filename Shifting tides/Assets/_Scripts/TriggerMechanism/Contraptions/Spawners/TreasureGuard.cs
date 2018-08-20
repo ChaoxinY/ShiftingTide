@@ -4,6 +4,7 @@ using System.Collections;
 public class TreasureGuard : Spawner
 {
     public float velocityProjectile;
+
     private GameObject player;
     private Rigidbody playerRigidBody;
     private bool tracking;

@@ -5,7 +5,6 @@ using UnityEngine;
 public class TimeStopZone : MonoBehaviour
 {
     public List<GameObject> influencedGameObjects = new List<GameObject>();
-
     private void Start()
     {
         InvokeRepeating("AreaDamage", 1.4f, 0.65f);
@@ -17,30 +16,48 @@ public class TimeStopZone : MonoBehaviour
         if (!gameObject.GetComponent<SphereCollider>().enabled) {
             gameObject.GetComponent<SphereCollider>().enabled = true;
         }
+ 
+        influencedGameObjects = UpdateInfluenceList();
         foreach (GameObject influencedGameObject in influencedGameObjects)
-        {
-            if (influencedGameObject.GetComponentInParent<HostileResourceManager>()&& GameObject.Find(influencedGameObject.name))
+        {   
+            if (influencedGameObject.GetComponentInParent<HostileResourceManager>()&&
+                influencedGameObject.GetComponentInParent<HostileResourceManager>().enabled == true)
             {
                 HostileResourceManager hostileResource = influencedGameObject.GetComponentInParent<HostileResourceManager>();
                 hostileResource.CurrentHealth -= 2.5f;
             }
         }
+        influencedGameObjects = UpdateInfluenceList();
     }
 
     private IEnumerator StopInfluencing()
     {
         yield return new WaitForSeconds(6.7f);
         gameObject.GetComponent<SphereCollider>().enabled = false;
+        influencedGameObjects = UpdateInfluenceList();
         yield return StartCoroutine(ReturnGameObjectToNormalState());
         Destroy(transform.parent.gameObject);
         yield break;
+    }
+
+    private List<GameObject> UpdateInfluenceList() {
+        RaycastHit[] hits;
+        hits = Physics.SphereCastAll(transform.position, 3.2f, Vector3.up, 0.1f);
+        List<GameObject> gameObjectHit = new List<GameObject>();
+        foreach (RaycastHit hit in hits)
+        {
+            if (IsGameObjectinfluenceable(hit.transform.gameObject))
+            {
+                gameObjectHit.Add(hit.transform.gameObject);               
+            }
+        }         
+         return gameObjectHit;
     }
 
     private IEnumerator ReturnGameObjectToNormalState()
     {
         foreach (GameObject influencedGameObject in influencedGameObjects)
         {
-            Debug.Log(influencedGameObject.name);
             if (GameObject.Find(influencedGameObject.name))
             {
                 InfluenceGameObject(influencedGameObject);
@@ -53,9 +70,15 @@ public class TimeStopZone : MonoBehaviour
     {
         if (IsGameObjectinfluenceable(other.gameObject))
         {
-            Debug.Log(Time.time);
             InfluenceGameObject(other.gameObject, true);
-            influencedGameObjects.Add(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (IsGameObjectinfluenceable(other.gameObject))
+        {
+            InfluenceGameObject(other.gameObject);
         }
     }
 
@@ -63,47 +86,25 @@ public class TimeStopZone : MonoBehaviour
 
         bool validGameObject = false;
 
-        if ((gameObjectCaught.GetComponent<TimeBoundGameObject>() || gameObjectCaught.gameObject.tag == "Enemy"
-            || gameObjectCaught.gameObject.name == "Player") && gameObjectCaught.name != "CritSpot")  {
+        if ((gameObjectCaught.GetComponent<TimeBoundGameObject>() || gameObjectCaught.gameObject.name == "Player") )  {
             validGameObject = true;
         }       
             return validGameObject;
     }
 
     private void InfluenceGameObject(GameObject gameObjectCaught,bool turnOn = false)
-    {   
-        if (gameObjectCaught.GetComponent<TimeBoundGameObject>())
-        {
-            TimeBoundGameObject tbGameObject = gameObjectCaught.GetComponent<TimeBoundGameObject>();
-            tbGameObject.isTimeStopped = turnOn;       
-        }
-        else if (gameObjectCaught.gameObject.tag == "Enemy")
-        {
-            TimeBoundGameObject tbGameObject = gameObjectCaught.GetComponentInParent<TimeBoundGameObject>();
-            tbGameObject.isTimeStopped = turnOn;
-        }
-        else if (gameObjectCaught.gameObject.name == "Player")
+    {                
+        if (gameObjectCaught.gameObject.name == "Player")
         {
             PlayerSkillModule playerSkillModule = gameObjectCaught.GetComponentInChildren<PlayerSkillModule>();
             playerSkillModule.isTimeStopped = turnOn;
-        }    
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        foreach (GameObject influencedGameObject in influencedGameObjects)
-        {
-            if (influencedGameObject == other.gameObject)
-            {
-                if (other.gameObject.gameObject.name == "Player")
-                {
-                    PlayerSkillModule playerSkillModule = other.gameObject.GetComponentInChildren<PlayerSkillModule>();
-                    playerSkillModule.isTimeStopped = false;
-                }
-            }
+            return;
         }
-
+        TimeBoundGameObject tbGameObject = gameObjectCaught.GetComponent<TimeBoundGameObject>();
+        tbGameObject.isTimeStopped = turnOn;
     }
+
+  
 }
 
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AgentAnimatorManager : MonoBehaviour
 {
-
     public Animator agentAnimator;
 
     private bool moving;
@@ -12,7 +11,7 @@ public class AgentAnimatorManager : MonoBehaviour
 
     private void Start()
     {
-        agentAnimator = GetComponent<Animator>();
+        //agentAnimator = gameObject.GetComponent<Animator>();
     }
 
     public void PlayAttackAnimation()

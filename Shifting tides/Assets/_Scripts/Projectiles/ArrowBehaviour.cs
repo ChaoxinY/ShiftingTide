@@ -13,7 +13,6 @@ public class ArrowBehaviour : Projectile
     public float penetrationStrength;
 
     protected PlayerTideComboManager playerTideComboManager;
-
     protected GameObject arrowPlaceholder;
     protected AudioSource onHitSoundSource;
     protected PlayerAimModule playerAimModule;
@@ -97,7 +96,7 @@ public class ArrowBehaviour : Projectile
     protected void SpawnOnHitEffect(Transform transformHit, ContactPoint contact, GameObject prefabToSpawn, Vector3 hitSpeed)
     {
         GameObject spawnedOnHitEffect = Instantiate(prefabToSpawn, contact.point + (hitSpeed.normalized * 1.3f), Quaternion.LookRotation(hitSpeed.normalized));
-        spawnedOnHitEffect.transform.SetParent(transformHit);
+        //spawnedOnHitEffect.transform.SetParent(transformHit);
     }
 
     // This method calls CopyPositionAndRotationForArrowPlaceholder.
@@ -116,8 +115,7 @@ public class ArrowBehaviour : Projectile
         };
 
         if (TargetHit.GetComponentInParent<RagdollManager>()|| TargetHit.GetComponent<RagdollManager>())
-        {
-           
+        {           
             Transform transformParent = TargetHit.GetComponent<RagdollManager>().ClosestRagdollTransform(contactPoint);
             Debug.Log(transformParent.gameObject.name);
             DummyParent.transform.SetParent(transformParent);

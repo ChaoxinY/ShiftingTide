@@ -19,14 +19,17 @@ public class SourceSpawner : Spawner
             SpawnSourcePoint(spawnPosition, endPosition);
         }
     }
-
-    private void SpawnSourcePoint(Vector3 spawnPosition, Vector3 endPosition)
+    public bool MaxSpawnedPointsReached()
     {
-        GameObject sourcePoint = Instantiate(Resources.Load("Prefabs/Source") as GameObject, spawnPosition, Quaternion.identity);
-        sourcePoint.GetComponent<SourcePoint>().OnSpawnInit(rightBound, endPosition,1,leftBound);
-        sourcePoint.transform.SetParent(gameObject.transform);
+        bool maxReached = false;
+        Component[] childSources = gameObject.GetComponentsInChildren(typeof(SourcePoint));
+        if (childSources.Length == maxPointsOut)
+        {
+            maxReached = true;
+        }
+        return maxReached;
     }
-
+   
     public override void TriggerFunction()
     {
         if (!isCollideSpawner && !MaxSpawnedPointsReached())
@@ -39,16 +42,13 @@ public class SourceSpawner : Spawner
         Triggered = true;
     }
 
-    public bool MaxSpawnedPointsReached()
+    private void SpawnSourcePoint(Vector3 spawnPosition, Vector3 endPosition)
     {
-        bool maxReached = false;
-        Component[] childSources = gameObject.GetComponentsInChildren(typeof(SourcePoint));
-        if (childSources.Length == maxPointsOut)
-        {
-            maxReached = true;
-        }
-        return maxReached;
+        GameObject sourcePoint = Instantiate(Resources.Load("Prefabs/Source") as GameObject, spawnPosition, Quaternion.identity);
+        sourcePoint.GetComponent<SourcePoint>().OnSpawnInit(rightBound, endPosition, 1, leftBound);
+        sourcePoint.transform.SetParent(gameObject.transform);
     }
+
 }
 
 

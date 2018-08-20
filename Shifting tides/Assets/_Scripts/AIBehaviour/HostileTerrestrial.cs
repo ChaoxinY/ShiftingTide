@@ -4,16 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class HostileTerrestrial : Terrestrial
-{
+{  
+    public float visionRange, sightRange, chaseRange, attackRange;
+
     private GameObject objectToChase;
     private float distanceToPray;
     private bool InCombat = false;
 
-    public float visionRange, sightRange, chaseRange, attackRange;
-
     protected override IEnumerator LocalUpdate()
     {
-        yield return base.LocalUpdate();
+        yield return StartCoroutine(base.LocalUpdate());
         if (!InCombat)
         {
             StartCoroutine(Searching());
@@ -22,18 +22,9 @@ public class HostileTerrestrial : Terrestrial
             yield return new WaitForSeconds(0.3f);
             InCombat = false;
         }
-    }
-
-    private IEnumerator CheckIfTargetIsStillInRange()
-    {
-        GameObject player = GameObject.Find("Player");
-        UpdateTargetDistance(player);
-        if (distanceToPray > chaseRange)
-        {
-            overwritingBehaviour = null;
-            InCombat = false;
-        }
-        yield break;
+        StartCoroutine(RestingBehaviourCheck());
+        yield return StartCoroutine(OverWrittingBehaviourCheck());
+        yield return StartCoroutine(StandardBehaviourCheck());
     }
 
     protected virtual IEnumerator Searching()
@@ -44,10 +35,11 @@ public class HostileTerrestrial : Terrestrial
 
         if (Physics.SphereCast(transform.position, visionRange, fwd, out hit, sightRange))
         {
+            Debug.Log("Hit");
             if (hit.collider.gameObject.tag == "Player")
             {
                 UpdateTargetDistance(hit.collider.gameObject);
-                objectToChase = hit.collider.gameObject;
+                objectToChase = hit.collider.gameObject;                
                 SwitchToCombatMode();
                 yield break;
             }
@@ -103,6 +95,18 @@ public class HostileTerrestrial : Terrestrial
 
     protected virtual IEnumerator EngageClassBehavior()
     {
+        yield break;
+    }
+
+    private IEnumerator CheckIfTargetIsStillInRange()
+    {
+        GameObject player = GameObject.Find("Player");
+        UpdateTargetDistance(player);
+        if (distanceToPray > chaseRange)
+        {
+            overwritingBehaviour = null;
+            InCombat = false;
+        }
         yield break;
     }
 

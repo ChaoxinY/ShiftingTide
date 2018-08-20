@@ -3,7 +3,6 @@ using System.Collections;
 
 public class HostileArrow : ArrowBehaviour
 {
- 
     protected override void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Player" ) {

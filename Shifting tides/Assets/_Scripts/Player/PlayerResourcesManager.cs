@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerResourcesManager : MonoBehaviour
-{
-    /// <summary>
-    ///  0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes 4 : arrows 5： SourceFused Arrows
-    /// </summary>
-    private static float[] playerResources = new float[6];
-    private static int scrapSource;
- 
+{ 
     /// <summary>
     ///  0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes 4 : arrows 5： SourceFused Arrows
     /// </summary>
     public static float[] playerResourcesCaps = { 100, 40, 4, 3, 100, 3 };
     public static Ui ui;
+
+    /// <summary>
+    ///  0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes 4 : arrows 5： SourceFused Arrows
+    /// </summary>
+    private static float[] playerResources = new float[6];
+    private static int scrapSource;
 
     private float rechargeTimer = 5;
 

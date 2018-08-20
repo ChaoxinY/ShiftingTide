@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class PlayerBlinkersManager : ParticleSystemHandler
 {
+    public List<PlayerBlinkerParticleSystemHandler> activedBlinkers = new List<PlayerBlinkerParticleSystemHandler>();
     public PlayerBlinkerParticleSystemHandler[] blinkers;
     public PlayerArrowParticleSystemManager playerArrowParticleSystemManager;
     public float blinkerCooldownReduction;
 
-    public List<PlayerBlinkerParticleSystemHandler> activedBlinkers = new List<PlayerBlinkerParticleSystemHandler>();
     private IEnumerator blinkerAnimationCoroutine;
     private PlayerAimModule playerAimModule;
 

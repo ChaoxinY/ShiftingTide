@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class Volant : Agent
 {
+    public float movementSpeed;
+
     private Vector3 targetRot;
     private Queue<Vector3> path = new Queue<Vector3>();
     private bool isPathing;
-
-    public float movementSpeed;
 
     protected override void Initialize()
     {
@@ -27,14 +27,24 @@ public class Volant : Agent
 
     protected override IEnumerator LocalUpdate() {
         yield return StartCoroutine(base.LocalUpdate());
+       
+        StartCoroutine(RestingBehaviourCheck());
+        yield return StartCoroutine(OverWrittingBehaviourCheck());
+        yield return StartCoroutine(StandardBehaviourCheck());
+      
+    }
+
+    private void LateUpdate()
+    {
         if (isPathing)
         {
             transform.position = Vector3.MoveTowards(transform.position, currentTarget, Time.deltaTime * movementSpeed);
             Vector3 targetDir = currentTarget - transform.position;
             Vector3 newVector = Vector3.RotateTowards(transform.forward, targetDir, Time.deltaTime * 5f, 0);
-            transform.rotation = Quaternion.LookRotation(newVector);           
+            transform.rotation = Quaternion.LookRotation(newVector);
         }
     }
+
     protected override IEnumerator PauseOnTimeStop()
     {
         if (isTimeStopped)
@@ -62,13 +72,14 @@ public class Volant : Agent
     protected IEnumerator AirRest()
     {
         overwritingBehaviour = null;
+        overwrittingBehaviourFinished = true;
         yield break;
     }
-    protected IEnumerator Dashing()
-    {
-        StartCoroutine(FinishStandardMovementBehaviour(0, 1));
-        yield break;
-    }
+    //protected IEnumerator Dashing()
+    //{
+    //    StartCoroutine(FinishStandardMovementBehaviour(0, 1));
+    //    yield break;
+    //}
     protected override IEnumerator Patroling()
     {
         Vector3 StartOfTheCircle = patrolRoute.Dequeue();
