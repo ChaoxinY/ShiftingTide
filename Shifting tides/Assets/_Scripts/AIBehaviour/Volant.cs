@@ -26,17 +26,15 @@ public class Volant : Agent
     }
 
     protected override IEnumerator LocalUpdate() {
-        yield return StartCoroutine(base.LocalUpdate());
-       
+        yield return StartCoroutine(base.LocalUpdate());      
         StartCoroutine(RestingBehaviourCheck());
         yield return StartCoroutine(OverWrittingBehaviourCheck());
-        yield return StartCoroutine(StandardBehaviourCheck());
-      
+        yield return StartCoroutine(StandardBehaviourCheck());     
     }
 
     private void LateUpdate()
     {
-        if (isPathing)
+        if (isPathing&& !isTimeStopped)
         {
             transform.position = Vector3.MoveTowards(transform.position, currentTarget, Time.deltaTime * movementSpeed);
             Vector3 targetDir = currentTarget - transform.position;
@@ -84,6 +82,8 @@ public class Volant : Agent
     {
         Vector3 StartOfTheCircle = patrolRoute.Dequeue();
         Vector3 EndOfTheCircle = patrolRoute.Dequeue();
+        Debug.Log(StartOfTheCircle);
+        Debug.Log(EndOfTheCircle);
         lastPatrolPointVisted = EndOfTheCircle;
         patrolRoute.Enqueue(StartOfTheCircle);
         patrolRoute.Enqueue(EndOfTheCircle);

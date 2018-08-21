@@ -81,7 +81,7 @@ public class ArrowBehaviour : Projectile
         //SoundManager
         onHitSoundSource.clip = onHitSounds[1];
         onHitSoundSource.Play();
-
+        Debug.Log(hostileResourceManager);
         hostileResourceManager.GotHit(baseDamage, other.contacts[0].point, hitSpeed);
        // playerTideComboManager.ResetCombo();
     }

@@ -4,6 +4,15 @@ using System.Collections;
 public class StatueBrute : HostileTerrestrial
 {
     private bool charging;
+    private StatueBruteHitBoxManager statueBruteHitBoxManager;
+
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+        statueBruteHitBoxManager = GetComponent<StatueBruteHitBoxManager>();
+    }
+
     private void Update()
     {
         if (charging&&agentAnimatorManager.AnimatorSpeed!= 0)
@@ -41,6 +50,7 @@ public class StatueBrute : HostileTerrestrial
         rigidbodyAgent.isKinematic = false;
         rigidbodyAgent.velocity = Vector3.zero;
         agentAnimatorManager.PlayAttackAnimation();
+        StartCoroutine(statueBruteHitBoxManager.SpearChargeHitBoxAnimation());
         yield return new WaitForSeconds(0.8f);
         charging = true;
         yield return new WaitUntil(() => !StaticToolMethods.GetAnimatorStateInfo(0,agentAnimatorManager.agentAnimator).IsName("Attacking"));

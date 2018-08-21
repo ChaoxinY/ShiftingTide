@@ -20,10 +20,10 @@ public class TimeStopZone : MonoBehaviour
         influencedGameObjects = UpdateInfluenceList();
         foreach (GameObject influencedGameObject in influencedGameObjects)
         {   
-            if (influencedGameObject.GetComponentInParent<HostileResourceManager>()&&
-                influencedGameObject.GetComponentInParent<HostileResourceManager>().enabled == true)
+            if (influencedGameObject.GetComponent<HostileResourceManager>()&&
+                influencedGameObject.GetComponent<HostileResourceManager>().enabled == true)
             {
-                HostileResourceManager hostileResource = influencedGameObject.GetComponentInParent<HostileResourceManager>();
+                HostileResourceManager hostileResource = influencedGameObject.GetComponent<HostileResourceManager>();
                 hostileResource.CurrentHealth -= 2.5f;
             }
         }
@@ -68,6 +68,7 @@ public class TimeStopZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         if (IsGameObjectinfluenceable(other.gameObject))
         {
             InfluenceGameObject(other.gameObject, true);

@@ -10,6 +10,7 @@ public class ItemDroperResourceManager : HostileResourceManager
         Instantiate(ItemToDrop, transform.position, Quaternion.identity);
         StartCoroutine(OnHitDrops(1, 2));
         SpawnSourcePoint(1);
+        Destroy(gameObject);
         yield break;
     }
 
