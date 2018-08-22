@@ -99,21 +99,7 @@ public class PlayerCamera : MonoBehaviour
         return targetFOV;
     }
 
-    public IEnumerator DoShake(int timesToShake, float shakeInterval, float shakeAmout)
-    {
-        Vector3 camPos = cameraMain.transform.position;
-        for (int i = 0; i < timesToShake; i++)
-        {
-            float shakeAmtX = Random.Range(-shakeAmout, shakeAmout);
-            float shakeAmtY = Random.Range(-shakeAmout, shakeAmout);
-            camPos.x += shakeAmtX;
-            camPos.y += shakeAmtY;
-            Debug.Log(camPos);
-            cameraMain.transform.position = camPos;
-            yield return new WaitForSeconds(shakeInterval);
-        }
-        yield break;
-    }
+  
 
     public void ResetTargetOffsets()
     {

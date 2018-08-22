@@ -24,7 +24,7 @@ public class PlayerAimModule : PlayerModule
     private Camera cameraMain;
     private Transform nearestTarget, playerTransForm;
     private Vector3 lastDirection;
-    private bool lockedOn, enemyHit;
+    private bool lockedOn, enemyHit, modul;
     private float standardMouseSensitivity;
 
     protected override void Initialize()
@@ -71,19 +71,28 @@ public class PlayerAimModule : PlayerModule
 
     public override void ModuleUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Tab) && !cursor.gameObject.activeInHierarchy)
+        {
+            ModuleStartUp();
+        }
+        else if (Input.GetKeyDown(KeyCode.Tab) && cursor.gameObject.activeInHierarchy)
+        {
+            ModuleRemove();
+        }
         bow.transform.LookAt(shootTarget.transform);
 
         if (Input.GetMouseButton(1) && CheckIfCurrentArrowIsAvailable(currentArrowhead.name))
         {
             ChargeUpArrow();
-
+            ModuleStartUp();
         }
         if (Input.GetMouseButtonUp(1) && isAiming && arrowChargingState != 0)
         {
             ShootArrow();
         }
 
-        if (Input.GetMouseButtonUp(1) && arrowChargingState == 0) {
+        if (Input.GetMouseButtonUp(1) && arrowChargingState == 0)
+        {
             CancelArrow();
         }
 
@@ -200,7 +209,8 @@ public class PlayerAimModule : PlayerModule
 
     }
 
-    private void CancelArrow() {
+    private void CancelArrow()
+    {
         if (isAiming) isAiming = !isAiming;
         playerAnimatorManager.Aiming = isAiming;
         playerParticleSystemManager.StopAllShootingParticleSystems();

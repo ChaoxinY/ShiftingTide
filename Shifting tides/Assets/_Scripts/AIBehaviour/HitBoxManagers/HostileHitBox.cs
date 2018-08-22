@@ -1,22 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HostileHitBox : MonoBehaviour
+public class HostileHitbox : MonoBehaviour
 {
     public Collider hitBoxCollider;
+    public AudioSource hitboxAudioSource;
     public float hitBoxDamage;
+
+    private PlayerStatusManager playerStatusManager;
 
     private void Start()
     {
         hitBoxCollider = GetComponent<Collider>();
+        hitboxAudioSource = GetComponent<AudioSource>();
+        playerStatusManager = GameObject.Find("Player").GetComponent<PlayerStatusManager>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.name == "Player")
+        if (collision.gameObject.name == "Player")
         {
             hitBoxCollider.enabled = false;
-            PlayerResourcesManager.Health -= hitBoxDamage;
+            playerStatusManager.ApplyDamage(hitBoxDamage);
+            hitboxAudioSource.Play();
         }
     }
 }

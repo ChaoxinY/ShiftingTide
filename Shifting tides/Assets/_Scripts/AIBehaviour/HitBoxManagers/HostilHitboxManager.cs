@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class HostilHitboxManager : MonoBehaviour
 {
-    protected List<HostileHitBox> hitBoxesToManage = new List<HostileHitBox>();
+    protected List<HostileHitbox> hitBoxesToManage = new List<HostileHitbox>();
     protected AgentAnimatorManager agentAnimatorManager;
 
     private void Start()
     {
-        Component[] childHostileHitBoxes = gameObject.GetComponentsInChildren(typeof(HostileHitBox));
-        foreach (HostileHitBox childHostileHitBox in childHostileHitBoxes)
+        Component[] childHostileHitBoxes = gameObject.GetComponentsInChildren(typeof(HostileHitbox));
+        foreach (HostileHitbox childHostileHitBox in childHostileHitBoxes)
         {
             hitBoxesToManage.Add(childHostileHitBox);
         }

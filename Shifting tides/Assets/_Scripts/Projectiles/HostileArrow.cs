@@ -3,12 +3,20 @@ using System.Collections;
 
 public class HostileArrow : ArrowBehaviour
 {
+    private PlayerStatusManager playerStatusManager;
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+        playerStatusManager = GameObject.Find("Player").GetComponent<PlayerStatusManager>();
+    }
+
     protected override void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Player" ) {
             onHitSoundSource.clip = onHitSounds[1];
             onHitSoundSource.Play();
-            PlayerResourcesManager.Health -= 25;
+            playerStatusManager.ApplyDamage(25f);
             SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized ,other.gameObject);
             return;
         }

@@ -25,7 +25,6 @@ public class RagdollManager : MonoBehaviour
         GetComponent<Animator>().enabled = false;
         GameObject weaponCopy = Instantiate(weaponInHand, weaponInHand.transform.position, weaponInHand.transform.rotation);
         weaponCopy.GetComponent<Rigidbody>().isKinematic = false;
-        weaponCopy.GetComponent<Collider>().isTrigger = false;
         weaponCopy.GetComponent<Collider>().enabled = true;
         
         Destroy(weaponInHand);

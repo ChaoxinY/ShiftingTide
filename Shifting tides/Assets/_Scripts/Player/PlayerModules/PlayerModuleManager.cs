@@ -6,8 +6,6 @@ public class PlayerModuleManager : MonoBehaviour
 {
     public List<PlayerModule> AvailableModules = new List<PlayerModule>();
     public List<PlayerModule> ActiveModules = new List<PlayerModule>();
-
-    private bool isAiming = false;
   
     private void Start()
     {
@@ -19,45 +17,35 @@ public class PlayerModuleManager : MonoBehaviour
 
     private void Update()
     {
-
-        if ((Input.GetKeyDown(KeyCode.Tab) && isAiming == false )|| (isAiming == false && Input.GetMouseButton(1)))
-        {         
-                ActiveModules[2].ModuleStartUp();
-                isAiming = true;            
-        }
-        else if (isAiming && Input.GetKeyDown(KeyCode.Tab) && !Input.GetMouseButton(1))
-        {   
-                foreach (PlayerModule module in ActiveModules)
-                {
-                    if (module.ModuleID == AvailableModules[2].ModuleID)
-                    {
-                        module.ModuleRemove();
-                        isAiming = false;
-                        return;
-                    }
-                }
-            
-        }
         foreach (PlayerModule module in ActiveModules)
         {
-            module.ModuleUpdate();
+            if (module.active)
+            {
+                module.ModuleUpdate();
+            }
         }
     }
     private void FixedUpdate()
     {
         foreach (PlayerModule module in ActiveModules)
         {
-            module.ModuleFixedUpdate();
+            if (module.active)
+            {
+                module.ModuleFixedUpdate();
+            }
         }
     }
 }
 
 public abstract class PlayerModule : MonoBehaviour
 {
+    public bool active;
     private int moduleID;
+
     private void Start()
     {
         Initialize();
+        active = true;
     }
     protected virtual void Initialize() { InitializeModuleID(); }
     public abstract void InitializeModuleID();
