@@ -7,12 +7,12 @@ public class BreakableSpawner : Spawner
 
     private void OnCollisionEnter(Collision collision)
     {
-        TriggerFunction();
+        MechanismFunction();
     }
 
-    public override void TriggerFunction()
+    public override void MechanismFunction()
     {
-        base.TriggerFunction();
+        base.MechanismFunction();
         Debug.Log("Spawned");
         Destroy(gameObject, selfDestructDelay);
     }

@@ -20,12 +20,12 @@ public class Spawner : TriggerBoundMechanism
         {
             if (!repeatTriggerFunction)
             {
-                TriggerFunction();
+                MechanismFunction();
                 this.enabled = false;
             }
             yield return new WaitForSeconds(spawnInterval);
 
-            TriggerFunction();           
+            MechanismFunction();           
             timesActivated += 1;
 
             if (timesActivated >= durabilitiy)
@@ -45,7 +45,7 @@ public class Spawner : TriggerBoundMechanism
         }
     }
 
-    public override void TriggerFunction()
+    public override void MechanismFunction()
     {
         GameObject spawnObject = Instantiate(objectToSpawn, positionToSpawn.position, positionToSpawn.rotation);
 

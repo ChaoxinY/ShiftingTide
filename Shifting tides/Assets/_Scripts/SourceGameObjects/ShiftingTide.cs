@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class ShiftingTide : MonoBehaviour
 {
-    private int rightBound;
-    private float growSpeed, maxSize;
+    public float growSpeed, maxSize;
+    public Transform meshTransform;
 
+    private int rightBound;
+   
     void Update()
     {
-        transform.localScale += Vector3.one * growSpeed * Time.deltaTime;
-        if (transform.localScale.magnitude >= maxSize)
+        SphereCollider sphereCollider = GetComponent<SphereCollider>();
+        sphereCollider.radius = Mathf.Lerp(sphereCollider.radius,maxSize/2, Time.deltaTime * growSpeed);
+        meshTransform.localScale = Vector3.Lerp(meshTransform.localScale, Vector3.one * maxSize, Time.deltaTime * growSpeed);
+
+        if (sphereCollider.radius >= Mathf.Abs(maxSize/2-100f))
         {
             Destroy(gameObject);
         }
@@ -25,13 +30,9 @@ public class ShiftingTide : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        switch (collision.gameObject.tag)
-        {
-            case "SourcePoint":
-                Debug.Log("hit");
-                collision.gameObject.GetComponent<SourcePoint>().OnSpawnInit(rightBound, collision.gameObject.transform.position);
-                collision.gameObject.layer = 8;
-                break;
+        if (collision.gameObject.tag == "SourcePoint") {
+            collision.gameObject.GetComponent<SourcePoint>().OnSpawnInit(rightBound, collision.gameObject.transform.position);
+            collision.gameObject.layer = 8;
         }
     }
 }

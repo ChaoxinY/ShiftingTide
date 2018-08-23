@@ -8,7 +8,7 @@ public class PlayerStatusManager : MonoBehaviour
 
     private void Start()
     {
-        playerModuleManager = GetComponent<PlayerModuleManager>();
+        playerModuleManager = GetComponent<PlayerModuleManager>();  
     }
 
     private void LateUpdate()

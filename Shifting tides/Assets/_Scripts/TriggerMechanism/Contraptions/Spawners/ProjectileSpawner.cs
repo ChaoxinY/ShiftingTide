@@ -6,7 +6,7 @@ public class ProjectileSpawner : Spawner
 {
     public float velocityProjectile;
 
-    public override void TriggerFunction()
+    public override void MechanismFunction()
     {
         GameObject spawnObject = Instantiate(objectToSpawn, positionToSpawn.position, positionToSpawn.transform.rotation);
         Component[] childRigidBodies = spawnObject.GetComponentsInChildren(typeof(Rigidbody));

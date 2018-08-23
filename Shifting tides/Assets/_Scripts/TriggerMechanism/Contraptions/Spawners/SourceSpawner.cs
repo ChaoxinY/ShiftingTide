@@ -30,7 +30,7 @@ public class SourceSpawner : Spawner
         return maxReached;
     }
    
-    public override void TriggerFunction()
+    public override void MechanismFunction()
     {
         if (!isCollideSpawner && !MaxSpawnedPointsReached())
             SpawnSourcePoint(transform.position, positionToSpawn.position);
