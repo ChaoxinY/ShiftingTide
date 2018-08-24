@@ -77,29 +77,26 @@ public class SourcePoint : StandardInteractiveGameObject
         yield return StartCoroutine(base.LocalUpdate());
         transform.Rotate(rotationValue * rotationSpeed);
 
-        if (transform.position != destination)
+        if (transform.position != destination && objectToChase == null)
         {
             transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * movementSpeed);
         }
         if (gameObject.layer == 8)
         {
-            WearOffImmunity();
+            StartCoroutine(WearOffImmunity());
         }
     }
 
-    private void WearOffImmunity()
+    private IEnumerator WearOffImmunity()
     {
-        immuneTime += Time.deltaTime * 20f;
-        if (immuneTime >= 200f)
-        {
-
+        yield return new WaitForSeconds(1.5f);
             gameObject.layer = 10;
-        }
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             //if (PlayerResourcesManager.IsThisResourceAtMax(colorIndex) && PlayerResourcesManager.IsThisResourceAtMax(5))
             //{

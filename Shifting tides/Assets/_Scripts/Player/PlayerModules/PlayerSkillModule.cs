@@ -116,13 +116,18 @@ public class PlayerSkillModule : PlayerModule
     private void GatherSource()
     {
         RaycastHit[] hits;
-        int layerMask = 1 << 10;
-        hits = Physics.SphereCastAll(transform.position, 3f, transform.forward, 1f, layerMask);
+        int layerMask1 = 1 << 10;
+        int layerMask2 = 1 << 8;
+        int finalLayerMask = layerMask1 | layerMask2;
+        hits = Physics.SphereCastAll(transform.position, 3f, transform.forward, 1f, finalLayerMask);
         foreach (RaycastHit rh in hits)
         {
-            SourcePoint sP = rh.collider.gameObject.GetComponent<SourcePoint>();
-            sP.objectToChase = gameObject;
-            sP.movementSpeed = 20f;
+            if (rh.collider.gameObject.GetComponent<SourcePoint>())
+            {
+                SourcePoint sP = rh.collider.gameObject.GetComponent<SourcePoint>();
+                sP.objectToChase = gameObject;
+                sP.movementSpeed = 20f;
+            }
         }
     }
     private void CreatePlatform()

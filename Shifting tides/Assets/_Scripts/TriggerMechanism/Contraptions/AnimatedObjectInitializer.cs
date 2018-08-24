@@ -6,7 +6,7 @@ public class AnimatedObjectInitializer : TriggerBoundMechanism
 {
     public Agent objectAgent;
     public Animator objectAnimator;
-    public Collider objectCollider;
+    public List<Collider> objectColliders = new List<Collider>();
     public float initializeAnimationDuration;
 
     public override void OnTriggerFunction()
@@ -18,8 +18,13 @@ public class AnimatedObjectInitializer : TriggerBoundMechanism
        
         objectAnimator.enabled = true;
         yield return new WaitForSeconds(initializeAnimationDuration);
-        objectAgent.enabled = true;
-        objectCollider.enabled = true;
+        foreach (Collider collider in objectColliders)
+        {
+            Debug.Log("Collider");
+            collider.enabled = true;
+        }
+        objectAgent.enabled = true;      
+        Destroy(gameObject);
         yield break;
     }
 }

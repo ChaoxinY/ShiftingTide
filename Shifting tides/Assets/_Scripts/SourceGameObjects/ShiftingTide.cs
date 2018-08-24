@@ -5,9 +5,9 @@ using UnityEngine;
 public class ShiftingTide : MonoBehaviour
 {
     public float growSpeed, maxSize;
+    public int rightBound;
     public Transform meshTransform;
 
-    private int rightBound;
    
     void Update()
     {
@@ -15,7 +15,7 @@ public class ShiftingTide : MonoBehaviour
         sphereCollider.radius = Mathf.Lerp(sphereCollider.radius,maxSize/2, Time.deltaTime * growSpeed);
         meshTransform.localScale = Vector3.Lerp(meshTransform.localScale, Vector3.one * maxSize, Time.deltaTime * growSpeed);
 
-        if (sphereCollider.radius >= Mathf.Abs(maxSize/2-100f))
+        if (sphereCollider.radius >= Mathf.Abs(maxSize / 2 - 100f))
         {
             Destroy(gameObject);
         }
