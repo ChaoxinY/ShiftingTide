@@ -86,7 +86,7 @@ public class HostileTerrestrial : Terrestrial
     }
 
 
-    protected virtual void SwitchToCombatMode()
+    public virtual void SwitchToCombatMode()
     {
         Debug.Log("Alart");
         overwrittingBehaviourFinished = true;

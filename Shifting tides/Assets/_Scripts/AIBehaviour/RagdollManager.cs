@@ -26,7 +26,7 @@ public class RagdollManager : MonoBehaviour
         GameObject weaponCopy = Instantiate(weaponInHand, weaponInHand.transform.position, weaponInHand.transform.rotation);
         weaponCopy.GetComponent<Rigidbody>().isKinematic = false;
         weaponCopy.GetComponent<Collider>().enabled = true;
-        
+        Destroy(weaponCopy.GetComponent<HostileHitbox>());
         Destroy(weaponInHand);
         foreach (Rigidbody childRigidBody in ragdollRigidbodies)
         {

@@ -16,7 +16,7 @@ public class PlayerStatusManager : MonoBehaviour
         if (cameraShake)
         {
             cameraShake = false;
-            StartCoroutine(DoShake(1, 0.2f, 0.2f));
+            StartCoroutine(DoShake(1, 0.2f, 0.4f));
         }
     }
 
@@ -35,9 +35,7 @@ public class PlayerStatusManager : MonoBehaviour
     }
 
     private IEnumerator DoShake(int timesToShake, float shakeInterval, float shakeAmout)
-    {
-      
-      
+    {          
         Vector3 camPos = Camera.main.transform.position;
         for (int i = 0; i < timesToShake; i++)
         {

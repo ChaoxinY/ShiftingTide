@@ -138,6 +138,10 @@ ModelImporter:
     100264: Cube_019
     100266: Cube_020
     100268: Plane_003
+    100270: Cube_021
+    100272: Cube_023
+    100274: Cube_025
+    100276: Cube_026
     400000: Bag_Ol_goods_1_001
     400002: Bag_Ol_goods_1_002
     400004: Bag_Ol_goods_1_003
@@ -273,6 +277,10 @@ ModelImporter:
     400264: Cube_019
     400266: Cube_020
     400268: Plane_003
+    400270: Cube_021
+    400272: Cube_023
+    400274: Cube_025
+    400276: Cube_026
     2100000: unnamed
     2100002: Material_001
     2100004: Arrow
@@ -411,6 +419,10 @@ ModelImporter:
     2300262: Cube_019
     2300264: Cube_020
     2300266: Plane_003
+    2300268: Cube_021
+    2300270: Cube_023
+    2300272: Cube_025
+    2300274: Cube_026
     3300000: Bag_Ol_goods_1_001
     3300002: Bag_Ol_goods_1_002
     3300004: Bag_Ol_goods_1_003
@@ -545,6 +557,10 @@ ModelImporter:
     3300262: Cube_019
     3300264: Cube_020
     3300266: Plane_003
+    3300268: Cube_021
+    3300270: Cube_023
+    3300272: Cube_025
+    3300274: Cube_026
     4300000: Bag_Ol_goods_1_001
     4300002: Bag_Ol_goods_1_002
     4300004: Bag_Ol_goods_1_003
@@ -679,6 +695,10 @@ ModelImporter:
     4300262: Cube_016
     4300264: Cube_014
     4300266: Plane_003
+    4300268: Cube_026
+    4300270: Cube_025
+    4300272: Cube_023
+    4300274: Cube_021
     6400000: Bag_Ol_goods_1_001
     6400002: Bag_Ol_goods_1_002
     6400004: Bag_Ol_goods_1_003
@@ -813,6 +833,10 @@ ModelImporter:
     6400262: Cube_019
     6400264: Cube_020
     6400266: Plane_003
+    6400268: Cube_021
+    6400270: Cube_023
+    6400272: Cube_025
+    6400274: Cube_026
     7400000: Default Take
     9500000: //RootNode
     2186277476908879412: ImportLogs
