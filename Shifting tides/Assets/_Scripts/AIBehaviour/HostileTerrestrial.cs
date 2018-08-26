@@ -7,7 +7,6 @@ public class HostileTerrestrial : Terrestrial
 {  
     public float visionRange, sightRange, chaseRange, attackRange;
 
-    private GameObject objectToChase;
     private float distanceToPray;
     private bool InCombat = false;
 
@@ -38,8 +37,7 @@ public class HostileTerrestrial : Terrestrial
             Debug.Log("Hit");
             if (hit.collider.gameObject.tag == "Player")
             {
-                UpdateTargetDistance(hit.collider.gameObject);
-                objectToChase = hit.collider.gameObject;                
+                UpdateTargetDistance(hit.collider.gameObject);              
                 SwitchToCombatMode();
                 yield break;
             }

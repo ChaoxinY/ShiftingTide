@@ -7,14 +7,14 @@ public class BreakableSpawner : Spawner
 
     private void OnCollisionEnter(Collision collision)
     {
-        MechanismFunction();
+       StartCoroutine(MechanismFunction());
     }
 
-    public override void MechanismFunction()
+    public override IEnumerator MechanismFunction()
     {
-        base.MechanismFunction();
-        Debug.Log("Spawned");
+        yield return StartCoroutine(base.MechanismFunction());
         Destroy(gameObject, selfDestructDelay);
+        yield break;
     }
 
 }

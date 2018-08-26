@@ -30,10 +30,11 @@ public class SourceSpawner : Spawner
         return maxReached;
     }
    
-    public override void MechanismFunction()
+    public override IEnumerator MechanismFunction()
     {
         if (!isCollideSpawner && !MaxSpawnedPointsReached())
             SpawnSourcePoint(transform.position, positionToSpawn.position);
+        yield break;
     }
 
     protected override void Initialize()

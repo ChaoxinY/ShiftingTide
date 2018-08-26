@@ -17,9 +17,10 @@ public class AnimatedObjectInitializer : TriggerBoundMechanism
         objectAnimatorManager = GetComponentInParent<AgentAnimatorManager>();
     }
 
-    public override void OnTriggerFunction()
+    public override IEnumerator OnTriggerFunction()
     {
         StartCoroutine(InitializeObject());
+        yield break;
     }
 
     protected virtual IEnumerator InitializeObject() {

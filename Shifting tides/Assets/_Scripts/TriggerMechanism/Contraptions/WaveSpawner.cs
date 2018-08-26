@@ -7,10 +7,11 @@ public class WaveSpawner : TriggerBoundMechanism
     public Transform[] spawnLocations;
     public float[] waveIntervals;
 
-    public override void OnTriggerFunction()
+    public override IEnumerator OnTriggerFunction()
     {
         GetComponent<Collider>().enabled = false;
         StartCoroutine(SpawnWaves());
+        yield break;
     }
 
     private IEnumerator SpawnWaves() {

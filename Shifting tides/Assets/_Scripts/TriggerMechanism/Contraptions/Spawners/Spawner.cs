@@ -25,7 +25,7 @@ public class Spawner : TriggerBoundMechanism
             }
             yield return new WaitForSeconds(spawnInterval);
 
-            MechanismFunction();           
+            yield return StartCoroutine(MechanismFunction());           
             timesActivated += 1;
 
             if (timesActivated >= durabilitiy)
@@ -45,9 +45,9 @@ public class Spawner : TriggerBoundMechanism
         }
     }
 
-    public override void MechanismFunction()
+    public override IEnumerator MechanismFunction()
     {
-        GameObject spawnObject = Instantiate(objectToSpawn, positionToSpawn.position, positionToSpawn.rotation);
-
+        Instantiate(objectToSpawn, positionToSpawn.position, positionToSpawn.rotation);
+        yield break;
     }
 }

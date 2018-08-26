@@ -6,7 +6,7 @@ public class ProjectileSpawner : Spawner
 {
     public float velocityProjectile;
 
-    public override void MechanismFunction()
+    public override IEnumerator MechanismFunction()
     {
         GameObject spawnObject = Instantiate(objectToSpawn, positionToSpawn.position, positionToSpawn.transform.rotation);
         Component[] childRigidBodies = spawnObject.GetComponentsInChildren(typeof(Rigidbody));
@@ -17,5 +17,6 @@ public class ProjectileSpawner : Spawner
                 rb.AddForce(positionToSpawn.transform.forward * velocityProjectile, ForceMode.Impulse);
             }
         }
+        yield break;
     }
 }

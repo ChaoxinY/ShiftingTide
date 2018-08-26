@@ -5,10 +5,11 @@ public class Initializer : TriggerBoundMechanism
 {
     public GameObject gameObjectToInitialize;
 
-    public override void OnTriggerFunction()
+    public override IEnumerator OnTriggerFunction()
     {
         gameObjectToInitialize.SetActive(true);
         Destroy(gameObject);
+        yield break;
     }
 
 }

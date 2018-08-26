@@ -11,8 +11,8 @@ public class TriggerBoundMechanism : StandardInteractiveGameObject
         base.Initialize();
     }
 
-    public virtual void OnTriggerFunction() { }
-    public virtual void MechanismFunction() { }
+    public virtual IEnumerator OnTriggerFunction() { yield break; }
+    public virtual IEnumerator MechanismFunction() { yield break; }
 
     public bool Triggered
     {
@@ -23,7 +23,7 @@ public class TriggerBoundMechanism : StandardInteractiveGameObject
         set
         {
             triggered = value;
-            OnTriggerFunction();
+            StartCoroutine(OnTriggerFunction());
         }
     }
 }

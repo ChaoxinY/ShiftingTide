@@ -8,6 +8,7 @@ public class HostileArrow : ArrowBehaviour
     protected override void Initialize()
     {
         base.Initialize();
+        gravity = 0;
         playerStatusManager = GameObject.Find("Player").GetComponent<PlayerStatusManager>();
     }
 

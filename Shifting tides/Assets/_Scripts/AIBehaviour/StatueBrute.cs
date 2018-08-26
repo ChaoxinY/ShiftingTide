@@ -6,7 +6,6 @@ public class StatueBrute : HostileTerrestrial
     private bool charging;
     private StatueBruteHitBoxManager statueBruteHitBoxManager;
 
-
     protected override void Initialize()
     {
         base.Initialize();
