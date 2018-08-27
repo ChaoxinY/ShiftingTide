@@ -6,7 +6,7 @@ public class PlayerAnimatorManager : MonoBehaviour
 {
     public Animator animatorPlayer;
 
-    private float inputSpeed;
+    private float inputSpeed,animatorSpeed;
     private bool onGround,aiming,input;
 
     private void Start()
@@ -69,5 +69,19 @@ public class PlayerAnimatorManager : MonoBehaviour
             animatorPlayer.SetBool("Input", input);
         }
 
+    }
+
+    public float AnimatorSpeed
+    {
+        get
+        {
+            return animatorSpeed;
+        }
+
+        set
+        {
+            animatorSpeed = value;
+            animatorPlayer.SetFloat("Speed", animatorSpeed);
+        }
     }
 }

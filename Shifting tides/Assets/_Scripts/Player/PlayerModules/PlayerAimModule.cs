@@ -21,6 +21,7 @@ public class PlayerAimModule : PlayerModule
     private PlayerAnimatorManager playerAnimatorManager;
     private PlayerSkillModule playerSkillModule;
     private PlayerCamera playerCamera;
+    private PlayerTideComboManager playerTideComboManager;
     private Camera cameraMain;
     private Transform nearestTarget, playerTransForm;
     private Vector3 lastDirection;
@@ -29,12 +30,14 @@ public class PlayerAimModule : PlayerModule
 
     protected override void Initialize()
     {
-        playerParticleSystemManager = GameObject.Find("Player").GetComponentInChildren<PlayerParticleSystemManager>();
-        playerAnimatorManager = GameObject.Find("Player").GetComponent<PlayerAnimatorManager>();
+        GameObject player = GameObject.Find("Player");
+        playerParticleSystemManager = player.GetComponentInChildren<PlayerParticleSystemManager>();
+        playerAnimatorManager = player.GetComponent<PlayerAnimatorManager>();
         playerCamera = GameObject.Find("Main Camera").GetComponent<PlayerCamera>();
-        playerSkillModule = GameObject.Find("Player").GetComponentInChildren<PlayerSkillModule>();
+        playerSkillModule = player.GetComponentInChildren<PlayerSkillModule>();
+        playerTideComboManager = player.GetComponent<PlayerTideComboManager>();
         cameraMain = Camera.main;
-        playerTransForm = GameObject.Find("Player").transform;
+        playerTransForm = player.transform;
         lockedOn = false;
         cursor.sprite = lockOffCursor;
         InitializeModuleID();
@@ -191,13 +194,14 @@ public class PlayerAimModule : PlayerModule
 
     private void ChargeUpArrow()
     {
-
+       
         if (!isAiming) isAiming = !isAiming;
 
         playerAnimatorManager.Aiming = isAiming;
-
+       
         if (playerParticleSystemManager.isPlayingChargingAnimation == false)
         {
+            playerAnimatorManager.AnimatorSpeed += playerTideComboManager.currentCombo * 0.167f;
             bowSoundSources[1].Play();
             playerParticleSystemManager.PlayChargingAnimation();
         }
@@ -214,11 +218,11 @@ public class PlayerAimModule : PlayerModule
         if (isAiming) isAiming = !isAiming;
         playerAnimatorManager.Aiming = isAiming;
         playerParticleSystemManager.StopAllShootingParticleSystems();
-
+        playerAnimatorManager.AnimatorSpeed = 1;
     }
 
     private void ShootArrow()
-    {
+    {   
         ConsumeCurrentArrowResource();
         GameObject Arrow = Instantiate(currentArrowhead, bow.transform.position, bow.transform.rotation);
         Arrow.GetComponent<ArrowBehaviour>().ApplyArrowStageValues(arrowChargingState);
@@ -231,7 +235,7 @@ public class PlayerAimModule : PlayerModule
         }
         if (isAiming) isAiming = !isAiming;
         playerAnimatorManager.Aiming = isAiming;
-
+        playerAnimatorManager.AnimatorSpeed = 1;
     }
 
     private void ConsumeCurrentArrowResource()
