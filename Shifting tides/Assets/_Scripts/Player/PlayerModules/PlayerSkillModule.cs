@@ -134,7 +134,7 @@ public class PlayerSkillModule : PlayerModule
     {
         if (PlayerResourcesManager.IsThereEnoughResource(2, 0) && isTimeStopped)
         {
-            Vector3 spawnPosition = gameObject.transform.position - new Vector3(0, 1.2f, 0) + transform.forward * playerPhysicsModule.speedLimit / 2.4f;
+            Vector3 spawnPosition = gameObject.transform.position - new Vector3(0, 1.4f, 0) + transform.forward * playerPhysicsModule.speedLimit /4f;
             if (!IsMoving())
             {
                 spawnPosition = gameObject.transform.position - new Vector3(0, 1f, 0);
