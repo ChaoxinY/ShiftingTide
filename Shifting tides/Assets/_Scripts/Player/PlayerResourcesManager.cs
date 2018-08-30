@@ -234,7 +234,7 @@ public class PlayerResourcesManager : MonoBehaviour
                 scrapSource = 0;
                 return;
             }
-            else if (scrapSource > 20)
+            else if (scrapSource > 10)
             {
                 SourceFusedArrows += 1;
                 scrapSource = 0;

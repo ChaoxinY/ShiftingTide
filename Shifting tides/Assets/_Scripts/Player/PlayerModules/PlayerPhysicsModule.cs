@@ -57,8 +57,11 @@ public class PlayerPhysicsModule : PlayerModule
     private bool BumpCheck() {
 
         bool hitABump = true;
+        int layerMask1 = 1 << 0;
+        int layerMask2 = 1 << 11;
+        int finalLayerMask = layerMask1 | layerMask2;
         RaycastHit hit;
-        Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity);
+        Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity,finalLayerMask);
         Debug.Log(hit.transform.gameObject.name);
         if (hit.distance > 1.5f) { hitABump = false; }
         return hitABump;
@@ -69,7 +72,10 @@ public class PlayerPhysicsModule : PlayerModule
         //Ray ray = new Ray(this.transform.position + Vector3.up * 2 * colExtents.x, Vector3.down);     
         //Debug.DrawRay(transform.position - transform.forward, Vector3.down, Color.red);
         //colExtents.x + 1.4f
-        return Physics.Raycast(transform.position, Vector3.down, 1.2f);
+        int layerMask1 = 1 << 0;
+        int layerMask2 = 1 << 11;
+        int finalLayerMask = layerMask1 | layerMask2;
+        return Physics.Raycast(transform.position, Vector3.down, 1.2f, finalLayerMask);
     }
 
     private bool IsMoving()

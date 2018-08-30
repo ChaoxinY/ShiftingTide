@@ -58,7 +58,7 @@ public class CloudArrowBehaviour : ArrowBehaviour
             playerAimModule.EnemyHit = true;
             if (hostileResourceManager.CurrentArmor != 0)
             {
-                hostileResourceManager.CurrentArmor -= hostileResourceManager.maxArmor * 0.33f;
+                hostileResourceManager.CurrentArmor -= hostileResourceManager.maxArmor * 0.5f;
                 return;
             }
             hostileResourceManager.GotHitOnCritSpot(baseDamage, other.contacts[0].point, hitSpeed);
@@ -72,7 +72,7 @@ public class CloudArrowBehaviour : ArrowBehaviour
         onHitSoundSource.Play();
         if (hostileResourceManager.CurrentArmor != 0)
         {
-            hostileResourceManager.CurrentArmor -= hostileResourceManager.maxArmor * 0.2f;
+            hostileResourceManager.CurrentArmor -= hostileResourceManager.maxArmor * 0.34f;
         }
         hostileResourceManager.GotHit(baseDamage, other.contacts[0].point, hitSpeed);
     }

@@ -3,10 +3,16 @@ using System.Collections;
 
 public class BreakableResourceManager : HostileResourceManager
 {
+    public bool dropsSource;
+    public int SourceType;
+
     protected override IEnumerator OnDeathFeedBack()
     {
-        yield return StartCoroutine(OnHitDrops(minOnHitDrop, maxOnHitDrop));
-        //SpawnSourcePoint(minOnDeathDrop);
+        yield return StartCoroutine(OnHitDrops(minOnDeathDrop, maxOnDeathDrop));
+        if (dropsSource)
+        {
+            SpawnSourcePoint(SourceType);
+        }
         Destroy(gameObject);
         yield break;
     }

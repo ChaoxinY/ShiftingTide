@@ -88,7 +88,7 @@ public class HostileResourceManager : MonoBehaviour
         {
             GameObject scrap = Instantiate(Resources.Load("Prefabs/Source") as GameObject, transform.position, Quaternion.identity);
             Vector3 randomPoistion = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
-            scrap.GetComponent<SourcePoint>().OnSpawnInit(4, GameObject.Find("Player").transform.position + randomPoistion,10, 4);
+            scrap.GetComponent<SourcePoint>().OnSpawnInit(4, GameObject.Find("Player").transform.position + randomPoistion,20, 4);
             scrap.GetComponent<SourcePoint>().objectToChase = GameObject.Find("Player");
             yield return new WaitForSeconds(0.1f);
         }

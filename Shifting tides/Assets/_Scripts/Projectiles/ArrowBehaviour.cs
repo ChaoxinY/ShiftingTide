@@ -62,6 +62,11 @@ public class ArrowBehaviour : Projectile
     {
         Vector3 hitSpeed = other.relativeVelocity;
         HostileResourceManager hostileResourceManager = other.gameObject.GetComponent<HostileResourceManager>();
+        if (hostileResourceManager == null) {
+            hostileResourceManager = other.gameObject.GetComponentInParent<HostileResourceManager>();
+        }
+
+        Debug.Log(hostileResourceManager);
         if (other.collider.name == "CritSpot")
         {
             onHitSoundSource.clip = onHitSounds[2];
@@ -124,7 +129,7 @@ public class ArrowBehaviour : Projectile
         }
 
         DummyParent.transform.SetParent(TargetHit.transform);
-        arrowDummy.transform.SetParent(DummyParent.transform);      
+        arrowDummy.transform.SetParent(DummyParent.transform);
         Destroy(gameObject);
     }
 
