@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
+    public Vector3 lastCheckPointPosition;
     private PlayerCamera plyCamera;
    
     public void Start()
@@ -18,7 +19,6 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.F5))
         {
             SceneManager.LoadScene("Prologue");
-            Time.timeScale = 1;
         }
     } 
 }

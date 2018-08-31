@@ -83,7 +83,10 @@ public class PlayerSkillModule : PlayerModule
     }
     private IEnumerator Dash()
     {
-        playerAnimatorManager.PlayDashAnimation();
+        if (!StaticToolMethods.GetAnimatorStateInfo(0, playerAnimatorManager.animatorPlayer).IsName("Dashing"))
+        {
+            playerAnimatorManager.PlayDashAnimation();
+        }
         playerParticleSystemManager.PlayDashAnimation();
         playerTideComboManager.StartCombo();
         PlayerResourcesManager.Dashes -= 1;

@@ -9,7 +9,7 @@ public class Trigger : MonoBehaviour {
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Rigidbody>()) {
+        if (other.gameObject.GetComponent<Rigidbody>() && boundMechanism != null) {
             boundMechanism.Triggered = true;
         }   
     }

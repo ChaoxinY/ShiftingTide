@@ -7,7 +7,7 @@ public class ColliderTrigger : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponent<Rigidbody>())
+        if (collision.gameObject.GetComponent<Rigidbody>() && boundMechanism != null)
         {
             boundMechanism.Triggered = true;
         }

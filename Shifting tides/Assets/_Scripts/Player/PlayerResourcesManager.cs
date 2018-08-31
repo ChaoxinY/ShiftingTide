@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerResourcesManager : MonoBehaviour
 { 
@@ -9,22 +10,26 @@ public class PlayerResourcesManager : MonoBehaviour
     /// </summary>
     public static float[] playerResourcesCaps = { 100, 40, 4, 1, 100, 3 };
     public static Ui ui;
+    public static GameObject player;
 
     /// <summary>
     ///  0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes 4 : arrows 5： SourceFused Arrows
     /// </summary>
     private static float[] playerResources = new float[6];
     private static int scrapSource;
-
+    private static GameManager gameManager;
     private float rechargeTimer = 5;
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         ui = GameObject.Find("UI").GetComponent<Ui>();
+        player = GameObject.Find("Player");
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         Health = playerResourcesCaps[0];
         SourceReserve = 0;
         JumpsLeft = 0;
-        Dashes = 0;
+        Dashes = 1;
         Arrows = 100;
         SourceFusedArrows = 0;
         ScrapSource = 0;
@@ -99,8 +104,9 @@ public class PlayerResourcesManager : MonoBehaviour
             ui.sliders[1].value = Health;
             if (playerResources[0] < 0)
             {
-                playerResources[0] = 0;
-                Time.timeScale = 0; 
+                SceneManager.LoadScene("Prologue");
+                player.transform.position = gameManager.lastCheckPointPosition;
+                Health = playerResourcesCaps[0];
             }
             if (playerResources[0] > playerResourcesCaps[0])
             {
