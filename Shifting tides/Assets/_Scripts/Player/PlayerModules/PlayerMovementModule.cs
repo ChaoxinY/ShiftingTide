@@ -69,7 +69,7 @@ public class PlayerMovementModule : PlayerModule
 
     public override void ModuleFixedUpdate()
     {
-        gravity = playerPhysicsModule.rigidbodyPlayer.velocity.y >= -1 ? 0 : gravity -= 0.7f;
+        gravity = playerPhysicsModule.rigidbodyPlayer.velocity.y >= -1 ? 0 : gravity -= 0.981f;
         playerPhysicsModule.rigidbodyPlayer.AddForce(currentMotion + Vector3.up * gravity, ForceMode.Acceleration);
         Vector2 horizontalVelocity = new Vector2(playerPhysicsModule.rigidbodyPlayer.velocity.x, playerPhysicsModule.rigidbodyPlayer.velocity.z);
         horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, playerPhysicsModule.speedLimit);

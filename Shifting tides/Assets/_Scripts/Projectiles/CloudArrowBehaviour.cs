@@ -47,6 +47,11 @@ public class CloudArrowBehaviour : ArrowBehaviour
         Vector3 hitSpeed = other.relativeVelocity;
         HostileResourceManager hostileResourceManager = other.gameObject.GetComponent<HostileResourceManager>();
         //CritHit
+        if (hostileResourceManager == null)
+        {
+            hostileResourceManager = other.gameObject.GetComponentInParent<HostileResourceManager>();
+        }
+        hostileResourceManager.CurrentArmor -= 100;
         if (other.collider.name == "CritSpot")
         {
             onHitSoundSource.clip = onHitSounds[2];
@@ -70,6 +75,7 @@ public class CloudArrowBehaviour : ArrowBehaviour
         SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[2], hitSpeed);
         onHitSoundSource.clip = onHitSounds[1];
         onHitSoundSource.Play();
+        
         if (hostileResourceManager.CurrentArmor != 0)
         {
             hostileResourceManager.CurrentArmor -= hostileResourceManager.maxArmor * 0.34f;

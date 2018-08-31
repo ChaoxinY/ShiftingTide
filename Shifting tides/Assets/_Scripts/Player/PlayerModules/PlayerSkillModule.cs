@@ -96,8 +96,7 @@ public class PlayerSkillModule : PlayerModule
         while (playerPhysicsModule.speedLimit > playerPhysicsModule.runLimit + 0.2f)
         {
             playerPhysicsModule.speedLimit
-                = Mathf.Lerp(playerPhysicsModule.speedLimit, playerPhysicsModule.runLimit, Time.deltaTime * 5f);
-
+                = Mathf.Lerp(playerPhysicsModule.speedLimit, playerPhysicsModule.runLimit, Time.deltaTime * 10);
             playerPhysicsModule.maxInput = Mathf.Lerp(playerPhysicsModule.maxInput, 0.5f, Time.deltaTime * 5f);
             yield return new WaitForSeconds(0.03f);
         }
