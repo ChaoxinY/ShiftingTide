@@ -9,6 +9,7 @@ public class CheckPoint : MonoBehaviour
 
             GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
             gameManager.lastCheckPointPosition = transform.position;
+            Destroy(this);
         }
     }
 

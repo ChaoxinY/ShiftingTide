@@ -5,6 +5,7 @@ public class HostileHitbox : MonoBehaviour
 {
     public Collider hitBoxCollider;
     public AudioSource hitboxAudioSource;
+    public bool disableUponHit = true;
     public float hitBoxDamage;
 
     private PlayerStatusManager playerStatusManager;
@@ -20,7 +21,10 @@ public class HostileHitbox : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            hitBoxCollider.enabled = false;
+            if (disableUponHit)
+            {
+                hitBoxCollider.enabled = false;
+            }
             playerStatusManager.ApplyDamage(hitBoxDamage);
             hitboxAudioSource.Play();
         }

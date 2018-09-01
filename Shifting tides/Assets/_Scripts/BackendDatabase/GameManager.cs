@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     public void Start()
     {      
         plyCamera = Camera.main.GetComponent<PlayerCamera>();
-            
+        lastCheckPointPosition = GameObject.Find("Player").transform.position;
     }
     public void Update()
     {

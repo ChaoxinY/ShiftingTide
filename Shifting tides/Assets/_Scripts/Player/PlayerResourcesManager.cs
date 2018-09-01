@@ -22,7 +22,7 @@ public class PlayerResourcesManager : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         ui = GameObject.Find("UI").GetComponent<Ui>();
         player = GameObject.Find("Player");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -104,7 +104,6 @@ public class PlayerResourcesManager : MonoBehaviour
             ui.sliders[1].value = Health;
             if (playerResources[0] < 0)
             {
-                SceneManager.LoadScene("Prologue");
                 player.transform.position = gameManager.lastCheckPointPosition;
                 Health = playerResourcesCaps[0];
             }

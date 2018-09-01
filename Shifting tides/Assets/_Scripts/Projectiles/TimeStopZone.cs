@@ -42,7 +42,7 @@ public class TimeStopZone : MonoBehaviour
 
     private List<GameObject> UpdateInfluenceList() {
         RaycastHit[] hits;
-        hits = Physics.SphereCastAll(transform.position, 3.2f, Vector3.up, 0.1f);
+        hits = Physics.SphereCastAll(transform.position, 5f, Vector3.up, 0f);
         List<GameObject> gameObjectHit = new List<GameObject>();
         foreach (RaycastHit hit in hits)
         {
