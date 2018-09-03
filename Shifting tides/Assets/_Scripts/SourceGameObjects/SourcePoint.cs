@@ -17,7 +17,7 @@ public class SourcePoint : StandardInteractiveGameObject
     /// addResource 0 : health , 1 : sourceReserve, 2 : jumps , 3 : dashes, 4: Scraps
     /// </summary>
     private int[] addResource = new int[5];
-    private int[] addResourceValue = { 20z, 10, 1, 1, 1 };
+    private int[] addResourceValue = { 20, 10, 1, 1, 1 };
     private float immuneTime, rotationSpeed;
     //private Coroutine pickedUpCorutine;
 

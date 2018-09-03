@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BreakableResourceManager : HostileResourceManager
+public class BreakableResourceManager : MobResourceManager
 {
     public bool dropsSource;
     public int SourceType;

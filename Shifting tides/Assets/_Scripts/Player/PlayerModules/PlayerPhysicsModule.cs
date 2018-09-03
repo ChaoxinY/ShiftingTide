@@ -62,7 +62,7 @@ public class PlayerPhysicsModule : PlayerModule
         int finalLayerMask = layerMask1 | layerMask2;
         RaycastHit hit;
         Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity,finalLayerMask);
-        Debug.Log(hit.transform.gameObject.name);
+        //Debug.Log(hit.transform.gameObject.name);
         if (hit.distance > 1.5f) { hitABump = false; }
         return hitABump;
     }

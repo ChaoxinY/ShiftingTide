@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TresureGuardResourceManager : HostileResourceManager
+public class TresureGuardResourceManager : MobResourceManager
 {
     protected override IEnumerator OnDeathFeedBack()
     {
@@ -9,5 +9,4 @@ public class TresureGuardResourceManager : HostileResourceManager
         SpawnSourcePoint(0);
         Destroy(gameObject);
     }
-
 }

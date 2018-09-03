@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemDroperResourceManager : HostileResourceManager
+public class ItemDroperResourceManager : MobResourceManager
 {
     public GameObject ItemToDrop;
 

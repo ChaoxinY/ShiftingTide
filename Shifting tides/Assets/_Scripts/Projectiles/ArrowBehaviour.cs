@@ -82,8 +82,6 @@ public class ArrowBehaviour : Projectile
         playerAimModule.EnemyHit = true;
         SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[0], hitSpeed);
         SpawnOnHitEffect(other.gameObject.transform, other.contacts[0], bleedEffect[2], hitSpeed);
-
-        //SoundManager
         onHitSoundSource.clip = onHitSounds[1];
         onHitSoundSource.Play();
         hostileResourceManager.GotHit(baseDamage, other.contacts[0].point, hitSpeed);
