@@ -19,6 +19,7 @@ public class BossInitializer : MonoBehaviour
             foreach (Collider collider in colliders) {
                 collider.enabled = true;
             }
+            Destroy(this);
         }
     }
 

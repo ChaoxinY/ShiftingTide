@@ -7,6 +7,7 @@ public class TresureGuardResourceManager : MobResourceManager
     {
         yield return StartCoroutine(OnHitDrops(minOnDeathDrop, maxOnDeathDrop));
         SpawnSourcePoint(0);
+        playerUi.StopTrackingStatus();
         Destroy(gameObject);
     }
 }

@@ -13,6 +13,7 @@ public class BreakableResourceManager : MobResourceManager
         {
             SpawnSourcePoint(SourceType);
         }
+        playerUi.StopTrackingStatus();
         Destroy(gameObject);
         yield break;
     }

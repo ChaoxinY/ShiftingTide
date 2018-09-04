@@ -13,7 +13,8 @@ public class Ui : MonoBehaviour
     public GameObject[] arrowHeadIcons;
 
     private bool tracking;
-    private Slider[] targetStatusSliders = new Slider[4];
+    private Slider[] targetStatusSliders = new Slider[4],displayStatusSliders = new Slider[4];
+
     private IEnumerator statusbarVisibilityCoroutine;
 
     public void DisplayCurrentArrowHead(GameObject currentArrowHead)
@@ -41,33 +42,36 @@ public class Ui : MonoBehaviour
     {
         if (tracking) {
             int j = 0;
-            for (int i = 3; i < 6; i++)
+            for (int i = 3; i < 7; i++)
             {
                 sliders[i].value = targetStatusSliders[j].value;
                 j++;
             }
+        }
+        if (!sliders[3].gameObject.activeInHierarchy) {
+            texts[3].gameObject.SetActive(false);
+            tracking = false;
         }
     }
 
     public void TrackTargetEnemyStatus(string name, Slider[] healthbars, Slider[] armorbars)
     {
         texts[3].text = name;
-
+        texts[3].gameObject.SetActive(true);
         //statusSliders = null ?
 
         Array.Clear(targetStatusSliders, 0, targetStatusSliders.Length);
         healthbars.CopyTo(targetStatusSliders, 0);
         armorbars.CopyTo(targetStatusSliders, healthbars.Length);
 
-        Slider[] displayStatusSliders = new Slider[4];
-
+      
         int j = 0;
-        for (int i = 3; i < 6; i++)
+        for (int i = 3; i < 7; i++)
         {
             sliders[i].gameObject.SetActive(true);
             sliders[i].maxValue = targetStatusSliders[j].maxValue;
             sliders[i].value = targetStatusSliders[j].value;
-            displayStatusSliders[i] = sliders[i];
+            displayStatusSliders[j] = sliders[i];
             j++;
         }
 
@@ -78,5 +82,17 @@ public class Ui : MonoBehaviour
         statusbarVisibilityCoroutine = StaticToolMethods.DisplaySliderBars(displayStatusSliders, 6,false);
         StartCoroutine(statusbarVisibilityCoroutine);
         tracking = true;
+    }
+
+    public void StopTrackingStatus() {
+        tracking = false;
+        if (statusbarVisibilityCoroutine != null)
+        {
+            StopCoroutine(statusbarVisibilityCoroutine);
+        }
+        statusbarVisibilityCoroutine = StaticToolMethods.DisplaySliderBars(displayStatusSliders, 0, false);
+        StartCoroutine(statusbarVisibilityCoroutine);
+        Array.Clear(targetStatusSliders, 0, targetStatusSliders.Length);
+        texts[3].gameObject.SetActive(false);
     }
 }

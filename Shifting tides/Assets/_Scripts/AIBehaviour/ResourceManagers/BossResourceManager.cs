@@ -36,14 +36,17 @@ public class BossResourceManager : HostileResourceManager
 
         set
         {
-            base.currentHealth = value;
+           base.CurrentHealth = value;
             if (sliderbarLerpCoroutine != null)
             {
                 StopCoroutine(sliderbarLerpCoroutine);
             }
             sliderbarLerpCoroutine = StaticToolMethods.LerpSliderBarValue(healthBars, currentHealth, 0.3f, 0.2f, 0.05f);
             StartCoroutine(sliderbarLerpCoroutine);
-
+            if (currentHealth <= 0)
+            {
+                StartCoroutine(OnDeathFeedBack());
+            }
         }
     }
 

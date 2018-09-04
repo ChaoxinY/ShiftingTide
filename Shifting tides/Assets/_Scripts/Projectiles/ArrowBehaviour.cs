@@ -50,6 +50,8 @@ public class ArrowBehaviour : Projectile
                 EnemyHit(other);
                 SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized, other.gameObject);               
                 break;
+            case "HeavyShield":
+                break;
             default:
                 DefaultHit();
                 SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized, other.gameObject);
@@ -65,10 +67,10 @@ public class ArrowBehaviour : Projectile
         if (hostileResourceManager == null) {
             hostileResourceManager = other.gameObject.GetComponentInParent<HostileResourceManager>();
         }
-
-        Debug.Log(hostileResourceManager);
+      
         if (other.collider.name == "CritSpot")
         {
+            Debug.Log(hostileResourceManager);
             onHitSoundSource.clip = onHitSounds[2];
             onHitSoundSource.Play();
             hostileResourceManager.GotHitOnCritSpot(baseDamage,other.contacts[0].point, hitSpeed);

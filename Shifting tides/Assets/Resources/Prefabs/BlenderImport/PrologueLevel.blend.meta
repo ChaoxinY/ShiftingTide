@@ -193,6 +193,13 @@ ModelImporter:
     100374: Cube_182
     100376: Cube_183
     100378: Cube_184
+    100380: Cube_185
+    100382: Cube_186
+    100384: Cube_187
+    100386: Cube_188
+    100388: Plane
+    100390: Cube_189
+    100392: Plane_002
     400000: Bag_Ol_goods_1_001
     400002: Bag_Ol_goods_1_002
     400004: Bag_Ol_goods_1_003
@@ -383,6 +390,13 @@ ModelImporter:
     400374: Cube_182
     400376: Cube_183
     400378: Cube_184
+    400380: Cube_185
+    400382: Cube_186
+    400384: Cube_187
+    400386: Cube_188
+    400388: Plane
+    400390: Cube_189
+    400392: Plane_002
     2100000: unnamed
     2100002: Material_001
     2100004: Arrow
@@ -576,6 +590,13 @@ ModelImporter:
     2300372: Cube_182
     2300374: Cube_183
     2300376: Cube_184
+    2300378: Cube_185
+    2300380: Cube_186
+    2300382: Cube_187
+    2300384: Cube_188
+    2300386: Plane
+    2300388: Cube_189
+    2300390: Plane_002
     3300000: Bag_Ol_goods_1_001
     3300002: Bag_Ol_goods_1_002
     3300004: Bag_Ol_goods_1_003
@@ -765,6 +786,13 @@ ModelImporter:
     3300372: Cube_182
     3300374: Cube_183
     3300376: Cube_184
+    3300378: Cube_185
+    3300380: Cube_186
+    3300382: Cube_187
+    3300384: Cube_188
+    3300386: Plane
+    3300388: Cube_189
+    3300390: Plane_002
     4300000: Bag_Ol_goods_1_001
     4300002: Bag_Ol_goods_1_002
     4300004: Bag_Ol_goods_1_003
@@ -954,6 +982,13 @@ ModelImporter:
     4300372: Cube_182
     4300374: Cube_184
     4300376: Cube_183
+    4300378: Plane
+    4300380: Cube_188
+    4300382: Cube_187
+    4300384: Cube_186
+    4300386: Cube_185
+    4300388: Cube_189
+    4300390: Plane_002
     6400000: Bag_Ol_goods_1_001
     6400002: Bag_Ol_goods_1_002
     6400004: Bag_Ol_goods_1_003
@@ -1143,6 +1178,13 @@ ModelImporter:
     6400372: Cube_182
     6400374: Cube_183
     6400376: Cube_184
+    6400378: Cube_185
+    6400380: Cube_186
+    6400382: Cube_187
+    6400384: Cube_188
+    6400386: Plane
+    6400388: Cube_189
+    6400390: Plane_002
     7400000: Default Take
     9500000: //RootNode
     2186277476908879412: ImportLogs

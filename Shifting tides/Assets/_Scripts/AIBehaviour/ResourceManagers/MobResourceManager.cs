@@ -5,6 +5,7 @@ using System.Collections;
 public class MobResourceManager : HostileResourceManager
 {
     protected Canvas uiCanvas;
+    protected Ui playerUi;
     protected Slider[] healthBars = new Slider[2], armorBars = new Slider[2];
     private IEnumerator healthBarVisibilityCoroutine, armorhBarVisibilityCoroutine;
 
@@ -20,7 +21,7 @@ public class MobResourceManager : HostileResourceManager
     {
         base.Initialize();
         uiCanvas = GetComponentInChildren<Canvas>();
-        
+        playerUi = GameObject.Find("UI").GetComponent<Ui>();
         healthBars[0] = uiCanvas.transform.Find("HealthBar").gameObject.GetComponent<Slider>();
         healthBars[1] = uiCanvas.transform.Find("HealthBarBackGround").gameObject.GetComponent<Slider>();
         armorBars[0] = uiCanvas.transform.Find("ArmorBar").gameObject.GetComponent<Slider>();
@@ -42,13 +43,13 @@ public class MobResourceManager : HostileResourceManager
     public override void GotHit(float baseDamage, Vector3 impactPoint, Vector3 impactForce)
     {
         base.GotHit(baseDamage, impactPoint, impactForce);
-        GameObject.Find("Ui").GetComponent<Ui>().TrackTargetEnemyStatus(gameObject.name, healthBars, armorBars);
+        playerUi.TrackTargetEnemyStatus(gameObject.name, healthBars, armorBars);
     }
 
     public override void GotHitOnCritSpot(float baseDamage, Vector3 impactPoint, Vector3 impactForce)
     {
         base.GotHitOnCritSpot(baseDamage, impactPoint, impactForce);
-        GameObject.Find("Ui").GetComponent<Ui>().TrackTargetEnemyStatus(gameObject.name, healthBars, armorBars);
+        playerUi.TrackTargetEnemyStatus(gameObject.name, healthBars, armorBars);
     }
 
     protected override IEnumerator OnDeathFeedBack()
@@ -62,6 +63,7 @@ public class MobResourceManager : HostileResourceManager
         ragdollManager.ApplyRagdollForce(lastCollisionPoint, lastCollisionImpactforce);
         yield return StartCoroutine(OnHitDrops(minOnDeathDrop, maxOnDeathDrop));
         uiCanvas.gameObject.SetActive(false);
+        playerUi.StopTrackingStatus();
         this.enabled = false;
     }
 
@@ -74,7 +76,7 @@ public class MobResourceManager : HostileResourceManager
 
         set
         {
-            base.CurrentHealth = value;
+            currentHealth = value;
             if (currentHealth > maxHealth) { currentHealth = maxHealth; }
             StaticToolMethods.DisplaySliderBars(healthBars, 0, true);
 
@@ -106,10 +108,6 @@ public class MobResourceManager : HostileResourceManager
         set
         {
             base.CurrentArmor = value;
-            if (currentArmor < 0)
-            {
-                currentArmor = 0;
-            }
             StaticToolMethods.DisplaySliderBars(armorBars, 0, true);
 
             if (sliderbarLerpCoroutine != null)

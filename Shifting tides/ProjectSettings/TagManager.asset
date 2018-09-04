@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - EnemyCritSpot
   - TheSource
+  - HeavyShield
   layers:
   - Default
   - TransparentFX

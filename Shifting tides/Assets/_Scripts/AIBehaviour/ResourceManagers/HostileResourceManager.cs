@@ -51,14 +51,15 @@ public class HostileResourceManager : MonoBehaviour
             CurrentArmor -= baseDamage * 0.75f;
             return;
         }
-        Debug.Log(baseDamage);
-      
+        
         RegisterCollision(impactPoint, impactForce);
         StartCoroutine(OnHitDrops(minOnHitDrop*2, maxOnHitDrop*2));
         CurrentHealth -= baseDamage * 2;
+        Debug.Log(baseDamage *2);
+
     }
 
- 
+
     public virtual IEnumerator OnHitDrops(int minDrop, int maxDrop) {
         for (int i = 0; i < Random.Range(minDrop, maxDrop); i++)
         {
@@ -88,7 +89,7 @@ public class HostileResourceManager : MonoBehaviour
         get { return currentHealth; }
         set
         {
-            currentHealth = value;              
+            currentHealth = value;
         }
     }
     public virtual float CurrentArmor
@@ -97,7 +98,10 @@ public class HostileResourceManager : MonoBehaviour
         set
         {
             currentArmor = value;
-          
+            if (currentArmor < 0)
+            {
+                currentArmor = 0;
+            }
         }
     }
 }

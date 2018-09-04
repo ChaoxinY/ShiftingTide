@@ -12,6 +12,7 @@ public static class StaticToolMethods
     public static IEnumerator DisplaySliderBars(Slider[] sliderBars, float delay,bool display)
     {
         yield return new WaitForSeconds(delay);
+        
         foreach (Slider sliderbar in sliderBars)
         {
             sliderbar.gameObject.SetActive(display);

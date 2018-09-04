@@ -10,6 +10,7 @@ public class ItemDroperResourceManager : MobResourceManager
         Instantiate(ItemToDrop, transform.position, Quaternion.identity);
         StartCoroutine(OnHitDrops(1, 2));
         SpawnSourcePoint(1);
+        playerUi.StopTrackingStatus();
         Destroy(gameObject);
         yield break;
     }
