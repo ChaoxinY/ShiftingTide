@@ -117,6 +117,7 @@ public class Agent : TimeBoundGameObject
         //Rethinking current choice
         int[] NumbersCorrect = { 0, 0 };
 
+        //rolls for each attribute number of times
         for (int i = 0; i < 20; i++)
             for (int j = 0; j < desire.Length - 1; j++)
             {

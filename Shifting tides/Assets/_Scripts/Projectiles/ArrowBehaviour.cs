@@ -51,6 +51,7 @@ public class ArrowBehaviour : Projectile
                 SetupArrowPlaceholder(other.contacts[0].point, other.relativeVelocity.normalized, other.gameObject);               
                 break;
             case "HeavyShield":
+                baseDamage = 0;
                 break;
             default:
                 DefaultHit();

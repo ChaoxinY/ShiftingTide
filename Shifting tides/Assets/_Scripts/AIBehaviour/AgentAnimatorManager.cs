@@ -5,13 +5,13 @@ using UnityEngine;
 public class AgentAnimatorManager : MonoBehaviour
 {
     public Animator agentAnimator;
-
+  
     private bool moving,active;
     private float animatorSpeed;
 
     private void Start()
     {
-        //agentAnimator = gameObject.GetComponent<Animator>();
+        agentAnimator = gameObject.GetComponent<Animator>();
     }
 
     public void PlayAttackAnimation()

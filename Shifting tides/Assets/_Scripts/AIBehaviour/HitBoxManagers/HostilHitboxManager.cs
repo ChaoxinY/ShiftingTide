@@ -16,4 +16,16 @@ public class HostilHitboxManager : MonoBehaviour
         }
         agentAnimatorManager = GetComponent<AgentAnimatorManager>();
     }
+
+    protected HostileHitbox FindHostileHitBox(string hitBoxName) {
+
+        HostileHitbox hitBoxFound = null;
+        foreach (HostileHitbox hostileHitBox in hitBoxesToManage) {
+            if (hostileHitBox.gameObject.name == hitBoxName) {
+                hitBoxFound = hostileHitBox;
+                break;
+            }
+        }
+        return hitBoxFound;
+    }
 }

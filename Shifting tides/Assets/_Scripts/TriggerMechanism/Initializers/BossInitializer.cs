@@ -1,27 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
-public class BossInitializer : MonoBehaviour
+public class BossInitializer : AgentInitializer
 {
-    public List<Collider> colliders;
-    private BossResourceManager bossResourceManager;
+    public BossResourceManager bossResourceManager;
 
-
-    private void Start()
-    { 
-        bossResourceManager = GetComponentInParent<BossResourceManager>();
-    }
-
-    public void OnTriggerEnter(Collider other)
+    public override IEnumerator OnTriggerFunction()
     {
-        if (other.gameObject.name == "Player") {
-            bossResourceManager.enabled = true;
-            foreach (Collider collider in colliders) {
-                collider.enabled = true;
-            }
-            Destroy(this);
-        }
+        bossResourceManager.enabled = true;
+        yield return StartCoroutine(InitializeObject());
+        Destroy(gameObject);
+        yield break;
     }
-
-
 }

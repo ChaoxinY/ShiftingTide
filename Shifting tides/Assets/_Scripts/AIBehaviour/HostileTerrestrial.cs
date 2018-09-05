@@ -7,7 +7,7 @@ public class HostileTerrestrial : Terrestrial
 {  
     public float visionRange, sightRange, chaseRange, attackRange;
 
-    private float distanceToPray;
+    protected float distanceToPray;
     private bool InCombat = false;
 
     protected override IEnumerator LocalUpdate()

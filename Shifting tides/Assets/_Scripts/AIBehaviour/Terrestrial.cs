@@ -14,7 +14,7 @@ public class Terrestrial : Agent
     {
         base.Initialize();
         agent = gameObject.GetComponent<NavMeshAgent>();
-        //agentAnimatorManager = GetComponent<AgentAnimatorManager>();
+        agentAnimatorManager = GetComponent<AgentAnimatorManager>();
         agent.speed = standardSpeed;
     }
     protected override void AddBehaviours()
