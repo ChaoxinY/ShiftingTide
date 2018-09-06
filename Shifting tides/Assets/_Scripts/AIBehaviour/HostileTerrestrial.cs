@@ -108,7 +108,7 @@ public class HostileTerrestrial : Terrestrial
         yield break;
     }
 
-    private void UpdateTargetDistance(GameObject hunted)
+    protected void UpdateTargetDistance(GameObject hunted)
     {
         distanceToPray = Vector3.Distance(gameObject.transform.position, hunted.transform.position);
     }

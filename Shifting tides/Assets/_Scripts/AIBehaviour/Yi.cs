@@ -8,6 +8,7 @@ public class Yi : HostileTerrestrial
     private YiHitBoxManager yiHitBoxManager;
     private List<IEnumerator> moveConditions = new List<IEnumerator>();
     private List<IEnumerator> availableAttackMoves = new List<IEnumerator>();
+    private bool attacking;
 
     protected override void Initialize()
     {
@@ -20,7 +21,16 @@ public class Yi : HostileTerrestrial
         moveConditions.Add(HeadSlamConditionCheck());
         moveConditions.Add(TailSwipeConditionCheck());
     }
-
+    private void Update()
+    {
+        if (attacking && agentAnimatorManager.AnimatorSpeed != 0)
+        {
+            Vector3 targetDir = GameObject.Find("Player").transform.position - transform.position;
+            targetDir.y = 0;
+            Vector3 newRotation = Vector3.RotateTowards(transform.forward, targetDir, Time.deltaTime * 5f, 0);
+            transform.rotation = Quaternion.LookRotation(newRotation);
+        }
+    }
     protected override IEnumerator LocalUpdate()
     {
         yield return StartCoroutine(DetermineCurrentAttack());
@@ -48,13 +58,17 @@ public class Yi : HostileTerrestrial
         GameObject player = GameObject.Find("Player");
         SetCurrentTarget(player);
         MoveTowardsTarget(currentTarget);
+        UpdateTargetDistance(player);
         yiAgentAnimatorManager.Moving = true;
         yield break;
     }
 
     private IEnumerator HeadSlamConditionCheck()
-    {       
-        if (distanceToPray <= 5)
+    {
+        GameObject player = GameObject.Find("Player");
+        UpdateTargetDistance(player);
+        Debug.Log(distanceToPray);
+        if (distanceToPray > 10 && distanceToPray < 15)
         {
             availableAttackMoves.Add(HeadSlam());
         }
@@ -63,17 +77,22 @@ public class Yi : HostileTerrestrial
 
     private IEnumerator HeadSlam()
     {
+        agent.speed = 0;
+        attacking = true;
         yiAgentAnimatorManager.Moving = false;
-        yiAgentAnimatorManager.PlayHeadSlamAnimation();
+        yiAgentAnimatorManager.PlayHeadSlamAnimation();       
         StartCoroutine(yiHitBoxManager.HeadSlamHitBoxAnimation());
+        yield return new WaitForSeconds(0.6f);
+        attacking = false;
         yield return new WaitUntil(() => !StaticToolMethods.GetAnimatorStateInfo(0, agentAnimatorManager.agentAnimator).IsName("HeadSlam"));
+        agent.speed = standardSpeed;       
         yiAgentAnimatorManager.Moving = true;
         yield break;
     }
 
     private IEnumerator TailSwipeConditionCheck()
     {
-        if (distanceToPray > 5 && distanceToPray < chaseRange)
+        if (distanceToPray < 5)
         {
             availableAttackMoves.Add(TailSwipe());
         }

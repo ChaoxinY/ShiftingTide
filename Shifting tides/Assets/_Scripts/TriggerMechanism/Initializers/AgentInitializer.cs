@@ -34,7 +34,6 @@ public class AgentInitializer : TriggerBoundMechanism
             collider.enabled = true;
         }
         objectAgent.enabled = true;
-        Debug.Log(objectAgent.enabled);
         yield break;
     }
 }
