@@ -702,7 +702,7 @@ MonoBehaviour:
   perferRandomBehaviours: 0
   perferPatternedBehaviours: 1
   customized: 0
-  movementSpeed: 4.5
+  movementSpeed: 0
 --- !u!114 &114359170346043144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1079,12 +1079,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   componentstoRemoveOnDeath: []
-  healthBars:
-  - {fileID: 114476419352532564}
-  - {fileID: 114359170346043144}
-  armorBars:
-  - {fileID: 114778810500867028}
-  - {fileID: 114492413139845700}
   maxHealth: 10
   maxArmor: 0
   minOnHitDrop: 0
