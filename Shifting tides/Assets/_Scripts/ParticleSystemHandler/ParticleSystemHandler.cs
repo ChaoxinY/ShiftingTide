@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Base class to influence one single particle system
 public abstract class ParticleSystemHandler : MonoBehaviour
 {
-
     protected ParticleSystem particleSystemToManage;
     protected float[] currentProfielValues = new float[100];
     protected float[] defaultProfielValues = new float[100];
@@ -32,6 +32,7 @@ public abstract class ParticleSystemHandler : MonoBehaviour
 
     protected abstract void InitializeParticleSystem();
 
+    //Create a copy of the current particle system values
     protected void GeneratedDefaultProfiel()
     {
         defaultProfielValues = (float[])currentProfielValues.Clone();

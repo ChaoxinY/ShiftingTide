@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class PlayerParticleSystemManager : MonoBehaviour
 {  
+    //Standard particle systems to manage
     public ParticleSystemHandler[] managedSystems;
-    //0 :charing vortex ,1 : cone radiator  2: conde shatter 3： cone radiator core 
-    //4 : Blinkers 
+    //Available arrow particle systems
     public PlayerArrowParticleSystemManager[] managedPlayerArrowParticle;
     public PlayerArrowParticleSystemManager currentPlayerArrowParticle;
     public PlayerAimModule playerAimModule;
@@ -20,6 +20,8 @@ public class PlayerParticleSystemManager : MonoBehaviour
         currentPlayerArrowParticle.StopAllShootingParticleSystems();
     }
 
+    //Maintain the current blinker counts when swapping to an another  
+    //arrow particle system.
     public void InherentBlinkerCount(int amount)
     {
         isPlayingChargedUpAnimation = true;
@@ -32,7 +34,6 @@ public class PlayerParticleSystemManager : MonoBehaviour
             }
         }
     }
-
    
     public void PlayChargingAnimation()
     {
@@ -50,13 +51,14 @@ public class PlayerParticleSystemManager : MonoBehaviour
         managedSystems[0].PlayParticleAnimation();
     }
 
-
    public void PlayerFireAnimation()
     {
         StartCoroutine(currentPlayerArrowParticle.PlayerFireAnimation());
         isPlayingChargingAnimation = false;
     }
 
+    //Switch between different arrow particle systeem based on the 
+    //currently selected arrowhead
     public void SetCurrentArrowParticleSystem()
     {
         switch (playerAimModule.currentArrowhead.name)

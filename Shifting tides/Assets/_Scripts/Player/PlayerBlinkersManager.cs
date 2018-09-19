@@ -56,6 +56,8 @@ public class PlayerBlinkersManager : ParticleSystemHandler
 
     private IEnumerator BlinkerAnimation(int skipToStage = 0)
     {
+        //When called while there is already more than 0 amount of blinkers spawned.
+        // Skip those blinker animation(s) and go the next blinker animation(s) in the queue
         switch (skipToStage)
         {
             case 1:

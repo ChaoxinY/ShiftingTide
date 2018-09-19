@@ -43,7 +43,6 @@ public abstract class TimeBoundGameObject : MonoBehaviour
     }
 
     protected virtual IEnumerator PauseOnTimeStop() {
-
         yield break;
     }
 

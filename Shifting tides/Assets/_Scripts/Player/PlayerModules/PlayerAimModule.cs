@@ -87,7 +87,10 @@ public class PlayerAimModule : PlayerModule
         if (Input.GetMouseButton(1) && CheckIfCurrentArrowIsAvailable(currentArrowhead.name))
         {
             ChargeUpArrow();
-            ModuleStartUp();
+            if (!cursor.gameObject.activeInHierarchy)
+            {
+                ModuleStartUp();
+            }
         }
         if (Input.GetMouseButtonUp(1) && isAiming && arrowChargingState != 0)
         {

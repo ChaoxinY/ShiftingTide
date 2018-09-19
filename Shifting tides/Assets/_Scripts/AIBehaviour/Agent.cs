@@ -30,6 +30,7 @@ public class Agent : TimeBoundGameObject
         for (int i = 0; i < 2; i++)
         {
             patrolRoute.Enqueue(patrolPoints[i].position);
+            Debug.Log(patrolPoints[i].position);
         }
         AddBehaviours();
         StartCoroutine(DetermineNextAgentBehaviour());
@@ -97,17 +98,17 @@ public class Agent : TimeBoundGameObject
 
     protected IEnumerator ChangePatrolRoute()
     {
-        patrolRoute.Clear();
-        List<Vector3> availablePatrolPoints = new List<Vector3>();
-        foreach (Transform point in patrolPoints)
-        {
-            if (lastPatrolPointVisted != point.position)
-            {
-                availablePatrolPoints.Add(point.position);
-            }
-        }
-        patrolRoute.Enqueue(availablePatrolPoints[Random.Range(0, availablePatrolPoints.Count)]);
-        patrolRoute.Enqueue(lastPatrolPointVisted);
+        //patrolRoute.Clear();
+        //List<Vector3> availablePatrolPoints = new List<Vector3>();
+        //foreach (Transform point in patrolPoints)
+        //{
+        //    if (lastPatrolPointVisted != point.position)
+        //    {
+        //        availablePatrolPoints.Add(point.position);
+        //    }
+        //}
+        //patrolRoute.Enqueue(availablePatrolPoints[Random.Range(0, availablePatrolPoints.Count)]);
+        //patrolRoute.Enqueue(lastPatrolPointVisted);
         yield return StartCoroutine(FinishStandardMovementBehaviour(0, 1));
         yield break;
     }

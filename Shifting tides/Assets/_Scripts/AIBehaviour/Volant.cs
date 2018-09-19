@@ -7,6 +7,8 @@ using UnityEngine;
 public class Volant : Agent
 {
     public float movementSpeed;
+    public float medianPointOffset;
+    public float curvePeakStrength;
 
     private Vector3 targetRot;
     private Queue<Vector3> path = new Queue<Vector3>();
@@ -59,7 +61,7 @@ public class Volant : Agent
         {
             currentTarget = pathPoint;
             yield return new WaitUntil(() => Arrived(gameObject.transform.position, currentTarget, 0.5f));
-           // DebugPath();
+            DebugPath();
         }
         path.Clear();
         yield return new WaitUntil(() => path.Count == 0);
@@ -85,20 +87,19 @@ public class Volant : Agent
         Debug.Log(StartOfTheCircle);
         Debug.Log(EndOfTheCircle);
         lastPatrolPointVisted = EndOfTheCircle;
-        patrolRoute.Enqueue(StartOfTheCircle);
-        patrolRoute.Enqueue(EndOfTheCircle);
+        patrolRoute.Enqueue(patrolPoints[0].transform.position);
+        patrolRoute.Enqueue(patrolPoints[1].transform.position);
 
         float pathDistance = Vector3.Distance(StartOfTheCircle, EndOfTheCircle);
-        float shiftValue = pathDistance/2;
         List<Vector3> CirclePoints = new List<Vector3>();
         List<Vector3> mirroredCirclePoints = new List<Vector3>();
         path.Enqueue(StartOfTheCircle);
-        CirclePoints = CreateBezierCurvedPath(StartOfTheCircle, EndOfTheCircle, Vector3.right, Vector3.forward, 12, pathDistance, shiftValue);
+        CirclePoints = CreateBezierCurvedPath(StartOfTheCircle, EndOfTheCircle, Vector3.right, Vector3.forward, 12, pathDistance, curvePeakStrength, medianPointOffset);
         foreach (Vector3 point in CirclePoints)
         {
             path.Enqueue(point);
         }
-        mirroredCirclePoints = CreateBezierCurvedPath(EndOfTheCircle, StartOfTheCircle, -Vector3.right, -Vector3.forward, 12, pathDistance, shiftValue);
+        mirroredCirclePoints = CreateBezierCurvedPath(EndOfTheCircle, StartOfTheCircle, -Vector3.right, -Vector3.forward, 12, pathDistance, curvePeakStrength, medianPointOffset);
         foreach (Vector3 point in mirroredCirclePoints)
         {
             path.Enqueue(point);
@@ -112,16 +113,25 @@ public class Volant : Agent
         path.Enqueue(wayPoints[UnityEngine.Random.Range(0, wayPoints.Count)].position);
         yield return StartCoroutine(Pathing());
         StartCoroutine(FinishStandardMovementBehaviour(0, 1));
+
         yield break;
     }
 
-    private List<Vector3> CreateBezierCurvedPath(Vector3 startPointCurve, Vector3 endPointCurve, Vector3 curveDirection, Vector3 objectFowardDirection,
-    float totalCurveCut, float curvePeak,float curvePeakShitValue)
+
+
+
+    private List<Vector3> CreateBezierCurvedPath(Vector3 startPointCurve, Vector3 endPointCurve,
+        Vector3 curveDirection, Vector3 objectFowardDirection,
+    float totalCurveCut, float curvePeak,float curvePeakOffset,float medianPointOffset)
     {
         List<Vector3> path = new List<Vector3>();
-        //Bezier curve
         Vector3 midPointCurve;
-        midPointCurve = startPointCurve + curveDirection * curvePeak - objectFowardDirection * (curvePeak- curvePeakShitValue);
+        midPointCurve = startPointCurve + objectFowardDirection 
+            * curvePeak * curvePeakOffset + curveDirection * - medianPointOffset;
+
+        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        cube.transform.position = midPointCurve;
+        cube.transform.localScale = new Vector3(2f, 2f, 2f);
         float CurveCut = totalCurveCut;
         for (int i = 0; i < CurveCut; i++)
         {
@@ -129,14 +139,15 @@ public class Volant : Agent
             Vector3 Q1 = Vector3.Lerp(midPointCurve, endPointCurve, 1f / CurveCut * i);
             Vector3 pointToAdd = Vector3.Lerp(Q0, Q1, 1f / CurveCut * i);
             path.Add(pointToAdd);
-
         }
         return path;
     }
+
+
     private void DebugPath()
     {
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.position = transform.position;
-        transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        cube.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
     }
 }

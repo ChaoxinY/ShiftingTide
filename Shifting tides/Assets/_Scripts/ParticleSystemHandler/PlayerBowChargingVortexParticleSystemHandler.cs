@@ -59,9 +59,7 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
             noiseModule.positionAmount = currentProfielValues[4];
 
             currentProfielValues[5] = Mathf.Lerp(currentProfielValues[5], targetProfielValues[5], lerpSpeed);
-            noiseModule.frequency = currentProfielValues[5];
-
-          
+            noiseModule.frequency = currentProfielValues[5];          
         }
     }
     public override void PlayParticleAnimation()
@@ -76,6 +74,7 @@ public class PlayerBowChargingVortexParticleSystemHandler : ParticleSystemHandle
         base.StopParticleAnimation();
     }
 
+    //Hard coded animations 
     public IEnumerator ChargeAnimation()
     {
         yield return new WaitForSeconds(0.3f);

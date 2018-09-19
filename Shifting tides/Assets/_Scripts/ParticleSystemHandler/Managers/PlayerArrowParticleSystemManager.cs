@@ -6,9 +6,9 @@ public class PlayerArrowParticleSystemManager : MonoBehaviour
 {
     //0 :charing vortex ,1 : cone radiator  2: conde shatter 3： cone radiator core 
     //4 : Blinkers 
+    //Particle systems that make up the whole arrow drawing/ firing particle effects.
     public ParticleSystemHandler[] managedSystems;
     public List<ParticleSystemHandler> activeSystems = new List<ParticleSystemHandler>();
-
     private PlayerParticleSystemManager playerParticleSystemManager;
 
     private void Start()
