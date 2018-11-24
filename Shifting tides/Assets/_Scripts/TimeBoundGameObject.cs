@@ -42,6 +42,8 @@ public abstract class TimeBoundGameObject : MonoBehaviour
         yield break;
     }
 
+    // Virtual method for child class to overwrite in order to achieve different interactions when
+    // its time is stopped.
     protected virtual IEnumerator PauseOnTimeStop() {
         yield break;
     }

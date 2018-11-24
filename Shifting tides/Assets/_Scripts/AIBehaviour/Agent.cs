@@ -96,6 +96,7 @@ public class Agent : TimeBoundGameObject
 
     protected virtual IEnumerator Roaming() { yield break; }
 
+    //Commented out for maintainance
     protected IEnumerator ChangePatrolRoute()
     {
         //patrolRoute.Clear();
@@ -137,7 +138,7 @@ public class Agent : TimeBoundGameObject
                 highestDesire = i;
             }
         }
-        // Debug.Log("Highest desire：" + highestDesire);
+        //Debug.Log("Highest desire：" + highestDesire);
         //Executing behaviour fit for current desire.
         switch (highestDesire)
         {
@@ -205,6 +206,8 @@ public class Agent : TimeBoundGameObject
         currentTarget = hunter.transform.position + new Vector3(UnityEngine.Random.Range(-50, 50), 0, UnityEngine.Random.Range(-50, 50));
         // MoveTowardsTarget(agent, currentTarget);
     }
+
+    //One of the oud on hit effect
     protected void ChangeToOriginMaterial()
     {
         meshRenderer.material = originMaterial;
@@ -223,6 +226,10 @@ public class Agent : TimeBoundGameObject
             EnterRestingState();
         }
     }
+
+    //Called when spawning an agent prefab without assigning any waypoints to it.
+    //The method looks for the closest waypoint assigner and read the waypoints in it 
+    //into the agent itself.
     private void LookForWayPointAssigner()
     {
         GameObject aiWayPointHolders = GameObject.Find("AIWayPointHolders");
@@ -246,6 +253,7 @@ public class Agent : TimeBoundGameObject
         }
     }
 
+    //Change the statemachine action values 
     private void SetUpAgentFactorInfluencePoint()
     {
         if (customized)

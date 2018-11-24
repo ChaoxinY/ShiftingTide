@@ -39,7 +39,8 @@ public class TimeStopZone : MonoBehaviour
         Destroy(transform.parent.gameObject);
         yield break;
     }
-
+    
+    //Fill the influnence list with valid gameobjects
     private List<GameObject> UpdateInfluenceList() {
         RaycastHit[] hits;
         hits = Physics.SphereCastAll(transform.position, 5f, Vector3.up, 0f);
@@ -93,6 +94,7 @@ public class TimeStopZone : MonoBehaviour
             return validGameObject;
     }
 
+    //Set isTimeStopped to true for every timebound gameobject to pause its local update
     private void InfluenceGameObject(GameObject gameObjectCaught,bool turnOn = false)
     {                
         if (gameObjectCaught.gameObject.name == "Player")

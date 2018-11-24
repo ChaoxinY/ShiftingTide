@@ -108,8 +108,5 @@ public class Terrestrial : Agent
         overwrittingBehaviourFinished = true;
         overwritingBehaviour = null;
         yield break;
-    }
-
-
-  
+    } 
 }

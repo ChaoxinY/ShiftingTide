@@ -22,14 +22,6 @@ public class StatueBrute : HostileTerrestrial
             transform.rotation = Quaternion.LookRotation(newRotation);
         }
     }
-    protected override IEnumerator LocalUpdate()
-    {
-        yield return base.LocalUpdate();
-     
-        //Vector3 direction = (GameObject.Find("Player").transform.position - transform.position).normalized;
-        //Quaternion lookRotation = Quaternion.LookRotation(direction);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
-    }
 
     protected override IEnumerator EngageClassBehavior()
     {
