@@ -20,5 +20,8 @@ public class GameManager : MonoBehaviour {
         {
             SceneManager.LoadScene("Prologue");
         }
+        if (Input.GetKeyDown(KeyCode.F4)) {
+            GameObject.Find("Player").transform.position = lastCheckPointPosition;
+        }
     } 
 }

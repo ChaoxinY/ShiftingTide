@@ -61,7 +61,7 @@ public class Volant : Agent
         {
             currentTarget = pathPoint;
             yield return new WaitUntil(() => Arrived(gameObject.transform.position, currentTarget, 0.5f));
-            DebugPath();
+            //DebugPath();
         }
         path.Clear();
         yield return new WaitUntil(() => path.Count == 0);
@@ -117,9 +117,6 @@ public class Volant : Agent
         yield break;
     }
 
-
-
-
     private List<Vector3> CreateBezierCurvedPath(Vector3 startPointCurve, Vector3 endPointCurve,
         Vector3 curveDirection, Vector3 objectFowardDirection,
     float totalCurveCut, float curvePeak,float curvePeakOffset,float medianPointOffset)
@@ -129,9 +126,9 @@ public class Volant : Agent
         midPointCurve = startPointCurve + objectFowardDirection 
             * curvePeak * curvePeakOffset + curveDirection * - medianPointOffset;
 
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = midPointCurve;
-        cube.transform.localScale = new Vector3(2f, 2f, 2f);
+        //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        //cube.transform.position = midPointCurve;
+        //cube.transform.localScale = new Vector3(2f, 2f, 2f);
         float CurveCut = totalCurveCut;
         for (int i = 0; i < CurveCut; i++)
         {
